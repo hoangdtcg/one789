@@ -1,5 +1,5 @@
 export interface Items {
-  Numbers?: any[];
+  Numbers?: any;
   Point?: number;
   Price?: number;
 }

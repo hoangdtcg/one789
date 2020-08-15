@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {OddsService} from '../service/odds/odds.service';
 import {NumbersService} from '../service/numbers/numbers.service';
 import {Numbers} from '../interface/numbers';
+import {Items} from '../interface/items';
 
 @Component({
   selector: 'app-homepage',
@@ -13,7 +14,10 @@ export class HomepageComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   waitingList: Numbers[] = [];
+  resultList: string[] = [];
+  items: Items[] = [];
   search: any = null;
+  point: number = 0;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService) {
@@ -54,6 +58,24 @@ export class HomepageComponent implements OnInit {
 
   moveWaitingListToResultList() {
     this.resultNumbers = this.waitingList;
+    this.waitingList.map(numbers => {
+      const item: Items = {
+        Numbers: numbers.Number,
+        Point: this.point,
+        Price: numbers.ExtraPrice
+      };
+      this.items.push(item);
+    });
+    let result = '';
+    for (let i = 0; i < this.waitingList.length; i++) {
+      result += this.waitingList[i].Number;
+      if (i != this.waitingList.length - 1) {
+        result += ', ';
+      }
+    }
+    result += 'x' + this.point;
+    this.resultList.push(result);
+    this.point = 0;
   }
 
   filterNumberBiggerThan() {
