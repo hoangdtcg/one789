@@ -41,11 +41,7 @@ export class HomepageComponent implements OnInit {
   }
 
   chooseNumber(number: Numbers) {
-    if (!number.checked || number.checked == null) {
-      number.checked = true;
-    } else {
-      number.checked = false;
-    }
+    number.checked = !number.checked;
     if (number.checked) {
       this.waitingList.push(number);
     } else {
