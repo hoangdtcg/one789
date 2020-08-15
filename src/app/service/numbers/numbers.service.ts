@@ -5,18 +5,26 @@ import {Numbers} from '../../interface/numbers';
   providedIn: 'root'
 })
 export class NumbersService {
-  numbers: Numbers[] = [];
 
   constructor() {
   }
 
   getAllNumber() {
+    let numbers = [];
     for (let i = 0; i < 10; i++) {
       const number: Numbers = {
         Number: '0' + i,
         ExtraPrice: 0
       };
-      this.numbers.push(number);
+      numbers.push(number);
     }
+    for (let i = 10; i < 100; i++) {
+      const number: Numbers = {
+        Number: i + '',
+        ExtraPrice: 0
+      };
+      numbers.push(number);
+    }
+    return numbers;
   }
 }

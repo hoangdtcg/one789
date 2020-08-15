@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Odds} from '../interface/odds';
 import {OddsService} from '../service/odds/odds.service';
+import {NumbersService} from '../service/numbers/numbers.service';
+import {Numbers} from '../interface/numbers';
 
 @Component({
   selector: 'app-homepage',
@@ -8,20 +10,23 @@ import {OddsService} from '../service/odds/odds.service';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  listOdd: Odds[];
+  listOdd: Odds[] = [];
+  numbers: Numbers[] = [];
 
-  constructor(private oddsService: OddsService) {
+  constructor(private oddsService: OddsService,
+              private numbersService: NumbersService) {
   }
 
   ngOnInit() {
     this.getAllOdd();
+    this.numbers = this.numbersService.getAllNumber();
+    console.log(this.numbers);
   }
 
   getAllOdd() {
     let term = this.convertDateToString(new Date());
     this.oddsService.getAllOdds(term).subscribe(listOdd => {
       this.listOdd = listOdd;
-      console.log(this.listOdd);
     });
   }
 
