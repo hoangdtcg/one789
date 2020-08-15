@@ -13,12 +13,11 @@ export class HomepageComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
-  waitingList: Numbers[] = [];
-  resultList: string[] = [];
   items: Items[] = [];
   search: any = null;
-  point: number = 0;
   data: string = '';
+  point: number = 0;
+  totalPoint: number = 0;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService) {
@@ -36,7 +35,9 @@ export class HomepageComponent implements OnInit {
       this.addExtraNumberToNumber(odd);
       this.filterNumbers.map(number => {
         this.numbers.map(number1 => {
-          number.ExtraPrice = number1.ExtraPrice;
+          if (number1.Number == number.Number) {
+            number.ExtraPrice = number1.ExtraPrice;
+          }
         });
       });
     });
@@ -50,18 +51,31 @@ export class HomepageComponent implements OnInit {
     }, 5000);
   }
 
-  filterNumberBiggerThan() {
-    if (this.search != null || this.search != '') {
-      this.filterNumbers = [];
-      this.numbers.map(number => {
-        if (number.ExtraPrice >= this.search) {
-          this.filterNumbers.push(number);
-        }
-      });
+  filterNumberLowerThan() {
+    let numberBigger = [];
+    this.filterNumbers.map(number => {
+      let flag = -1;
+      if (number.ExtraPrice <= this.search) {
+        flag = 1;
+        number.checked = true;
+        number.point = this.point;
+        this.resultNumbers.push(number);
+      }
+      if (flag == -1) {
+        numberBigger.push(number);
+      }
+    });
+    this.filterNumbers = numberBigger;
+    let result = '';
+    for (let i = 0; i < numberBigger.length; i++) {
+      result += numberBigger[i].Number;
+      if (i != numberBigger.length - 1) {
+        result += ', ';
+      }
     }
-    if (this.search == '') {
-      this.getAllOdd();
-    }
+    result += 'x' + this.point + 'n';
+    this.data = result;
+    this.sumTotalPoint();
   }
 
   addExtraNumberToNumber(odd) {
@@ -119,7 +133,14 @@ export class HomepageComponent implements OnInit {
         this.items.push(items);
       });
     });
+    this.sumTotalPoint();
     this.data = '';
+  }
+
+  sumTotalPoint() {
+    this.resultNumbers.map(number => {
+      this.totalPoint += +number.point;
+    });
   }
 
   submit() {

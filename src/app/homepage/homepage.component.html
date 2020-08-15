@@ -23,7 +23,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"></h3>
-          <input type="text" (keyup)="filterNumberBiggerThan()" placeholder="Nhập điểm" name="search"
+          <input type="text" (keyup)="filterNumberLowerThan()" placeholder="Nhập điểm" name="search"
                  [(ngModel)]="search">
           <div class="card-tools">
           </div>
@@ -47,6 +47,7 @@
       </div>
     </div>
     <div class="col-md-2 text-center">
+      <input type="text" name="point" [(ngModel)]="point">
     </div>
     <div class="col-md-3">
       <div class="card">
@@ -75,12 +76,12 @@
             <tfoot>
             <tr>
               <td></td>
-              <td class="text-bold">Tổng điểm:</td>
+              <td class="text-bold">Tổng điểm: {{totalPoint}}</td>
             </tr>
             <tr>
               <td></td>
               <td>
-                <button class="btn btn-outline-primary" (click)="submit()">
+                <button class="btn btn-outline-primary float-lg-right" (click)="submit()">
                   Đánh
                 </button>
               </td>
