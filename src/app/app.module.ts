@@ -10,12 +10,14 @@ import { HomepageComponent } from './homepage/homepage.component';
 import {ErrorInterceptor} from './helper/error-interceptor';
 import {JwtInterceptor} from './helper/jwt-interceptor';
 import {SharedModule} from './shared/shared.module';
+import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shared.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomepageComponent
+    HomepageComponent,
+    LayoutWithSharedComponent
   ],
   imports: [
     BrowserModule,
