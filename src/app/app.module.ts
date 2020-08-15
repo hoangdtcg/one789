@@ -9,6 +9,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { HomepageComponent } from './homepage/homepage.component';
 import {ErrorInterceptor} from './helper/error-interceptor';
 import {JwtInterceptor} from './helper/jwt-interceptor';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {JwtInterceptor} from './helper/jwt-interceptor';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
