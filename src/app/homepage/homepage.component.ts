@@ -52,6 +52,10 @@ export class HomepageComponent implements OnInit {
     }
   }
 
+  moveWaitingListToResultList() {
+    this.resultNumbers = this.waitingList;
+  }
+
   filterNumberBiggerThan() {
     if (this.search != null || this.search != '') {
       this.filterNumbers = [];
