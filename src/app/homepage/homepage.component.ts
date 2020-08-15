@@ -161,8 +161,19 @@ export class HomepageComponent implements OnInit {
     };
     this.gamePlayService.play(data).subscribe(() => {
       console.log('success');
+      this.clearAll();
+      this.data = '';
     }, () => {
       console.log('error');
     });
+  }
+
+  clearAll() {
+    this.filterNumbers = this.numbersService.getAllNumber();
+    this.getAllOdd();
+    this.resultNumbers = [];
+    this.items = [];
+    this.totalPoint = 0;
+    this.search = '';
   }
 }
