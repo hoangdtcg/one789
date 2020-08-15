@@ -24,8 +24,19 @@ export class HomepageComponent implements OnInit {
     let term = this.convertDateToString(new Date());
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
-      this.numbers.map(number => {
-        number.ExtraPrice = odd[0].Price;
+      this.addExtraNumberToNumber(odd);
+    });
+  }
+
+  addExtraNumberToNumber(odd) {
+    this.numbers.map(number => {
+      number.ExtraPrice = odd[0].Price;
+    });
+    this.numbers.map(number => {
+      odd[0].Numbers.map(numbers => {
+        if (number.Number == numbers.Number) {
+          number.ExtraPrice += numbers.ExtraPrice;
+        }
       });
     });
   }
