@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://id.lotusapi.com'
+  apiLoginUrl: 'https://id.lotusapi.com',
+  apiUrl: 'https://lotto.lotusapi.com'
 };
