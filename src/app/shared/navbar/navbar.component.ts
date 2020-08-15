@@ -11,24 +11,12 @@ import {AuthenticationService} from '../../service/authentication/authentication
 })
 export class NavbarComponent {
   currentUser: UserToken;
-  hasRoleAdmin = false;
-  hasRoleUser = false;
   user: User;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(value => this.currentUser = value);
-    if (this.currentUser) {
-      const roleList = this.currentUser.roles;
-      for (const role of roleList) {
-        if (role.authority === 'ADMIN') {
-          this.hasRoleAdmin = true;
-        } else {
-          this.hasRoleUser = true;
-        }
-      }
-    }
   }
 
   logout() {
