@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Board} from '../../interface/board';
+import {Odds} from '../../interface/odds';
 
 const API_URL = environment.apiUrl;
 
@@ -14,7 +14,7 @@ export class OddsService {
   constructor(private http: HttpClient) {
   }
 
-  getAllOdds(term: string): Observable<Board[]> {
-    return this.http.get<Board[]>(API_URL + '/odds/player?term=' + term + '&gameTypes=0&betTypes=0');
+  getAllOdds(term: string): Observable<Odds[]> {
+    return this.http.get<Odds[]>(API_URL + '/odds/player?term=' + term + '&gameTypes=0&betTypes=0');
   }
 }

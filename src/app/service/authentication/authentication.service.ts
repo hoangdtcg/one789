@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 import {environment} from '../../../environments/environment';
 import {UserToken} from '../../interface/user-token';
 
-const API_URL = environment.apiUrl;
+const API_URL = environment.apiLoginUrl;
 
 @Injectable({
   providedIn: 'root'

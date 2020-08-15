@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://id.lotusapi.com'
+  apiLoginUrl: 'https://id.lotusapi.com',
+  apiUrl: 'https://lotto.lotusapi.com'
 };
 
 /*
