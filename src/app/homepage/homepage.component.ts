@@ -11,6 +11,8 @@ import {Numbers} from '../interface/numbers';
 })
 export class HomepageComponent implements OnInit {
   numbers: Numbers[] = [];
+  filterNumbers: Numbers[] = [];
+  search: any = null;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService) {
@@ -25,6 +27,7 @@ export class HomepageComponent implements OnInit {
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
+      this.filterNumbers = this.numbers;
     });
   }
 
@@ -34,6 +37,20 @@ export class HomepageComponent implements OnInit {
     setTimeout(function() {
       self.getAllOdd();
     }, 5000);
+  }
+
+  filterNumberLowerThan() {
+    if (this.search != null || this.search != '') {
+      this.filterNumbers = [];
+      this.numbers.map(number => {
+        if (number.ExtraPrice >= this.search) {
+          this.filterNumbers.push(number);
+        }
+      });
+    }
+    if (this.search == '') {
+      this.getAllOdd();
+    }
   }
 
   addExtraNumberToNumber(odd) {
