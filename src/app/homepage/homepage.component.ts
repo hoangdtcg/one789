@@ -121,4 +121,7 @@ export class HomepageComponent implements OnInit {
     });
     this.data = '';
   }
+
+  submit() {
+  }
 }
