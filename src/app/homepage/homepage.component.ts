@@ -3,6 +3,7 @@ import {OddsService} from '../service/odds/odds.service';
 import {NumbersService} from '../service/numbers/numbers.service';
 import {Numbers} from '../interface/numbers';
 import {Items} from '../interface/items';
+import {GamePlayService} from '../service/game-play/game-play.service';
 
 @Component({
   selector: 'app-homepage',
@@ -20,7 +21,8 @@ export class HomepageComponent implements OnInit {
   totalPoint: number = 0;
 
   constructor(private oddsService: OddsService,
-              private numbersService: NumbersService) {
+              private numbersService: NumbersService,
+              private gamePlayService: GamePlayService) {
   }
 
   ngOnInit() {
@@ -118,7 +120,7 @@ export class HomepageComponent implements OnInit {
         number = number.trim();
         this.filterNumbers.map(number1 => {
           if (number1.Number == number) {
-            items.Numbers = number;
+            items.Numbers = [number];
             items.Price = number1.ExtraPrice;
             number1.checked = true;
             number1.point = +columns[1];
@@ -144,5 +146,23 @@ export class HomepageComponent implements OnInit {
   }
 
   submit() {
+    let term = this.convertDateToString(new Date());
+    let data = {
+      Term: term,
+      IgnorePrice: true,
+      Tickets:
+        [
+          {
+            GameType: 0,
+            BetType: 0,
+            Items: this.items
+          }
+        ]
+    };
+    this.gamePlayService.play(data).subscribe(() => {
+      console.log('success');
+    }, () => {
+      console.log('error');
+    });
   }
 }
