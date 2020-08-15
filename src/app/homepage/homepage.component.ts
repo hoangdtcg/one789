@@ -18,6 +18,7 @@ export class HomepageComponent implements OnInit {
   items: Items[] = [];
   search: any = null;
   point: number = 0;
+  data: string = '';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService) {
@@ -33,6 +34,11 @@ export class HomepageComponent implements OnInit {
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
+      this.filterNumbers.map(number => {
+        this.numbers.map(number1 => {
+          number.ExtraPrice = number1.ExtraPrice;
+        });
+      });
     });
   }
 
@@ -42,40 +48,6 @@ export class HomepageComponent implements OnInit {
     setTimeout(function() {
       self.getAllOdd();
     }, 5000);
-  }
-
-  chooseNumber(number: Numbers) {
-    number.checked = !number.checked;
-    if (number.checked) {
-      this.waitingList.push(number);
-    } else {
-      let index = this.waitingList.indexOf(number);
-      if (index > -1) {
-        this.waitingList.splice(index, 1);
-      }
-    }
-  }
-
-  moveWaitingListToResultList() {
-    this.resultNumbers = this.waitingList;
-    this.waitingList.map(numbers => {
-      const item: Items = {
-        Numbers: numbers.Number,
-        Point: this.point,
-        Price: numbers.ExtraPrice
-      };
-      this.items.push(item);
-    });
-    let result = '';
-    for (let i = 0; i < this.waitingList.length; i++) {
-      result += this.waitingList[i].Number;
-      if (i != this.waitingList.length - 1) {
-        result += ', ';
-      }
-    }
-    result += 'x' + this.point;
-    this.resultList.push(result);
-    this.point = 0;
   }
 
   filterNumberBiggerThan() {
@@ -93,10 +65,10 @@ export class HomepageComponent implements OnInit {
   }
 
   addExtraNumberToNumber(odd) {
-    this.filterNumbers.map(number => {
+    this.numbers.map(number => {
       number.ExtraPrice = odd[0].Price;
     });
-    this.filterNumbers.map(number => {
+    this.numbers.map(number => {
       odd[0].Numbers.map(numbers => {
         if (number.Number == numbers.Number) {
           number.ExtraPrice += numbers.ExtraPrice;
@@ -118,5 +90,35 @@ export class HomepageComponent implements OnInit {
     }
     term += day;
     return term;
+  }
+
+  searchNumber() {
+    this.data = this.data.replace('\n', '');
+    let rows = this.data.split('n');
+    rows.pop();
+    rows.map(row => {
+      const columns = row.split('x');
+      const numbers = columns[0].split(',');
+      numbers.map(number => {
+        let items: Items = {};
+        number = number.trim();
+        this.filterNumbers.map(number1 => {
+          if (number1.Number == number) {
+            items.Numbers = number;
+            items.Price = number1.ExtraPrice;
+            number1.checked = true;
+            number1.point = +columns[1];
+            this.resultNumbers.push(number1);
+            let index = this.filterNumbers.indexOf(number1);
+            this.filterNumbers.splice(index, 1);
+          }
+        });
+        if (columns[1] != null) {
+          items.Point = +columns[1];
+        }
+        this.items.push(items);
+      });
+    });
+    this.data = '';
   }
 }

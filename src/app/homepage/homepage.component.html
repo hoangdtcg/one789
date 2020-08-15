@@ -14,6 +14,10 @@
 </section>
 <section class="content">
   <div class="row">
+    <textarea name="data" [(ngModel)]="data" rows="3"></textarea>
+    <button (click)="searchNumber()">Search</button>
+  </div>
+  <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-3">
       <div class="card">
@@ -33,8 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let number of filterNumbers" (click)="chooseNumber(number)"
-                [style.background]="number.checked?'#349af3':''">
+            <tr *ngFor="let number of filterNumbers">
               <td>{{number.Number}}</td>
               <td>{{number.ExtraPrice}}</td>
             </tr>
@@ -44,10 +47,6 @@
       </div>
     </div>
     <div class="col-md-2 text-center">
-      <input type="text" name="point" [(ngModel)]="point">
-      <button class="btn btn-outline-primary" (click)="moveWaitingListToResultList()">
-        <span><i class="fas fa-arrow-right fa-3x"></i></span>
-      </button>
     </div>
     <div class="col-md-3">
       <div class="card">
@@ -63,12 +62,14 @@
           <table class="table table-hover">
             <thead>
             <tr>
-              <th>Point</th>
+              <th>Số</th>
+              <th>Điểm</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let result of resultList" >
-              <td>{{result}}</td>
+            <tr *ngFor="let number of resultNumbers" [style.background]="number.checked?'#349af3':''">
+              <td>{{number.Number}}</td>
+              <td>{{number.ExtraPrice}} x {{number.point}}</td>
             </tr>
             </tbody>
           </table>
