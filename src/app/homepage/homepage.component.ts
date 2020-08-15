@@ -10,7 +10,6 @@ import {Numbers} from '../interface/numbers';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-  listOdd: Odds[] = [];
   numbers: Numbers[] = [];
 
   constructor(private oddsService: OddsService,
@@ -19,14 +18,15 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.getAllOdd();
-    this.numbers = this.numbersService.getAllNumber();
-    console.log(this.numbers);
   }
 
   getAllOdd() {
     let term = this.convertDateToString(new Date());
-    this.oddsService.getAllOdds(term).subscribe(listOdd => {
-      this.listOdd = listOdd;
+    this.oddsService.getOdds(term).subscribe(odd => {
+      this.numbers = this.numbersService.getAllNumber();
+      this.numbers.map(number => {
+        number.ExtraPrice = odd[0].Price;
+      });
     });
   }
 
