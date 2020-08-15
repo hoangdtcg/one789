@@ -17,7 +17,7 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAllOdd();
+    this.updateData();
   }
 
   getAllOdd() {
@@ -26,6 +26,14 @@ export class HomepageComponent implements OnInit {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
     });
+  }
+
+  updateData() {
+    this.getAllOdd();
+    var self = this;
+    setTimeout(function() {
+      self.getAllOdd();
+    }, 5000);
   }
 
   addExtraNumberToNumber(odd) {
