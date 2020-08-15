@@ -25,14 +25,20 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="row" *ngFor="let number of filterNumbers">
-            <div class="col-md-10">
-              <span>{{number.Number}}</span>
-            </div>
-            <div class="col-md-2">
-              <span>{{number.ExtraPrice}}</span>
-            </div>
-          </div>
+          <table id="example2" class="table table-hover">
+            <thead>
+            <tr>
+              <th style="width: 150px">Số</th>
+              <th>Điểm</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let number of filterNumbers">
+              <td>{{number.Number}}</td>
+              <td>{{number.ExtraPrice}}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
