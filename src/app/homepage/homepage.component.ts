@@ -12,6 +12,7 @@ export class HomepageComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
+  waitingList: Numbers[] = [];
   search: any = null;
 
   constructor(private oddsService: OddsService,
@@ -20,6 +21,7 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();
+    this.filterNumbers = this.numbersService.getAllNumber();
   }
 
   getAllOdd() {
@@ -27,7 +29,6 @@ export class HomepageComponent implements OnInit {
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
-      this.filterNumbers = this.numbers;
     });
   }
 
@@ -37,6 +38,22 @@ export class HomepageComponent implements OnInit {
     setTimeout(function() {
       self.getAllOdd();
     }, 5000);
+  }
+
+  chooseNumber(number: Numbers) {
+    if (!number.checked || number.checked == null) {
+      number.checked = true;
+    } else {
+      number.checked = false;
+    }
+    if (number.checked) {
+      this.waitingList.push(number);
+    } else {
+      let index = this.waitingList.indexOf(number);
+      if (index > -1) {
+        this.waitingList.splice(index, 1);
+      }
+    }
   }
 
   filterNumberBiggerThan() {
@@ -54,10 +71,10 @@ export class HomepageComponent implements OnInit {
   }
 
   addExtraNumberToNumber(odd) {
-    this.numbers.map(number => {
+    this.filterNumbers.map(number => {
       number.ExtraPrice = odd[0].Price;
     });
-    this.numbers.map(number => {
+    this.filterNumbers.map(number => {
       odd[0].Numbers.map(numbers => {
         if (number.Number == numbers.Number) {
           number.ExtraPrice += numbers.ExtraPrice;

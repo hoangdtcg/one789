@@ -33,7 +33,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let number of filterNumbers">
+            <tr *ngFor="let number of filterNumbers" (click)="chooseNumber(number)"
+                [style.background]="number.checked?'#349af3':''">
               <td>{{number.Number}}</td>
               <td>{{number.ExtraPrice}}</td>
             </tr>
