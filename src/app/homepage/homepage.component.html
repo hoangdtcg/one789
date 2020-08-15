@@ -19,7 +19,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title"></h3>
-          <input type="text" (keyup)="filterNumberLowerThan()" placeholder="Nhập điểm" name="search"
+          <input type="text" (keyup)="filterNumberBiggerThan()" placeholder="Nhập điểm" name="search"
                  [(ngModel)]="search">
           <div class="card-tools">
           </div>
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="row" *ngFor="let number of numbers">
+          <div class="row" *ngFor="let number of resultNumbers">
             <div class="col-md-10">
               <span>{{number.Number}}</span>
             </div>

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Odds} from '../interface/odds';
 import {OddsService} from '../service/odds/odds.service';
 import {NumbersService} from '../service/numbers/numbers.service';
 import {Numbers} from '../interface/numbers';
@@ -12,6 +11,7 @@ import {Numbers} from '../interface/numbers';
 export class HomepageComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
+  resultNumbers: Numbers[] = [];
   search: any = null;
 
   constructor(private oddsService: OddsService,
@@ -39,7 +39,7 @@ export class HomepageComponent implements OnInit {
     }, 5000);
   }
 
-  filterNumberLowerThan() {
+  filterNumberBiggerThan() {
     if (this.search != null || this.search != '') {
       this.filterNumbers = [];
       this.numbers.map(number => {
