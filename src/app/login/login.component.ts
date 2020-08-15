@@ -3,7 +3,7 @@ import {first} from 'rxjs/operators';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UserToken} from '../interface/user-token';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '../authentication/authentication.service';
+import {AuthenticationService} from '../service/authentication/authentication.service';
 
 @Component({
   selector: 'app-login',

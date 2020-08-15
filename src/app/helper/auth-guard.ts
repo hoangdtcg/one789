@@ -10,7 +10,7 @@ import {
   UrlSegment
 } from '@angular/router';
 import {UserToken} from '../interface/user-token';
-import {AuthenticationService} from '../authentication/authentication.service';
+import {AuthenticationService} from '../service/authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
