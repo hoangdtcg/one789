@@ -120,7 +120,7 @@
               <td></td>
               <td [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
               <td>
-                <button class="btn btn-outline-danger" (click)="cancelPlay(ticket)">Hủy</button>
+                <button class="btn btn-outline-danger" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">Hủy</button>
               </td>
             </tr>
             </tbody>

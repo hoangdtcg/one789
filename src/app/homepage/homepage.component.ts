@@ -63,7 +63,7 @@ export class HomepageComponent implements OnInit {
     setInterval(function() {
       self.getAllOdd();
       self.getTicketsLatest();
-    }, 500);
+    }, 1000);
   }
 
   filterNumberLowerThan() {
