@@ -11,12 +11,13 @@ import {AuthenticationService} from '../../service/authentication/authentication
 })
 export class NavbarComponent {
   currentUser: UserToken;
-  user: User;
+  username: string = '';
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService) {
     this.authenticationService.currentUser.subscribe(value => this.currentUser = value);
+   this.username = localStorage.getItem('username');
   }
 
   logout() {

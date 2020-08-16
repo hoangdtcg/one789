@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           localStorage.setItem('ACCESS_TOKEN', data.IdToken);
+          localStorage.setItem('username', this.loginRequest.Username);
           this.router.navigate([this.returnUrl]).finally(() => {
           });
           this.notificationService.showSuccessMessage('Đăng nhập thành công');
