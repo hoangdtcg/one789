@@ -89,12 +89,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let ticket of latest">
+            <tr *ngFor="let ticket of latest"
+                [style.background]="ticket.Status == 9?'#899cb5':''">
               <td>{{ticket.TicketNumber}}</td>
               <td></td>
               <td>{{ticket.Amount}}</td>
               <td>
-                <button class="btn btn-outline-danger" [disabled]="ticket.Status!=1" (click)="cancelPlay(ticket)">Hủy</button>
+                <button class="btn btn-outline-danger" (click)="cancelPlay(ticket)">Hủy</button>
               </td>
             </tr>
             </tbody>
