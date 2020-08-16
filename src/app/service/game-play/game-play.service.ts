@@ -20,4 +20,8 @@ export class GamePlayService {
   cancelTicket(data: any): Observable<any> {
     return this.http.post<any>(API_URL + '/game-play/player/cancel-ticket', data);
   }
+
+  getTicketsLatest(): Observable<any> {
+    return this.http.get<any>(API_URL + '/game-play/player/tickets/latest?limit=5');
+  }
 }
