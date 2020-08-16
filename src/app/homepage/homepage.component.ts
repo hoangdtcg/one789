@@ -80,7 +80,7 @@ export class HomepageComponent implements OnInit {
           this.resultNumbers.splice(index, 1);
         }
       });
-      this.data = this.exportStringToTextArea(numberBigger);
+      this.exportData = this.exportStringToTextArea(numberBigger);
     }
   }
 
@@ -139,6 +139,7 @@ export class HomepageComponent implements OnInit {
     });
     this.filterNumberLowerThan();
     this.sumTotalPointAndTotalMoney();
+    this.data = '';
   }
 
   sumTotalPointAndTotalMoney() {
@@ -164,10 +165,9 @@ export class HomepageComponent implements OnInit {
     };
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
-      this.exportData = this.exportStringToTextArea(this.resultNumbers);
+      this.data = this.exportStringToTextArea(this.resultNumbers);
       this.getTicketsLatest();
       this.clearAll();
-      this.data = '';
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
     });
