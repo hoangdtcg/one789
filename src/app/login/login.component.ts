@@ -4,6 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {UserToken} from '../interface/user-token';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../service/authentication/authentication.service';
+import {NotificationService} from '../service/notification/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -16,13 +17,12 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
   returnUrl: string;
-  loading = false;
-  submitted = false;
   currentUser: UserToken;
 
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private notificationService: NotificationService) {
     this.authenticationService.currentUser.subscribe(value => this.currentUser = value);
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
@@ -34,8 +34,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.submitted = true;
-    this.loading = true;
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
       .pipe(first())
       .subscribe(
@@ -43,9 +41,10 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('ACCESS_TOKEN', data.IdToken);
           this.router.navigate([this.returnUrl]).finally(() => {
           });
+          this.notificationService.showSuccessMessage('Đăng nhập thành công');
         },
         () => {
-          this.loading = false;
+          this.notificationService.showSuccessMessage('Đăng nhập thành công');
         });
   }
 }
