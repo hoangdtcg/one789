@@ -90,10 +90,10 @@
             </thead>
             <tbody>
             <tr *ngFor="let ticket of latest"
-                [style.background]="ticket.Status == 9?'#899cb5':''">
+                [style.background]="ticket.Status == 9?'#718299':''">
               <td>{{ticket.TicketNumber}}</td>
               <td></td>
-              <td>{{ticket.Amount}}</td>
+              <td [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
               <td>
                 <button class="btn btn-outline-danger" (click)="cancelPlay(ticket)">Hủy</button>
               </td>
