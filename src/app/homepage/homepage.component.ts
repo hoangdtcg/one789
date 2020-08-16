@@ -4,6 +4,7 @@ import {NumbersService} from '../service/numbers/numbers.service';
 import {Numbers} from '../interface/numbers';
 import {Items} from '../interface/items';
 import {GamePlayService} from '../service/game-play/game-play.service';
+import {NotificationService} from '../service/notification/notification.service';
 
 @Component({
   selector: 'app-homepage',
@@ -22,7 +23,8 @@ export class HomepageComponent implements OnInit {
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
-              private gamePlayService: GamePlayService) {
+              private gamePlayService: GamePlayService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -160,11 +162,11 @@ export class HomepageComponent implements OnInit {
         ]
     };
     this.gamePlayService.play(data).subscribe(() => {
-      console.log('success');
+      this.notificationService.showSuccessMessage('Thành công');
       this.clearAll();
       this.data = '';
     }, () => {
-      console.log('error');
+      this.notificationService.showErrorMessage('Xảy ra lỗi');
     });
   }
 

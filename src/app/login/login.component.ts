@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
           this.notificationService.showSuccessMessage('Đăng nhập thành công');
         },
         () => {
-          this.notificationService.showSuccessMessage('Đăng nhập thành công');
+          this.notificationService.showErrorMessage('Đăng nhập thất bại');
         });
   }
 }
