@@ -16,6 +16,22 @@
       <div class="form-group">
         <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
       </div>
+      <div class="card-body table-responsive p-0" style="height: 350px;">
+        <table class="table table-head-fixed">
+          <thead>
+          <tr>
+            <th style="width: 150px">Số</th>
+            <th>Điểm</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let number of filterNumbers">
+            <td>{{number.Number}}</td>
+            <td>{{number.ExtraPrice}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="col-md-1 text-center">
     </div>
