@@ -165,6 +165,7 @@ export class HomepageComponent implements OnInit {
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.exportData = this.exportStringToTextArea(this.resultNumbers);
+      this.getTicketsLatest();
       this.clearAll();
       this.data = '';
     }, () => {
