@@ -19,7 +19,9 @@ export class HomepageComponent implements OnInit {
   search: string = '';
   data: string = '';
   totalPoint: number = 0;
+  totalMoney: number = 0;
   exportData: string = '';
+  date: Date = new Date();
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -117,7 +119,6 @@ export class HomepageComponent implements OnInit {
             items.Price = number1.ExtraPrice;
             number1.checked = true;
             number1.point = +columns[1];
-            console.log(number1.point);
             this.resultNumbers.push(number1);
           }
         });
@@ -128,12 +129,13 @@ export class HomepageComponent implements OnInit {
       });
     });
     this.filterNumberLowerThan();
-    this.sumTotalPoint();
+    this.sumTotalPointAndTotalMoney();
   }
 
-  sumTotalPoint() {
+  sumTotalPointAndTotalMoney() {
     this.resultNumbers.map(number => {
       this.totalPoint += +number.point;
+      this.totalMoney += number.point * number.ExtraPrice;
     });
   }
 
@@ -167,6 +169,7 @@ export class HomepageComponent implements OnInit {
     this.resultNumbers = [];
     this.items = [];
     this.totalPoint = 0;
+    this.totalMoney = 0;
     this.search = '';
   }
 

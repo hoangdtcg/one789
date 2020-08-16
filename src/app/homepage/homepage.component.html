@@ -1,105 +1,67 @@
-<section class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-1"></div>
-      <div class="col-sm-4">
-        <h1>Tỉ lệ</h1>
-      </div>
-      <div class="col-sm-2">
-        <div class="row">
-          <div class="col-8">
-            <textarea name="data" [(ngModel)]="data" rows="3"></textarea>
-          </div>
-          <div class="col-2">
-            <button class="btn btn-outline-primary" (click)="searchNumber()">Search</button>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-2">
-        <div class="col-8">
-          <textarea name="data" [(ngModel)]="exportData" rows="3"></textarea>
-        </div>
-      </div>
-      <div class="col-sm-2">
-      </div>
-      <div class="col-sm-1"></div>
-    </div>
-  </div><!-- /.container-fluid -->
-</section>
 <section class="content">
   <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-3">
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title"></h3>
-          <input type="text" placeholder="Nhập điểm" name="search"
-                 [(ngModel)]="search">
-          <div class="card-tools">
-          </div>
-        </div>
-        <div class="card-body">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th style="width: 150px">Số</th>
-              <th>Điểm</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let number of filterNumbers">
-              <td>{{number.Number}}</td>
-              <td>{{number.ExtraPrice}}</td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+      <h3>Ngày: {{date.getUTCDate()}}/{{date.getUTCMonth() + 1}}/{{date.getUTCFullYear()}}</h3>
+      <div class="form-group">
+        <label for="search">Lọc số: </label>
+        <input id="search" type="text" placeholder="Nhập số" name="search" [(ngModel)]="search">
+      </div>
+      <div class="form-group">
+        <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>
+      </div>
+      <div class="form-group">
+        <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
       </div>
     </div>
-    <div class="col-md-2 text-center">
+    <div class="col-md-1 text-center">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
             Kết quả
           </h3>
-
           <div class="card-tools">
-            <button class="btn btn-outline-danger" (click)="clearAll()">
-              Xóa hết
+            <button class="btn btn-outline-primary float-lg-right" (click)="submit()">
+              Đánh
             </button>
           </div>
         </div>
-        <div class="card-body">
-          <table class="table table-hover">
+        <div class="card-body table-responsive p-0">
+          <table class="table table-bordered table-head-fixed">
             <thead>
             <tr>
               <th>Số</th>
               <th>Điểm</th>
+              <th>Point</th>
+              <th>Thành tiền</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let number of resultNumbers" [style.background]="number.checked?'#349af3':''">
               <td>{{number.Number}}</td>
-              <td>{{number.ExtraPrice}} x {{number.point}}</td>
+              <td>{{number.point}}</td>
+              <td>{{number.ExtraPrice}}</td>
+              <td>{{number.ExtraPrice * number.point}}</td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
-              <td></td>
+              <td class="text-bold">Tổng số: {{resultNumbers.length}}</td>
               <td class="text-bold">Tổng điểm: {{totalPoint}}</td>
-            </tr>
-            <tr>
               <td></td>
-              <td>
-                <button class="btn btn-outline-primary float-lg-right" (click)="submit()">
-                  Đánh
-                </button>
-              </td>
+              <td class="text-bold">Tổng tiền: {{totalMoney}}</td>
             </tr>
             </tfoot>
           </table>
+          <hr>
+          <button class="btn btn-outline-danger mt-2 float-lg-right" (click)="clearAll()">
+            Xóa hết
+          </button>
         </div>
       </div>
     </div>
