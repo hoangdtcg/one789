@@ -6,9 +6,9 @@
     <div class="card">
       <div class="card-body login-card-body">
         <p class="login-box-msg">Đăng nhập</p>
-        <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <form (ngSubmit)="login()">
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Username" formControlName="username">
+            <input type="text" class="form-control" placeholder="Username" name="Username" [(ngModel)]="loginRequest.Username">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password" formControlName="password">
+            <input type="password" class="form-control" placeholder="Password" name="Password" [(ngModel)]="loginRequest.Password">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -55,7 +55,6 @@
           <a href="#">Quên mật khẩu</a>
         </p>
         <p class="mb-0">
-          <a [routerLink]="['/register']" class="text-center">Đăng ký tài khoản mới</a>
         </p>
       </div>
     </div>

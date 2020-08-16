@@ -5,6 +5,7 @@ import {UserToken} from '../interface/user-token';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../service/authentication/authentication.service';
 import {NotificationService} from '../service/notification/notification.service';
+import {User} from '../interface/user';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +13,10 @@ import {NotificationService} from '../service/notification/notification.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
-  });
+  loginRequest: User = {
+    Username: '',
+    Password: ''
+  };
   returnUrl: string;
   currentUser: UserToken;
 
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password)
+    this.authenticationService.login(this.loginRequest.Username, this.loginRequest.Password)
       .pipe(first())
       .subscribe(
         data => {
