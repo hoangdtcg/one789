@@ -16,4 +16,8 @@ export class GamePlayService {
   play(data: any): Observable<any> {
     return this.http.post<any>(API_URL + '/game-play/player/play', data);
   }
+
+  cancelTicket(data: any): Observable<any> {
+    return this.http.post<any>(API_URL + '/game-play/player/cancel-ticket', data);
+  }
 }
