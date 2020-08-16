@@ -16,9 +16,8 @@ export class HomepageComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   items: Items[] = [];
-  search: any = null;
+  search: string = '';
   data: string = '';
-  point: number = 0;
   totalPoint: number = 0;
   exportData: string = '';
 
@@ -57,22 +56,21 @@ export class HomepageComponent implements OnInit {
   }
 
   filterNumberLowerThan() {
-    let numberBigger = [];
-    this.filterNumbers.map(number => {
-      let flag = -1;
-      if (number.ExtraPrice <= this.search) {
-        flag = 1;
-        number.checked = true;
-        number.point = this.point;
-        this.resultNumbers.push(number);
-      }
-      if (flag == -1) {
-        numberBigger.push(number);
-      }
-    });
-    this.filterNumbers = numberBigger;
-    this.data = this.exportStringToTextArea(numberBigger);
-    this.sumTotalPoint();
+    if (this.search != '') {
+      let numberBigger = [];
+      this.resultNumbers.map(number => {
+        let flag = -1;
+        if (number.ExtraPrice <= (+this.search)) {
+          flag = 1;
+        }
+        if (flag == -1) {
+          numberBigger.push(number);
+          let index = this.resultNumbers.indexOf(number);
+          this.resultNumbers.splice(index, 1);
+        }
+      });
+      this.data = this.exportStringToTextArea(numberBigger);
+    }
   }
 
   addExtraNumberToNumber(odd) {
@@ -119,9 +117,8 @@ export class HomepageComponent implements OnInit {
             items.Price = number1.ExtraPrice;
             number1.checked = true;
             number1.point = +columns[1];
+            console.log(number1.point);
             this.resultNumbers.push(number1);
-            let index = this.filterNumbers.indexOf(number1);
-            this.filterNumbers.splice(index, 1);
           }
         });
         if (columns[1] != null) {
@@ -130,8 +127,8 @@ export class HomepageComponent implements OnInit {
         this.items.push(items);
       });
     });
+    this.filterNumberLowerThan();
     this.sumTotalPoint();
-    this.data = '';
   }
 
   sumTotalPoint() {
@@ -181,7 +178,7 @@ export class HomepageComponent implements OnInit {
         result += ', ';
       }
     }
-    result += 'x' + this.point + 'n';
+    result += 'x' + numbers[0].point + 'n';
     return result;
   }
 }
