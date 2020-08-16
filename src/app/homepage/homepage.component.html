@@ -23,7 +23,7 @@
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">
-            Kết quả
+            KẾT QUẢ
           </h3>
           <div class="card-tools">
             <button class="btn btn-outline-primary float-lg-right" (click)="submit()">
@@ -94,7 +94,7 @@
               <td></td>
               <td>{{ticket.Amount}}</td>
               <td>
-                <button class="btn btn-outline-danger" [disabled]="ticket.Status!=1">Hủy</button>
+                <button class="btn btn-outline-danger" [disabled]="ticket.Status!=1" (click)="cancelPlay(ticket)">Hủy</button>
               </td>
             </tr>
             </tbody>

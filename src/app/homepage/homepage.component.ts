@@ -193,4 +193,33 @@ export class HomepageComponent implements OnInit {
     result += 'x' + numbers[0].point + 'n';
     return result;
   }
+
+  isLessThanFiveMinutes(ticket: any) {
+    let currentTime = new Date().getTime();
+    let createDate = new Date(ticket.CreatedAt).getTime();
+    return (currentTime - createDate) < 300000;
+  }
+
+  cancelPlay(ticket: any) {
+    if (this.isLessThanFiveMinutes(ticket)) {
+      let term = this.convertDateToString(new Date());
+      let data = {
+        Term: term,
+        Tickets: [
+          {
+            GameType: 0,
+            BetType: 0,
+            TicketNumber: ticket.TicketNumber
+          }
+        ]
+      };
+      this.gamePlayService.cancelTicket(data).subscribe(() => {
+        this.notificationService.showSuccessMessage('Hủy thành công');
+      }, () => {
+        this.notificationService.showErrorMessage('Hủy thất bại');
+      });
+    } else {
+      this.notificationService.showErrorMessage('Quá 5 phút không thể hủy được');
+    }
+  }
 }

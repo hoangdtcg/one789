@@ -37,7 +37,7 @@ export class NotificationService {
 
       Toast.fire({
         type: 'error',
-        title: 'Cập nhật thất bại'
+        title: message
       });
     });
   }
