@@ -70,6 +70,37 @@
           </table>
         </div>
       </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            MÃ CƯỢC GẦN ĐÂY
+          </h3>
+          <div class="card-tools">
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0">
+          <table class="table table-head-fixed">
+            <thead>
+            <tr>
+              <th>Số</th>
+              <th></th>
+              <th>Point</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ticket of latest">
+              <td>{{ticket.TicketNumber}}</td>
+              <td></td>
+              <td>{{ticket.Amount}}</td>
+              <td>
+                <button class="btn btn-outline-danger" [disabled]="ticket.Status!=1">Hủy</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="col-md-2"></div>
   </div>

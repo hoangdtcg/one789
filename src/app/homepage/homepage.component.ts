@@ -22,6 +22,7 @@ export class HomepageComponent implements OnInit {
   totalMoney: number = 0;
   exportData: string = '';
   date: Date = new Date();
+  latest: any;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -32,6 +33,12 @@ export class HomepageComponent implements OnInit {
   ngOnInit() {
     this.updateData();
     this.filterNumbers = this.numbersService.getAllNumber();
+  }
+
+  getTicketsLatest() {
+    this.gamePlayService.getTicketsLatest().subscribe(latest => {
+      this.latest = latest;
+    });
   }
 
   getAllOdd() {
@@ -51,9 +58,11 @@ export class HomepageComponent implements OnInit {
 
   updateData() {
     this.getAllOdd();
+    this.getTicketsLatest();
     var self = this;
     setTimeout(function() {
       self.getAllOdd();
+      self.getTicketsLatest();
     }, 5000);
   }
 
