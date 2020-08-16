@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          localStorage.setItem('ACCESS_TOKEN', data.IdToken);
+          sessionStorage.setItem('ACCESS_TOKEN', data.IdToken);
           localStorage.setItem('username', this.loginRequest.Username);
           this.router.navigate([this.returnUrl]).finally(() => {
           });

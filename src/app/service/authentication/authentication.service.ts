@@ -16,7 +16,7 @@ export class AuthenticationService {
   update = new EventEmitter<string>();
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<UserToken>(JSON.parse(localStorage.getItem('user')));
+    this.currentUserSubject = new BehaviorSubject<UserToken>(JSON.parse(sessionStorage.getItem('user')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
@@ -27,7 +27,7 @@ export class AuthenticationService {
   login(Username: string, Password: string) {
     return this.http.post<any>(API_URL + '/auth/sign-in', {Username, Password})
       .pipe(map(user => {
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
         this.currentUserSubject.next(user);
         this.update.emit('login');
         return user;
@@ -37,7 +37,7 @@ export class AuthenticationService {
 
 
   logout() {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
     this.currentUserSubject.next(null);
   }
 }
