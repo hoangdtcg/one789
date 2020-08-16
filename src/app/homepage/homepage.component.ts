@@ -59,11 +59,11 @@ export class HomepageComponent implements OnInit {
   updateData() {
     this.getAllOdd();
     this.getTicketsLatest();
-    var self = this;
-    setTimeout(function() {
+    let self = this;
+    setInterval(function() {
       self.getAllOdd();
       self.getTicketsLatest();
-    }, 5000);
+    }, 500);
   }
 
   filterNumberLowerThan() {
@@ -166,7 +166,6 @@ export class HomepageComponent implements OnInit {
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.data = this.exportStringToTextArea(this.resultNumbers);
-      this.getTicketsLatest();
       this.clearAll();
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
