@@ -20,6 +20,7 @@ export class HomepageComponent implements OnInit {
   data: string = '';
   point: number = 0;
   totalPoint: number = 0;
+  exportData: string = '';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -70,15 +71,7 @@ export class HomepageComponent implements OnInit {
       }
     });
     this.filterNumbers = numberBigger;
-    let result = '';
-    for (let i = 0; i < numberBigger.length; i++) {
-      result += numberBigger[i].Number;
-      if (i != numberBigger.length - 1) {
-        result += ', ';
-      }
-    }
-    result += 'x' + this.point + 'n';
-    this.data = result;
+    this.data = this.exportStringToTextArea(numberBigger);
     this.sumTotalPoint();
   }
 
@@ -163,6 +156,7 @@ export class HomepageComponent implements OnInit {
     };
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
+      this.exportData = this.exportStringToTextArea(this.resultNumbers);
       this.clearAll();
       this.data = '';
     }, () => {
@@ -177,5 +171,17 @@ export class HomepageComponent implements OnInit {
     this.items = [];
     this.totalPoint = 0;
     this.search = '';
+  }
+
+  exportStringToTextArea(numbers) {
+    let result = '';
+    for (let i = 0; i < numbers.length; i++) {
+      result += numbers[i].Number;
+      if (i != numbers.length - 1) {
+        result += ', ';
+      }
+    }
+    result += 'x' + this.point + 'n';
+    return result;
   }
 }
