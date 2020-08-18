@@ -58,11 +58,11 @@ export class HomepageComponent implements OnInit {
 
   updateData() {
     this.getAllOdd();
-    this.getTicketsLatest();
+    // this.getTicketsLatest();
     let self = this;
     setInterval(function() {
       self.getAllOdd();
-      self.getTicketsLatest();
+      // self.getTicketsLatest();
     }, 1000);
   }
 
@@ -123,12 +123,23 @@ export class HomepageComponent implements OnInit {
         let items: Items = {};
         number = number.trim();
         this.filterNumbers.map(number1 => {
-          if (number1.Number == number) {
+          let temp = number1;
+          if (temp.Number == number) {
             items.Numbers = [number];
-            items.Price = number1.ExtraPrice;
-            number1.checked = true;
-            number1.point = +columns[1];
-            this.resultNumbers.push(number1);
+            items.Price = temp.ExtraPrice;
+            temp.point = +columns[1];
+            let index = this.isTheSameNumber(temp, this.resultNumbers);
+            if (index != -1) {
+              this.resultNumbers[index].point += temp.point;
+            } else {
+              let numberTemp: Numbers = {
+                Number: temp.Number,
+                point: temp.point,
+                checked: true,
+                ExtraPrice: temp.ExtraPrice
+              };
+              this.resultNumbers.push(numberTemp);
+            }
           }
         });
         if (columns[1] != null) {
@@ -140,6 +151,17 @@ export class HomepageComponent implements OnInit {
     this.filterNumberLowerThan();
     this.sumTotalPointAndTotalMoney();
     this.data = '';
+  }
+
+  isTheSameNumber(number: Numbers, listNumber: Numbers[]) {
+    let index = -1;
+    for (let i = 0; i < listNumber.length; i++) {
+      if (listNumber[i].Number == number.Number) {
+        index = i;
+        break;
+      }
+    }
+    return index;
   }
 
   sumTotalPointAndTotalMoney() {
