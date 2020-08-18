@@ -205,6 +205,43 @@ export class HomepageComponent implements OnInit {
   }
 
   exportStringToTextArea(numbers) {
+    let arrayPoint = [];
+    for (let i = 0; i < numbers.length; i++) {
+      let flag = 0;
+      for (let j = i + 1; j < numbers.length - 1; j++) {
+        if (numbers[i].point == numbers[j].point) {
+          flag = 1;
+          break;
+        }
+      }
+      if (flag == 0) {
+        if (i == numbers.length - 1) {
+          let index = arrayPoint.indexOf(numbers[i].point);
+          if (index == -1) {
+            arrayPoint.push(numbers[i].point);
+          }
+        } else {
+          arrayPoint.push(numbers[i].point);
+        }
+      }
+    }
+    let result = '';
+    for (let i = 0; i < arrayPoint.length; i++) {
+      const numberHasSamePointArray = [];
+      for (let j = 0; j < numbers.length; j++) {
+        if (arrayPoint[i] == numbers[j].point) {
+          numberHasSamePointArray.push(numbers[j]);
+        }
+      }
+      result += this.exportOneLine(numberHasSamePointArray);
+      if (i != numbers.length - 1) {
+        result += '\n';
+      }
+    }
+    return result;
+  }
+
+  exportOneLine(numbers) {
     let result = '';
     for (let i = 0; i < numbers.length; i++) {
       result += numbers[i].Number;
@@ -215,6 +252,7 @@ export class HomepageComponent implements OnInit {
     result += 'x' + numbers[0].point + 'n';
     return result;
   }
+
 
   isLessThanFiveMinutes(ticket: any) {
     let currentTime = new Date().getTime();
