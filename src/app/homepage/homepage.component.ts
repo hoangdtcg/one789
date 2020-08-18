@@ -58,11 +58,11 @@ export class HomepageComponent implements OnInit {
 
   updateData() {
     this.getAllOdd();
-    // this.getTicketsLatest();
+    this.getTicketsLatest();
     let self = this;
     setInterval(function() {
       self.getAllOdd();
-      // self.getTicketsLatest();
+      self.getTicketsLatest();
     }, 1000);
   }
 
