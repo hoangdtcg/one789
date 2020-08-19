@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
   totalMoney: number = 0;
   exportData: string = '';
   date: Date = new Date();
-  latest: any;
+  latest: any = [];
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -62,8 +62,14 @@ export class HomepageComponent implements OnInit {
     let self = this;
     setInterval(function() {
       self.getAllOdd();
-      self.getTicketsLatest();
     }, 1000);
+  }
+
+  reloadTicketsLatestList() {
+    const self = this;
+    setTimeout(function() {
+      self.getTicketsLatest();
+    }, 2000);
   }
 
   filterNumberLowerThan() {
@@ -192,6 +198,7 @@ export class HomepageComponent implements OnInit {
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
     });
+    this.reloadTicketsLatestList();
   }
 
   clearAll() {
@@ -275,6 +282,7 @@ export class HomepageComponent implements OnInit {
       };
       this.gamePlayService.cancelTicket(data).subscribe(() => {
         this.notificationService.showSuccessMessage('Hủy thành công');
+        this.reloadTicketsLatestList();
       }, () => {
         this.notificationService.showErrorMessage('Hủy thất bại');
       });
