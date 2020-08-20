@@ -244,8 +244,6 @@ export class HomepageComponent implements OnInit {
   }
 
   clearAll() {
-    this.filterNumbers = this.numbersService.getAllNumber();
-    this.getAllOdd();
     this.resultNumbers = [];
     this.items = [];
     this.totalPoint = 0;
