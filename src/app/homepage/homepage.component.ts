@@ -155,10 +155,13 @@ export class HomepageComponent implements OnInit {
   private getResultNumbers(number: string, items: Items, point: number) {
     this.filterNumbers.map(number1 => {
       let temp = number1;
-      if (temp.Number == number) {
+      let isEqualNumberValue = temp.Number == number;
+      if (isEqualNumberValue) {
         items.Numbers = [number];
         items.Price = temp.ExtraPrice;
-        if (point > +this.maximum && +this.maximum > 0) {
+        let isGreaterThanMaximum = point > +this.maximum;
+        let isPositiveNumber = +this.maximum > 0;
+        if (isGreaterThanMaximum && isPositiveNumber) {
           temp.point = +this.maximum;
           let temp1: Numbers = {
             Number: temp.Number,
