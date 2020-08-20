@@ -5,11 +5,11 @@
       <h3>Ngày: {{date.getUTCDate()}}/{{date.getUTCMonth() + 1}}/{{date.getUTCFullYear()}}</h3>
       <div class="form-group">
         <label for="search">Lọc số: </label>
-        <input id="search" type="text" placeholder="Nhập số" name="search" [(ngModel)]="search">
+        <input id="search" type="number" placeholder="Nhập số" name="search" [(ngModel)]="search">
       </div>
       <div class="form-group">
         <label for="maximum">Điểm tối đa: </label>
-        <input id="maximum" type="text" placeholder="Nhập số điểm tối đa" name="maximum" [(ngModel)]="maximum">
+        <input id="maximum" type="number" placeholder="Nhập số điểm tối đa" name="maximum" [(ngModel)]="maximum">
       </div>
       <div class="form-group">
         <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>

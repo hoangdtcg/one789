@@ -137,6 +137,9 @@ export class HomepageComponent implements OnInit {
           if (temp.Number == number) {
             items.Numbers = [number];
             items.Price = temp.ExtraPrice;
+            if (+columns[1] > +this.maximum) {
+
+            }
             temp.point = +columns[1];
             let index = this.isTheSameNumber(temp, this.resultNumbers);
             if (index != -1) {
