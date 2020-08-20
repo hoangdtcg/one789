@@ -124,7 +124,9 @@ export class HomepageComponent implements OnInit {
 
   searchNumber() {
     let contents = this.data.split(':');
-    if (contents[1] != null && (contents[0] != 'De' || contents[0] != 'Đề')) {
+    let isValid = contents[1] != null;
+    let isValidType = contents[0] != 'De' || contents[0] != 'Đề';
+    if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
       rows.pop();
@@ -134,37 +136,7 @@ export class HomepageComponent implements OnInit {
         numbers.map(number => {
           let items: Items = {};
           number = number.trim();
-          this.filterNumbers.map(number1 => {
-            let temp = number1;
-            if (temp.Number == number) {
-              items.Numbers = [number];
-              items.Price = temp.ExtraPrice;
-              if (+columns[1] > +this.maximum && +this.maximum > 0) {
-                temp.point = +this.maximum;
-                let temp1: Numbers = {
-                  Number: temp.Number,
-                  point: +columns[1] - +this.maximum,
-                  checked: temp.checked,
-                  ExtraPrice: temp.ExtraPrice
-                };
-                this.listUnsatisfactory.push(temp1);
-              } else {
-                temp.point = +columns[1];
-              }
-              let index = this.isTheSameNumber(temp, this.resultNumbers);
-              if (index != -1) {
-                this.resultNumbers[index].point += temp.point;
-              } else {
-                let numberTemp: Numbers = {
-                  Number: temp.Number,
-                  point: temp.point,
-                  checked: true,
-                  ExtraPrice: temp.ExtraPrice
-                };
-                this.resultNumbers.push(numberTemp);
-              }
-            }
-          });
+          this.getResultNumbers(number, items, +columns[1]);
           if (columns[1] != null) {
             items.Point = +columns[1];
           }
@@ -178,6 +150,40 @@ export class HomepageComponent implements OnInit {
     } else {
       $('#modal-danger').modal('show');
     }
+  }
+
+  private getResultNumbers(number: string, items: Items, point: number) {
+    this.filterNumbers.map(number1 => {
+      let temp = number1;
+      if (temp.Number == number) {
+        items.Numbers = [number];
+        items.Price = temp.ExtraPrice;
+        if (point > +this.maximum && +this.maximum > 0) {
+          temp.point = +this.maximum;
+          let temp1: Numbers = {
+            Number: temp.Number,
+            point: point - +this.maximum,
+            checked: temp.checked,
+            ExtraPrice: temp.ExtraPrice
+          };
+          this.listUnsatisfactory.push(temp1);
+        } else {
+          temp.point = point;
+        }
+        let index = this.isTheSameNumber(temp, this.resultNumbers);
+        if (index != -1) {
+          this.resultNumbers[index].point += temp.point;
+        } else {
+          let numberTemp: Numbers = {
+            Number: temp.Number,
+            point: temp.point,
+            checked: true,
+            ExtraPrice: temp.ExtraPrice
+          };
+          this.resultNumbers.push(numberTemp);
+        }
+      }
+    });
   }
 
   isTheSameNumber(number: Numbers, listNumber: Numbers[]) {

@@ -3,4 +3,5 @@ export interface Numbers {
   ExtraPrice?: number;
   checked?: boolean;
   point?: number;
+  totalPoint?: number;
 }
