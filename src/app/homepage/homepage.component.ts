@@ -159,23 +159,27 @@ export class HomepageComponent implements OnInit {
       if (isEqualNumberValue) {
         items.Numbers = [number];
         items.Price = temp.ExtraPrice;
-        let isGreaterThanMaximum = point > +this.maximum;
-        let isPositiveNumber = +this.maximum > 0;
-        if (isGreaterThanMaximum && isPositiveNumber) {
-          temp.point = +this.maximum;
-          let temp1: Numbers = {
-            Number: temp.Number,
-            point: point - +this.maximum,
-            checked: temp.checked,
-            ExtraPrice: temp.ExtraPrice
-          };
-          this.listUnsatisfactory.push(temp1);
-        } else {
-          temp.point = point;
-        }
+        this.pushNumberToUnsatisfactoryList(point, temp);
         this.pushDifferentNumberToResultList(temp);
       }
     });
+  }
+
+  private pushNumberToUnsatisfactoryList(point: number, temp: Numbers) {
+    let isGreaterThanMaximum = point > +this.maximum;
+    let isPositiveNumber = +this.maximum > 0;
+    if (isGreaterThanMaximum && isPositiveNumber) {
+      temp.point = +this.maximum;
+      let temp1: Numbers = {
+        Number: temp.Number,
+        point: point - +this.maximum,
+        checked: temp.checked,
+        ExtraPrice: temp.ExtraPrice
+      };
+      this.listUnsatisfactory.push(temp1);
+    } else {
+      temp.point = point;
+    }
   }
 
   private pushDifferentNumberToResultList(temp: Numbers) {
