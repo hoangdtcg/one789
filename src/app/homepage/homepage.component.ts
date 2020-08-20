@@ -130,19 +130,7 @@ export class HomepageComponent implements OnInit {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
       rows.pop();
-      rows.map(row => {
-        const columns = row.split('x');
-        const numbers = columns[0].split(',');
-        numbers.map(number => {
-          let items: Items = {};
-          number = number.trim();
-          this.getResultNumbers(number, items, +columns[1]);
-          if (columns[1] != null) {
-            items.Point = +columns[1];
-          }
-          this.items.push(items);
-        });
-      });
+      this.pushDataToItemList(rows);
       this.numberOfInput = this.resultNumbers.length;
       this.filterNumberLowerThan();
       this.sumTotalPointAndTotalMoney();
@@ -150,6 +138,22 @@ export class HomepageComponent implements OnInit {
     } else {
       $('#modal-danger').modal('show');
     }
+  }
+
+  private pushDataToItemList(rows: string[]) {
+    rows.map(row => {
+      const columns = row.split('x');
+      const numbers = columns[0].split(',');
+      numbers.map(number => {
+        let items: Items = {};
+        number = number.trim();
+        this.getResultNumbers(number, items, +columns[1]);
+        if (columns[1] != null) {
+          items.Point = +columns[1];
+        }
+        this.items.push(items);
+      });
+    });
   }
 
   private getResultNumbers(number: string, items: Items, point: number) {
