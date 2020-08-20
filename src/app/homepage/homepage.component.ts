@@ -47,6 +47,7 @@ export class HomepageComponent implements OnInit {
   }
 
   getAllOdd() {
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('numbers'));
     let term = this.convertDateToString(new Date());
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
@@ -57,16 +58,39 @@ export class HomepageComponent implements OnInit {
             number.ExtraPrice = number1.ExtraPrice;
           }
         });
+        if (numberInLocalStorage != null) {
+          numberInLocalStorage.map(number1 => {
+            if (number1.Number == number.Number) {
+              number.totalPoint = number1.point;
+            }
+          });
+        }
       });
     });
   }
 
   updateData() {
-    let date = +localStorage.getItem('date');
-    let currentTime = new Date().getTime();
-    if (currentTime > date) {
-      localStorage.setItem('date', currentTime + '');
-      localStorage.removeItem('numbers');
+    let date = +localStorage.getItem('now');
+    let currentTime = new Date();
+    let convertToDate = new Date(date);
+    let isLowerDate = convertToDate.getUTCDate() < currentTime.getUTCDate();
+    let isLowerMonth = convertToDate.getUTCMonth() < currentTime.getUTCMonth();
+    let isLowerYear = convertToDate.getUTCFullYear() < currentTime.getUTCFullYear();
+    if (date != 0) {
+      if (isLowerDate) {
+        localStorage.setItem('now', this.convertDateToString(currentTime));
+        localStorage.removeItem('numbers');
+      } else {
+        if (isLowerMonth) {
+          localStorage.setItem('now', this.convertDateToString(currentTime));
+          localStorage.removeItem('numbers');
+        } else {
+          if (isLowerYear) {
+            localStorage.setItem('now', this.convertDateToString(currentTime));
+            localStorage.removeItem('numbers');
+          }
+        }
+      }
     }
     this.getAllOdd();
     this.getTicketsLatest();
@@ -239,30 +263,32 @@ export class HomepageComponent implements OnInit {
           }
         ]
     };
-    localStorage.setItem('now', new Date().getTime() + '');
+    let date = this.convertDateToString(new Date());
+    localStorage.setItem('now', date);
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.data = this.exportStringToTextArea(this.resultNumbers);
       let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
       if (localStorageArray == null) {
         localStorage.setItem('numbers', JSON.stringify(this.resultNumbers));
+      } else {
+        localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+        this.resultNumbers.map(number => {
+          let index = this.isTheSameNumber(number, localStorageArray);
+          if (index != -1) {
+            localStorageArray[index].point += number.point;
+          } else {
+            let numberTemp: Numbers = {
+              Number: number.Number,
+              point: number.point,
+              checked: false,
+              ExtraPrice: number.ExtraPrice
+            };
+            localStorageArray.push(numberTemp);
+          }
+          localStorage.setItem('numbers', JSON.stringify(localStorageArray));
+        });
       }
-      localStorageArray = JSON.parse(localStorage.getItem('numbers'));
-      this.resultNumbers.map(number => {
-        let index = this.isTheSameNumber(number, localStorageArray);
-        if (index != -1) {
-          localStorageArray[index].point += number.point;
-        } else {
-          let numberTemp: Numbers = {
-            Number: number.Number,
-            point: number.point,
-            checked: false,
-            ExtraPrice: number.ExtraPrice
-          };
-          localStorageArray.push(numberTemp);
-        }
-        localStorage.setItem('numbers', JSON.stringify(localStorageArray));
-      });
       this.clearAll();
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
@@ -271,6 +297,7 @@ export class HomepageComponent implements OnInit {
   }
 
   clearAll() {
+    this.getAllOdd();
     this.resultNumbers = [];
     this.items = [];
     this.totalPoint = 0;
