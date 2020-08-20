@@ -39,14 +39,16 @@
           <table class="table table-head-fixed">
             <thead>
             <tr>
-              <th style="width: 150px">Số</th>
+              <th style="width: 100px">Số</th>
               <th>Điểm</th>
+              <th>Điểm đã đánh</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let number of filterNumbers">
               <td>{{number.Number}}</td>
               <td>{{number.ExtraPrice}}</td>
+              <td>{{number.totalPoint == null ? 0 : 1}}</td>
             </tr>
             </tbody>
           </table>

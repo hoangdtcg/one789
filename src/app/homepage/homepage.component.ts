@@ -62,6 +62,12 @@ export class HomepageComponent implements OnInit {
   }
 
   updateData() {
+    let date = +localStorage.getItem('date');
+    let currentTime = new Date().getTime();
+    if (currentTime > date) {
+      localStorage.setItem('date', currentTime + '');
+      localStorage.removeItem('numbers');
+    }
     this.getAllOdd();
     this.getTicketsLatest();
     let self = this;
@@ -233,9 +239,30 @@ export class HomepageComponent implements OnInit {
           }
         ]
     };
+    localStorage.setItem('now', new Date().getTime() + '');
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.data = this.exportStringToTextArea(this.resultNumbers);
+      let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+      if (localStorageArray == null) {
+        localStorage.setItem('numbers', JSON.stringify(this.resultNumbers));
+      }
+      localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+      this.resultNumbers.map(number => {
+        let index = this.isTheSameNumber(number, localStorageArray);
+        if (index != -1) {
+          localStorageArray[index].point += number.point;
+        } else {
+          let numberTemp: Numbers = {
+            Number: number.Number,
+            point: number.point,
+            checked: false,
+            ExtraPrice: number.ExtraPrice
+          };
+          localStorageArray.push(numberTemp);
+        }
+        localStorage.setItem('numbers', JSON.stringify(localStorageArray));
+      });
       this.clearAll();
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
