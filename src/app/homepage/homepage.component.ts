@@ -25,6 +25,7 @@ export class HomepageComponent implements OnInit {
   latest: any = [];
   numberOfUnsatisfactory: number = 0;
   numberOfInput: number = 0;
+  maximum: string = '';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
