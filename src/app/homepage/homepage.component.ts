@@ -23,7 +23,7 @@ export class HomepageComponent implements OnInit {
   exportData: string = '';
   date: Date = new Date();
   latest: any = [];
-  numberOfUnsatisfactory: number = 0;
+  listUnsatisfactory: Numbers[] = [];
   numberOfInput: number = 0;
   maximum: string = '';
 
@@ -77,20 +77,18 @@ export class HomepageComponent implements OnInit {
 
   filterNumberLowerThan() {
     if (this.search != '') {
-      let numberBigger = [];
       this.resultNumbers.map(number => {
         let flag = -1;
         if (number.ExtraPrice <= (+this.search)) {
           flag = 1;
         }
         if (flag == -1) {
-          numberBigger.push(number);
+          this.listUnsatisfactory.push(number);
           let index = this.resultNumbers.indexOf(number);
           this.resultNumbers.splice(index, 1);
         }
       });
-      this.numberOfUnsatisfactory = numberBigger.length;
-      this.exportData = this.exportStringToTextArea(numberBigger);
+      this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
     }
   }
 
@@ -138,9 +136,17 @@ export class HomepageComponent implements OnInit {
             items.Numbers = [number];
             items.Price = temp.ExtraPrice;
             if (+columns[1] > +this.maximum) {
-
+              temp.point = +this.maximum;
+              let temp1: Numbers = {
+                Number: temp.Number,
+                point: +columns[1] - +this.maximum,
+                checked: temp.checked,
+                ExtraPrice: temp.ExtraPrice
+              };
+              this.listUnsatisfactory.push(temp1);
+            } else {
+              temp.point = +columns[1];
             }
-            temp.point = +columns[1];
             let index = this.isTheSameNumber(temp, this.resultNumbers);
             if (index != -1) {
               this.resultNumbers[index].point += temp.point;
@@ -218,7 +224,7 @@ export class HomepageComponent implements OnInit {
     this.totalMoney = 0;
     this.search = '';
     this.numberOfInput = 0;
-    this.numberOfUnsatisfactory = 0;
+    this.listUnsatisfactory = [];
   }
 
   exportStringToTextArea(numbers) {

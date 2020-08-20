@@ -20,8 +20,8 @@
       <div class="form-group">
         <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
       </div>
-      <div class="form-group" *ngIf="numberOfUnsatisfactory != 0">
-        <p>Có <span style="color: red">{{numberOfUnsatisfactory}}</span> không thoả mãn điều kiện</p>
+      <div class="form-group" *ngIf="listUnsatisfactory.length != 0">
+        <p>Có <span style="color: red">{{listUnsatisfactory.length}}</span> không thoả mãn điều kiện</p>
       </div>
       <div class="form-group">
         <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
