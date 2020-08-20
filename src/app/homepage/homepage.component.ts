@@ -6,6 +6,8 @@ import {Items} from '../interface/items';
 import {GamePlayService} from '../service/game-play/game-play.service';
 import {NotificationService} from '../service/notification/notification.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-homepage',
   templateUrl: './homepage.component.html',
@@ -122,56 +124,60 @@ export class HomepageComponent implements OnInit {
 
   searchNumber() {
     let contents = this.data.split(':');
-    contents[1] = contents[1].replace('\n', '').trim();
-    let rows = contents[1].split('n');
-    rows.pop();
-    rows.map(row => {
-      const columns = row.split('x');
-      const numbers = columns[0].split(',');
-      numbers.map(number => {
-        let items: Items = {};
-        number = number.trim();
-        this.filterNumbers.map(number1 => {
-          let temp = number1;
-          if (temp.Number == number) {
-            items.Numbers = [number];
-            items.Price = temp.ExtraPrice;
-            if (+columns[1] > +this.maximum && +this.maximum > 0) {
-              temp.point = +this.maximum;
-              let temp1: Numbers = {
-                Number: temp.Number,
-                point: +columns[1] - +this.maximum,
-                checked: temp.checked,
-                ExtraPrice: temp.ExtraPrice
-              };
-              this.listUnsatisfactory.push(temp1);
-            } else {
-              temp.point = +columns[1];
+    if (contents[1] != null && (contents[0] != 'De' || contents[0] != 'Đề')) {
+      contents[1] = contents[1].replace('\n', '').trim();
+      let rows = contents[1].split('n');
+      rows.pop();
+      rows.map(row => {
+        const columns = row.split('x');
+        const numbers = columns[0].split(',');
+        numbers.map(number => {
+          let items: Items = {};
+          number = number.trim();
+          this.filterNumbers.map(number1 => {
+            let temp = number1;
+            if (temp.Number == number) {
+              items.Numbers = [number];
+              items.Price = temp.ExtraPrice;
+              if (+columns[1] > +this.maximum && +this.maximum > 0) {
+                temp.point = +this.maximum;
+                let temp1: Numbers = {
+                  Number: temp.Number,
+                  point: +columns[1] - +this.maximum,
+                  checked: temp.checked,
+                  ExtraPrice: temp.ExtraPrice
+                };
+                this.listUnsatisfactory.push(temp1);
+              } else {
+                temp.point = +columns[1];
+              }
+              let index = this.isTheSameNumber(temp, this.resultNumbers);
+              if (index != -1) {
+                this.resultNumbers[index].point += temp.point;
+              } else {
+                let numberTemp: Numbers = {
+                  Number: temp.Number,
+                  point: temp.point,
+                  checked: true,
+                  ExtraPrice: temp.ExtraPrice
+                };
+                this.resultNumbers.push(numberTemp);
+              }
             }
-            let index = this.isTheSameNumber(temp, this.resultNumbers);
-            if (index != -1) {
-              this.resultNumbers[index].point += temp.point;
-            } else {
-              let numberTemp: Numbers = {
-                Number: temp.Number,
-                point: temp.point,
-                checked: true,
-                ExtraPrice: temp.ExtraPrice
-              };
-              this.resultNumbers.push(numberTemp);
-            }
+          });
+          if (columns[1] != null) {
+            items.Point = +columns[1];
           }
+          this.items.push(items);
         });
-        if (columns[1] != null) {
-          items.Point = +columns[1];
-        }
-        this.items.push(items);
       });
-    });
-    this.numberOfInput = this.resultNumbers.length;
-    this.filterNumberLowerThan();
-    this.sumTotalPointAndTotalMoney();
-    this.data = '';
+      this.numberOfInput = this.resultNumbers.length;
+      this.filterNumberLowerThan();
+      this.sumTotalPointAndTotalMoney();
+      this.data = '';
+    } else {
+      $('#modal-danger').modal('show');
+    }
   }
 
   isTheSameNumber(number: Numbers, listNumber: Numbers[]) {
