@@ -121,8 +121,9 @@ export class HomepageComponent implements OnInit {
   }
 
   searchNumber() {
-    this.data = this.data.replace('\n', '');
-    let rows = this.data.split('n');
+    let contents = this.data.split(':');
+    contents[1] = contents[1].replace('\n', '').trim();
+    let rows = contents[1].split('n');
     rows.pop();
     rows.map(row => {
       const columns = row.split('x');
@@ -135,7 +136,7 @@ export class HomepageComponent implements OnInit {
           if (temp.Number == number) {
             items.Numbers = [number];
             items.Price = temp.ExtraPrice;
-            if (+columns[1] > +this.maximum) {
+            if (+columns[1] > +this.maximum && +this.maximum > 0) {
               temp.point = +this.maximum;
               let temp1: Numbers = {
                 Number: temp.Number,
