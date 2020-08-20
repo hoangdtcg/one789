@@ -23,6 +23,8 @@ export class HomepageComponent implements OnInit {
   exportData: string = '';
   date: Date = new Date();
   latest: any = [];
+  numberOfUnsatisfactory: number = 0;
+  numberOfInput: number = 0;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -86,6 +88,7 @@ export class HomepageComponent implements OnInit {
           this.resultNumbers.splice(index, 1);
         }
       });
+      this.numberOfUnsatisfactory = numberBigger.length;
       this.exportData = this.exportStringToTextArea(numberBigger);
     }
   }
@@ -154,6 +157,7 @@ export class HomepageComponent implements OnInit {
         this.items.push(items);
       });
     });
+    this.numberOfInput = this.resultNumbers.length;
     this.filterNumberLowerThan();
     this.sumTotalPointAndTotalMoney();
     this.data = '';
@@ -209,6 +213,8 @@ export class HomepageComponent implements OnInit {
     this.totalPoint = 0;
     this.totalMoney = 0;
     this.search = '';
+    this.numberOfInput = 0;
+    this.numberOfUnsatisfactory = 0;
   }
 
   exportStringToTextArea(numbers) {

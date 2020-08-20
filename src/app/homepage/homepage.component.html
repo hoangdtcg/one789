@@ -10,8 +10,14 @@
       <div class="form-group">
         <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>
       </div>
+      <div class="form-group" *ngIf="numberOfInput != 0">
+        <p>Có <span style="color: red">{{numberOfInput}}</span> được nhập</p>
+      </div>
       <div class="form-group">
         <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
+      </div>
+      <div class="form-group" *ngIf="numberOfUnsatisfactory != 0">
+        <p>Có <span style="color: red">{{numberOfUnsatisfactory}}</span> không thoả mãn điều kiện</p>
       </div>
       <div class="form-group">
         <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
@@ -120,7 +126,9 @@
               <td></td>
               <td [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
               <td>
-                <button class="btn btn-outline-danger" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">Hủy</button>
+                <button class="btn btn-outline-danger" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">
+                  Hủy
+                </button>
               </td>
             </tr>
             </tbody>
