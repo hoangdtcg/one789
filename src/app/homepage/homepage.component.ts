@@ -173,20 +173,24 @@ export class HomepageComponent implements OnInit {
         } else {
           temp.point = point;
         }
-        let index = this.isTheSameNumber(temp, this.resultNumbers);
-        if (index != -1) {
-          this.resultNumbers[index].point += temp.point;
-        } else {
-          let numberTemp: Numbers = {
-            Number: temp.Number,
-            point: temp.point,
-            checked: true,
-            ExtraPrice: temp.ExtraPrice
-          };
-          this.resultNumbers.push(numberTemp);
-        }
+        this.pushDifferentNumberToResultList(temp);
       }
     });
+  }
+
+  private pushDifferentNumberToResultList(temp: Numbers) {
+    let index = this.isTheSameNumber(temp, this.resultNumbers);
+    if (index != -1) {
+      this.resultNumbers[index].point += temp.point;
+    } else {
+      let numberTemp: Numbers = {
+        Number: temp.Number,
+        point: temp.point,
+        checked: true,
+        ExtraPrice: temp.ExtraPrice
+      };
+      this.resultNumbers.push(numberTemp);
+    }
   }
 
   isTheSameNumber(number: Numbers, listNumber: Numbers[]) {
