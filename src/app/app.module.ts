@@ -17,7 +17,7 @@ import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shar
     AppComponent,
     LoginComponent,
     HomepageComponent,
-    LayoutWithSharedComponent
+    LayoutWithSharedComponent,
   ],
   imports: [
     BrowserModule,
