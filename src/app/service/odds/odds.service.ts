@@ -14,7 +14,7 @@ export class OddsService {
   constructor(private http: HttpClient) {
   }
 
-  getOdds(term: string): Observable<Odds[]> {
-    return this.http.get<Odds[]>(API_URL + '/odds/player?term=' + term + '&gameTypes=0&betTypes=0');
+  getOdds(term: string, betTypes): Observable<Odds[]> {
+    return this.http.get<Odds[]>(API_URL + '/odds/player?term=' + term + '&gameTypes=0&betTypes=' + betTypes);
   }
 }
