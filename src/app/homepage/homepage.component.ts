@@ -66,6 +66,15 @@ export class HomepageComponent implements OnInit {
           });
         }
       });
+      for (let i = 0; i < this.filterNumbers.length; i++) {
+        for (let j = 0; j < this.filterNumbers.length; j++) {
+          if (this.numbersService.compareTo(this.filterNumbers[i], this.filterNumbers[j]) == 1) {
+            let temp = this.filterNumbers[i];
+            this.filterNumbers[i] = this.filterNumbers[j];
+            this.filterNumbers[j] = temp;
+          }
+        }
+      }
     });
   }
 

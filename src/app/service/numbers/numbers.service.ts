@@ -27,4 +27,8 @@ export class NumbersService {
     }
     return numbers;
   }
+
+  compareTo = (a: Numbers, b: Numbers) => {
+    return a.Number < b.Number ? 1 : -1;
+  };
 }
