@@ -46,4 +46,17 @@ export class NumbersService {
     term += day;
     return term;
   }
+
+  getPairOfNumberArray(array) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
+      for (let j = i + 1; j < array.length; j++) {
+        let arrayTemp = [];
+        arrayTemp.push(array[i]);
+        arrayTemp.push(array[j]);
+        result.push(arrayTemp);
+      }
+    }
+    return result;
+  }
 }
