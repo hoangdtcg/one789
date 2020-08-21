@@ -162,6 +162,8 @@
         <button type="button" class="btn btn-outline-light " data-dismiss="modal">Đóng</button>
         <button *ngIf="continue" type="button" class="btn btn-primary" (click)="splitInputData()">Tiếp tục
         </button>
+        <button *ngIf="isExpired" type="button" class="btn btn-primary" (click)="logout()">Xác nhận
+        </button>
       </div>
     </div>
     <!-- /.modal-content -->

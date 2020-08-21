@@ -5,6 +5,7 @@ import {Numbers} from '../interface/numbers';
 import {Items} from '../interface/items';
 import {GamePlayService} from '../service/game-play/game-play.service';
 import {NotificationService} from '../service/notification/notification.service';
+import {AuthenticationService} from '../service/authentication/authentication.service';
 
 declare var $: any;
 
@@ -30,11 +31,13 @@ export class HomepageComponent implements OnInit {
   maximum: string = '';
   message: string = '';
   continue: boolean = false;
+  isExpired: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
               private gamePlayService: GamePlayService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -77,6 +80,9 @@ export class HomepageComponent implements OnInit {
           }
         }
       }
+    }, () => {
+      this.message = 'Đã hết phiên đăng nhập! Hãy đăng nhập lại';
+      this.isExpired = true;
     });
   }
 
@@ -184,7 +190,7 @@ export class HomepageComponent implements OnInit {
       this.data = '';
       $('#modal-danger').modal('hide');
     } else {
-      this.message = 'Xin hãy nhập như mẫu sau: Đề: 01,02x1n'
+      this.message = 'Xin hãy nhập như mẫu sau: Đề: 01,02x1n';
       $('#modal-danger').modal('show');
     }
   }
@@ -403,5 +409,9 @@ export class HomepageComponent implements OnInit {
     } else {
       this.notificationService.showErrorMessage('Quá 5 phút không thể hủy được');
     }
+  }
+
+  logout() {
+    this.authenticationService.logout();
   }
 }
