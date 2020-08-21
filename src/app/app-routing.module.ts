@@ -4,6 +4,7 @@ import {LoginComponent} from './login/login.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {LayoutWithSharedComponent} from './layout-with-shared/layout-with-shared.component';
 import {AuthGuard} from './helper/auth-guard';
+import {XienComponent} from './xien/xien.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomepageComponent
+      },
+      {
+        path: 'xien',
+        component: XienComponent
       }
     ]
   }
