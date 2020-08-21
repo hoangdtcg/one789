@@ -56,30 +56,29 @@ export class XienComponent implements OnInit {
     let term = this.numbersService.convertDateToString(new Date());
     this.oddsService.getOdds(term, 2).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
-      this.addExtraNumberToNumber(odd);
-      this.filterNumbers.map(number => {
-        this.numbers.map(number1 => {
-          if (number1.Number == number.Number) {
-            number.ExtraPrice = number1.ExtraPrice;
-          }
-        });
-        if (numberInLocalStorage != null) {
-          numberInLocalStorage.map(number1 => {
-            if (number1.Number == number.Number) {
-              number.totalPoint = number1.point;
+      this.addExtraNumberToPrice(odd, 1);
+      this.oddsService.getOdds(term, 3).subscribe(odd2 => {
+        this.addExtraNumberToPrice(odd2, 2);
+        this.oddsService.getOdds(term, 4).subscribe(odd3 => {
+          this.addExtraNumberToPrice(odd3, 3);
+          this.filterNumbers.map(number => {
+            this.numbers.map(number1 => {
+              if (number1.Number == number.Number) {
+                number.price1 = number1.price1;
+                number.price2 = number1.price2;
+                number.price3 = number1.price3;
+              }
+            });
+            if (numberInLocalStorage != null) {
+              numberInLocalStorage.map(number1 => {
+                if (number1.Number == number.Number) {
+                  number.totalPoint = number1.point;
+                }
+              });
             }
           });
-        }
+        });
       });
-      for (let i = 0; i < this.filterNumbers.length; i++) {
-        for (let j = 0; j < this.filterNumbers.length; j++) {
-          if (this.numbersService.compareTo(this.filterNumbers[i], this.filterNumbers[j]) == 1) {
-            let temp = this.filterNumbers[i];
-            this.filterNumbers[i] = this.filterNumbers[j];
-            this.filterNumbers[j] = temp;
-          }
-        }
-      }
     }, () => {
       this.message = 'Đã hết phiên đăng nhập! Hãy đăng nhập lại';
       this.isExpired = true;
@@ -141,14 +140,34 @@ export class XienComponent implements OnInit {
     }
   }
 
-  addExtraNumberToNumber(odd) {
+  addExtraNumberToPrice(odd, price) {
     this.numbers.map(number => {
-      number.ExtraPrice = odd[0].Price;
+      if (price == 1) {
+        number.price1 = odd[0].Price;
+      }
+      if (price == 2) {
+        number.price2 = odd[0].Price;
+      }
+      if (price == 3) {
+        number.price3 = odd[0].Price;
+      }
     });
     this.numbers.map(number => {
       odd[0].Numbers.map(numbers => {
-        if (number.Number == numbers.Number) {
-          number.ExtraPrice += numbers.ExtraPrice;
+        if (price == 1) {
+          if (number.Number == numbers.Number) {
+            number.price1 += numbers.ExtraPrice;
+          }
+        }
+        if (price == 2) {
+          if (number.Number == numbers.Number) {
+            number.price2 += numbers.ExtraPrice;
+          }
+        }
+        if (price == 3) {
+          if (number.Number == numbers.Number) {
+            number.price3 += numbers.ExtraPrice;
+          }
         }
       });
     });
