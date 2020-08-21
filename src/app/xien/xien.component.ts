@@ -52,7 +52,7 @@ export class XienComponent implements OnInit {
   }
 
   getAllOdd() {
-    let numberInLocalStorage = JSON.parse(localStorage.getItem('numbers'));
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('xien'));
     let term = this.numbersService.convertDateToString(new Date());
     this.oddsService.getOdds(term, 2).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
@@ -95,15 +95,15 @@ export class XienComponent implements OnInit {
     if (date != 0) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-        localStorage.removeItem('numbers');
+        localStorage.removeItem('xien');
       } else {
         if (isLowerMonth) {
           localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-          localStorage.removeItem('numbers');
+          localStorage.removeItem('xien');
         } else {
           if (isLowerYear) {
             localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-            localStorage.removeItem('numbers');
+            localStorage.removeItem('xien');
           }
         }
       }
@@ -314,9 +314,9 @@ export class XienComponent implements OnInit {
       this.data = this.exportStringToTextArea(this.resultNumbers);
       let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
       if (localStorageArray == null) {
-        localStorage.setItem('numbers', JSON.stringify(this.resultNumbers));
+        localStorage.setItem('xien', JSON.stringify(this.resultNumbers));
       } else {
-        localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+        localStorageArray = JSON.parse(localStorage.getItem('xien'));
         this.resultNumbers.map(number => {
           let index = this.isTheSameNumber(number, localStorageArray);
           if (index != -1) {
@@ -330,7 +330,7 @@ export class XienComponent implements OnInit {
             };
             localStorageArray.push(numberTemp);
           }
-          localStorage.setItem('numbers', JSON.stringify(localStorageArray));
+          localStorage.setItem('xien', JSON.stringify(localStorageArray));
         });
       }
       this.clearAll();
@@ -372,7 +372,7 @@ export class XienComponent implements OnInit {
         }
       }
     }
-    let result = 'Đề:';
+    let result = 'Xiên:';
     for (let i = 0; i < arrayPoint.length; i++) {
       const numberHasSamePointArray = [];
       for (let j = 0; j < numbers.length; j++) {

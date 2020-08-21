@@ -52,7 +52,7 @@ export class HomepageComponent implements OnInit {
   }
 
   getAllOdd() {
-    let numberInLocalStorage = JSON.parse(localStorage.getItem('numbers'));
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('de'));
     let term = this.numbersService.convertDateToString(new Date());
     this.oddsService.getOdds(term, 0).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
@@ -106,15 +106,15 @@ export class HomepageComponent implements OnInit {
     if (date != 0) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-        localStorage.removeItem('numbers');
+        localStorage.removeItem('de');
       } else {
         if (isLowerMonth) {
           localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-          localStorage.removeItem('numbers');
+          localStorage.removeItem('de');
         } else {
           if (isLowerYear) {
             localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
-            localStorage.removeItem('numbers');
+            localStorage.removeItem('de');
           }
         }
       }
@@ -297,11 +297,11 @@ export class HomepageComponent implements OnInit {
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.data = this.exportStringToTextArea(this.resultNumbers);
-      let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+      let localStorageArray = JSON.parse(localStorage.getItem('de'));
       if (localStorageArray == null) {
-        localStorage.setItem('numbers', JSON.stringify(this.resultNumbers));
+        localStorage.setItem('de', JSON.stringify(this.resultNumbers));
       } else {
-        localStorageArray = JSON.parse(localStorage.getItem('numbers'));
+        localStorageArray = JSON.parse(localStorage.getItem('de'));
         this.resultNumbers.map(number => {
           let index = this.isTheSameNumber(number, localStorageArray);
           if (index != -1) {
@@ -315,7 +315,7 @@ export class HomepageComponent implements OnInit {
             };
             localStorageArray.push(numberTemp);
           }
-          localStorage.setItem('numbers', JSON.stringify(localStorageArray));
+          localStorage.setItem('de', JSON.stringify(localStorageArray));
         });
       }
       this.clearAll();
