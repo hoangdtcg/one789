@@ -50,7 +50,7 @@ export class HomepageComponent implements OnInit {
 
   getAllOdd() {
     let numberInLocalStorage = JSON.parse(localStorage.getItem('numbers'));
-    let term = this.convertDateToString(new Date());
+    let term = this.numbersService.convertDateToString(new Date());
     this.oddsService.getOdds(term).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
@@ -89,15 +89,15 @@ export class HomepageComponent implements OnInit {
     let isLowerYear = convertToDate.getUTCFullYear() < currentTime.getUTCFullYear();
     if (date != 0) {
       if (isLowerDate) {
-        localStorage.setItem('now', this.convertDateToString(currentTime));
+        localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
         localStorage.removeItem('numbers');
       } else {
         if (isLowerMonth) {
-          localStorage.setItem('now', this.convertDateToString(currentTime));
+          localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
           localStorage.removeItem('numbers');
         } else {
           if (isLowerYear) {
-            localStorage.setItem('now', this.convertDateToString(currentTime));
+            localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
             localStorage.removeItem('numbers');
           }
         }
@@ -146,21 +146,6 @@ export class HomepageComponent implements OnInit {
         }
       });
     });
-  }
-
-  convertDateToString(date: Date): string {
-    let term = date.getUTCFullYear() + '-';
-    let month = date.getUTCMonth() + 1;
-    let day = date.getUTCDate();
-    if (month < 10) {
-      term += '0';
-    }
-    term += month + '-';
-    if (day < 10) {
-      term += '0';
-    }
-    term += day;
-    return term;
   }
 
   searchNumber() {
@@ -284,7 +269,7 @@ export class HomepageComponent implements OnInit {
   }
 
   submit() {
-    let term = this.convertDateToString(new Date());
+    let term = this.numbersService.convertDateToString(new Date());
     let data = {
       Term: term,
       IgnorePrice: true,
@@ -297,7 +282,7 @@ export class HomepageComponent implements OnInit {
           }
         ]
     };
-    let date = this.convertDateToString(new Date());
+    let date = this.numbersService.convertDateToString(new Date());
     localStorage.setItem('now', date);
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
@@ -390,7 +375,6 @@ export class HomepageComponent implements OnInit {
     return result;
   }
 
-
   isLessThanFiveMinutes(ticket: any) {
     let currentTime = new Date().getTime();
     let createDate = new Date(ticket.CreatedAt).getTime();
@@ -399,7 +383,7 @@ export class HomepageComponent implements OnInit {
 
   cancelPlay(ticket: any) {
     if (this.isLessThanFiveMinutes(ticket)) {
-      let term = this.convertDateToString(new Date());
+      let term = this.numbersService.convertDateToString(new Date());
       let data = {
         Term: term,
         Tickets: [

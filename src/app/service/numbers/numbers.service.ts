@@ -31,4 +31,19 @@ export class NumbersService {
   compareTo = (a: Numbers, b: Numbers) => {
     return a.Number < b.Number ? 1 : -1;
   };
+
+  convertDateToString(date: Date): string {
+    let term = date.getUTCFullYear() + '-';
+    let month = date.getUTCMonth() + 1;
+    let day = date.getUTCDate();
+    if (month < 10) {
+      term += '0';
+    }
+    term += month + '-';
+    if (day < 10) {
+      term += '0';
+    }
+    term += day;
+    return term;
+  }
 }
