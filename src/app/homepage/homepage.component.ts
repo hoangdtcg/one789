@@ -353,7 +353,7 @@ export class HomepageComponent implements OnInit {
         }
       }
     }
-    let result = '';
+    let result = 'Đề:';
     for (let i = 0; i < arrayPoint.length; i++) {
       const numberHasSamePointArray = [];
       for (let j = 0; j < numbers.length; j++) {
