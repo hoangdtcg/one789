@@ -1,0 +1,173 @@
+<section class="content">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+      <h3>Ngày: {{date.getUTCDate()}}/{{date.getUTCMonth() + 1}}/{{date.getUTCFullYear()}}</h3>
+      <div class="form-group">
+        <label for="search">Lọc số: </label>
+        <input id="search" type="number" min="0" placeholder="Nhập số" name="search" [(ngModel)]="search">
+      </div>
+      <div class="form-group">
+        <label for="maximum">Điểm tối đa: </label>
+        <input id="maximum" type="number" min="0" placeholder="Nhập số điểm tối đa" name="maximum"
+               [(ngModel)]="maximum">
+      </div>
+      <div class="form-group">
+        <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>
+      </div>
+<!--      <div class="form-group" *ngIf="numberOfInput != 0">-->
+<!--        <p>Có <span style="color: red">{{numberOfInput}}</span> được nhập</p>-->
+<!--      </div>-->
+      <div class="form-group">
+        <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
+      </div>
+<!--      <div class="form-group" *ngIf="listUnsatisfactory.length != 0">-->
+<!--        <p>Có <span style="color: red">{{listUnsatisfactory.length}}</span> không thoả mãn điều kiện</p>-->
+<!--      </div>-->
+      <div class="form-group">
+        <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            THÔNG TIN
+          </h3>
+          <div class="card-tools">
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0" style="height: 350px;">
+          <table class="table table-head-fixed">
+            <thead>
+            <tr>
+              <th style="width: 100px">Số</th>
+              <th>Điểm</th>
+              <th>Điểm đã đánh</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let number of filterNumbers">
+              <td>{{number.Number}}</td>
+              <td>{{number.ExtraPrice}}</td>
+              <td>{{number.totalPoint == null ? 0 : number.totalPoint}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1 text-center">
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            KẾT QUẢ
+          </h3>
+          <div class="card-tools">
+            <button class="btn btn-outline-primary float-lg-right" (click)="submit()">
+              Đánh
+            </button>
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0" style="height: 350px;">
+          <table class="table table-head-fixed">
+            <thead>
+            <tr>
+              <th>Số</th>
+              <th>Điểm</th>
+              <th>Giá tiền</th>
+              <th>Thành tiền</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let number of resultNumbers" [style.background]="number.checked?'#349af3':''">
+              <td>{{number.Number}}</td>
+              <td>{{number.point}}</td>
+              <td>{{number.ExtraPrice}}</td>
+              <td>{{number.ExtraPrice * number.point}}</td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="resultNumbers.length!=0">
+            <tr>
+              <td class="text-bold">Tổng số: {{resultNumbers.length}}</td>
+              <td class="text-bold">Tổng điểm: {{totalPoint}}</td>
+              <td></td>
+              <td class="text-bold">Tổng tiền: {{totalMoney}}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td class="align-bottom">
+                <button class="btn btn-outline-danger float-lg-right" (click)="clearAll()">
+                  Xóa hết
+                </button>
+              </td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">
+            MÃ CƯỢC GẦN ĐÂY
+          </h3>
+          <div class="card-tools">
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0" style="height: 350px;">
+          <table class="table table-head-fixed">
+            <thead>
+            <tr>
+              <th>Số</th>
+              <th></th>
+              <th>Giá tiền</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ticket of latest"
+                [style.background]="ticket.Status == 9?'#718299':''">
+              <td>{{ticket.TicketNumber}}</td>
+              <td></td>
+              <td [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
+              <td>
+                <button class="btn btn-outline-danger" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">
+                  Hủy
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</section>
+<div class="modal fade" id="modal-danger">
+  <div class="modal-dialog">
+    <div class="modal-content bg-danger">
+      <div class="modal-header">
+        <h4 class="modal-title">XẢY RA LỖI</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>{{message}}</p>
+      </div>
+      <div class="modal-footer float-lg-right">
+        <button type="button" class="btn btn-outline-light " data-dismiss="modal">Đóng</button>
+        <button *ngIf="continue" type="button" class="btn btn-primary" (click)="splitInputData()">Tiếp tục
+        </button>
+        <button *ngIf="isExpired" type="button" class="btn btn-primary" (click)="logout()">Xác nhận
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+

@@ -11,6 +11,7 @@ import {ErrorInterceptor} from './helper/error-interceptor';
 import {JwtInterceptor} from './helper/jwt-interceptor';
 import {SharedModule} from './shared/shared.module';
 import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shared.component';
+import { XienComponent } from './xien/xien.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shar
     LoginComponent,
     HomepageComponent,
     LayoutWithSharedComponent,
+    XienComponent,
   ],
   imports: [
     BrowserModule,
