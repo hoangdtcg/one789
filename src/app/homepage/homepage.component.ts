@@ -54,7 +54,7 @@ export class HomepageComponent implements OnInit {
   getAllOdd() {
     let numberInLocalStorage = JSON.parse(localStorage.getItem('numbers'));
     let term = this.numbersService.convertDateToString(new Date());
-    this.oddsService.getOdds(term,0).subscribe(odd => {
+    this.oddsService.getOdds(term, 0).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
       this.filterNumbers.map(number => {
@@ -87,6 +87,16 @@ export class HomepageComponent implements OnInit {
   }
 
   updateData() {
+    this.getAllOdd();
+    this.getTicketsLatest();
+    let self = this;
+    setInterval(function() {
+      self.getAllOdd();
+      self.deleteLocalStorageAfterNextDay();
+    }, 1000);
+  }
+
+  deleteLocalStorageAfterNextDay() {
     let date = +localStorage.getItem('now');
     let currentTime = new Date();
     let convertToDate = new Date(date);
@@ -109,12 +119,6 @@ export class HomepageComponent implements OnInit {
         }
       }
     }
-    this.getAllOdd();
-    this.getTicketsLatest();
-    let self = this;
-    setInterval(function() {
-      self.getAllOdd();
-    }, 1000);
   }
 
   reloadTicketsLatestList() {
