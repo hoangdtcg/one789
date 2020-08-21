@@ -162,6 +162,25 @@ export class HomepageComponent implements OnInit {
   }
 
   searchNumber() {
+    let contentInLocalStorage = JSON.parse(localStorage.getItem('contents'));
+    if (contentInLocalStorage == null) {
+      let array = [];
+      array.push(this.data);
+      localStorage.setItem('contents', JSON.stringify(array));
+      this.splitInputData();
+    } else {
+      contentInLocalStorage = JSON.parse(localStorage.getItem('contents'));
+      if (contentInLocalStorage.indexOf(this.data) == -1) {
+        contentInLocalStorage.push(this.data);
+        localStorage.setItem('contents', JSON.stringify(contentInLocalStorage));
+        this.splitInputData();
+      } else {
+        $('#modal-danger').modal('show');
+      }
+    }
+  }
+
+  private splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
     let isValidType = contents[0] != 'De' || contents[0] != 'Đề';
