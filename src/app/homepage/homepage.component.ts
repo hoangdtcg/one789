@@ -28,6 +28,8 @@ export class HomepageComponent implements OnInit {
   listUnsatisfactory: Numbers[] = [];
   numberOfInput: number = 0;
   maximum: string = '';
+  message: string = '';
+  continue: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -175,6 +177,8 @@ export class HomepageComponent implements OnInit {
         localStorage.setItem('contents', JSON.stringify(contentInLocalStorage));
         this.splitInputData();
       } else {
+        this.message = 'Thông tin vừa nhập có thể đã bị trùng! Xin hãy kiểm tra lại';
+        this.continue = true;
         $('#modal-danger').modal('show');
       }
     }
@@ -193,7 +197,9 @@ export class HomepageComponent implements OnInit {
       this.filterNumberLowerThan();
       this.sumTotalPointAndTotalMoney();
       this.data = '';
+      $('#modal-danger').modal('hide');
     } else {
+      this.message = 'Xin hãy nhập như mẫu sau: Đề: 01,02x1n'
       $('#modal-danger').modal('show');
     }
   }
