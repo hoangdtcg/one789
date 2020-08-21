@@ -59,4 +59,20 @@ export class NumbersService {
     }
     return result;
   }
+
+  getThreeDifferentNumber(array) {
+    let result = [];
+    for (let i = 0; i < array.length; i++) {
+      for (let j = i + 1; j < array.length; j++) {
+        for (let k = j + 1; k < array.length; k++) {
+          let arrayTemp = [];
+          arrayTemp.push(array[i]);
+          arrayTemp.push(array[j]);
+          arrayTemp.push(array[k]);
+          result.push(arrayTemp);
+        }
+      }
+    }
+    return result;
+  }
 }
