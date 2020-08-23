@@ -5,6 +5,7 @@ import {HomepageComponent} from './homepage/homepage.component';
 import {LayoutWithSharedComponent} from './layout-with-shared/layout-with-shared.component';
 import {AuthGuard} from './helper/auth-guard';
 import {XienComponent} from './xien/xien.component';
+import {DitNhatComponent} from './dit-nhat/dit-nhat.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'xien',
         component: XienComponent
+      },
+      {
+        path: 'dit-nhat',
+        component: DitNhatComponent
       }
     ]
   }
