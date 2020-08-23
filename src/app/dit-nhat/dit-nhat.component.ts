@@ -399,7 +399,7 @@ export class DitNhatComponent implements OnInit {
         Tickets: [
           {
             GameType: 0,
-            BetType: 0,
+            BetType: 22,
             TicketNumber: ticket.TicketNumber
           }
         ]
