@@ -227,34 +227,24 @@ export class XienComponent implements OnInit {
       let xien2 = this.numbersService.getPairOfNumberArray(numbers);
       let xien3 = this.numbersService.getThreeDifferentNumber(numbers);
       let xien4 = this.numbersService.getFourDifferentNumber(numbers);
-      xien2.map(number => {
-        let items: Items = {};
-        items.Numbers = number;
-        items.Price = this.getNumberExtraPrice(number[0]);
-        if (columns[1] != null) {
-          items.Point = +columns[1];
-        }
-        this.items.push(items);
-      });
-      xien3.map(number => {
-        let items: Items = {};
-        items.Numbers = number;
-        items.Price = this.getNumberExtraPrice(number[0]);
-        if (columns[1] != null) {
-          items.Point = +columns[1];
-        }
-        this.items1.push(items);
-      });
-      xien4.map(number => {
-        let items: Items = {};
-        items.Numbers = number;
-        items.Price = this.getNumberExtraPrice(number[0]);
-        if (columns[1] != null) {
-          items.Point = +columns[1];
-        }
-        this.items2.push(items);
-      });
+      this.items = this.pushToItemsList(xien2, columns[1], 'price1');
+      this.items1 = this.pushToItemsList(xien3, columns[1], 'price2');
+      this.items2 = this.pushToItemsList(xien4, columns[1], 'price3');
     });
+  }
+
+  private pushToItemsList(xien: any[], price: string, priceType: string) {
+    let itemsList = [];
+    xien.map(number => {
+      let items: Items = {};
+      items.Numbers = number;
+      items.Price = this.getNumberExtraPrice(number[0], priceType);
+      if (price != null) {
+        items.Point = +price;
+      }
+      itemsList.push(items);
+    });
+    return itemsList;
   }
 
   private getResultNumbers(number: string, items: Items, point: number) {
@@ -485,13 +475,24 @@ export class XienComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  private getNumberExtraPrice(number: any) {
-    let price = 0;
-    this.filterNumbers.map(numbers => {
-      if (numbers.Number == number) {
-        price = numbers.ExtraPrice;
+  private getNumberExtraPrice(number: any, price) {
+    let extraPrice = 0;
+    for (let i = 0; i < this.filterNumbers.length; i++) {
+      if (this.filterNumbers[i].Number == number) {
+        if (price == 'price1') {
+          extraPrice = this.filterNumbers[i].price1;
+          break;
+        }
+        if (price == 'price2') {
+          extraPrice = this.filterNumbers[i].price2;
+          break;
+        }
+        if (price == 'price3') {
+          extraPrice = this.filterNumbers[i].price3;
+          break;
+        }
       }
-    });
-    return price;
+    }
+    return extraPrice;
   }
 }
