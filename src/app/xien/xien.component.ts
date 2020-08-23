@@ -252,7 +252,10 @@ export class XienComponent implements OnInit {
         Number: temp.Number,
         point: point - +this.maximum,
         checked: temp.checked,
-        ExtraPrice: temp.ExtraPrice
+        ExtraPrice: temp.ExtraPrice,
+        price1: temp.price1,
+        price2: temp.price2,
+        price3: temp.price3
       };
       this.listUnsatisfactory.push(temp1);
     } else {
@@ -295,17 +298,72 @@ export class XienComponent implements OnInit {
 
   submit() {
     let term = this.numbersService.convertDateToString(new Date());
+    let listNumberInput = [];
+    this.resultNumbers.map(numbers => {
+      listNumberInput.push(numbers.Number);
+    });
+    let xien2 = this.numbersService.getPairOfNumberArray(listNumberInput);
+    let xien3 = this.numbersService.getThreeDifferentNumber(listNumberInput);
+    let xien4 = this.numbersService.getFourDifferentNumber(listNumberInput);
+    let tickets = [];
+    let items1 = [];
+    let items2 = [];
+    let items3 = [];
+    xien2.map(numbers => {
+      let item: Items = {
+        Numbers: numbers,
+        Price: numbers.price1,
+        Point: numbers.point
+      };
+      items1.push(item);
+    });
+    xien3.map(numbers => {
+      let item: Items = {
+        Numbers: numbers,
+        Price: numbers.price1,
+        Point: numbers.point
+      };
+      items2.push(item);
+    });
+    xien4.map(numbers => {
+      let item: Items = {
+        Numbers: numbers,
+        Price: numbers.price1,
+        Point: numbers.point
+      };
+      items3.push(item);
+    });
+    if (items1.length == 0) {
+      this.message = 'Phải nhập ít nhất 2 số';
+      return;
+    }
+    let ticket1 = {
+      GameType: 0,
+      BetType: 2,
+      Items: items1
+    };
+    tickets.push(ticket1);
+    if (items2.length != 0) {
+      let ticket2 = {
+        GameType: 0,
+        BetType: 3,
+        Items: items2
+      };
+      tickets.push(ticket2);
+    }
+
+    if (items3.length != 0) {
+      let ticket3 = {
+        GameType: 0,
+        BetType: 4,
+        Items: items3
+      };
+      tickets.push(ticket3);
+    }
     let data = {
       Term: term,
       IgnorePrice: true,
-      Tickets:
-        [
-          {
-            GameType: 0,
-            BetType: 0,
-            Items: this.items
-          }
-        ]
+      Tickets: tickets
     };
     let date = this.numbersService.convertDateToString(new Date());
     localStorage.setItem('now', date);
