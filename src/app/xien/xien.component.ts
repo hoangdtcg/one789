@@ -19,6 +19,8 @@ export class XienComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   items: Items[] = [];
+  items1: Items[] = [];
+  items2: Items[] = [];
   search: string = '';
   data: string = '';
   totalPoint: number = 0;
@@ -219,13 +221,37 @@ export class XienComponent implements OnInit {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
       numbers.map(number => {
-        let items: Items = {};
         number = number.trim();
-        this.getResultNumbers(number, items, +columns[1]);
+      });
+      let xien2 = this.numbersService.getPairOfNumberArray(numbers);
+      let xien3 = this.numbersService.getThreeDifferentNumber(numbers);
+      let xien4 = this.numbersService.getFourDifferentNumber(numbers);
+      xien2.map(number => {
+        let items: Items = {};
+        items.Numbers = number;
+        items.Price = this.getNumberExtraPrice(number[0]);
         if (columns[1] != null) {
           items.Point = +columns[1];
         }
         this.items.push(items);
+      });
+      xien3.map(number => {
+        let items: Items = {};
+        items.Numbers = number;
+        items.Price = this.getNumberExtraPrice(number[0]);
+        if (columns[1] != null) {
+          items.Point = +columns[1];
+        }
+        this.items1.push(items);
+      });
+      xien4.map(number => {
+        let items: Items = {};
+        items.Numbers = number;
+        items.Price = this.getNumberExtraPrice(number[0]);
+        if (columns[1] != null) {
+          items.Point = +columns[1];
+        }
+        this.items2.push(items);
       });
     });
   }
@@ -298,65 +324,31 @@ export class XienComponent implements OnInit {
 
   submit() {
     let term = this.numbersService.convertDateToString(new Date());
-    let listNumberInput = [];
-    this.resultNumbers.map(numbers => {
-      listNumberInput.push(numbers.Number);
-    });
-    let xien2 = this.numbersService.getPairOfNumberArray(listNumberInput);
-    let xien3 = this.numbersService.getThreeDifferentNumber(listNumberInput);
-    let xien4 = this.numbersService.getFourDifferentNumber(listNumberInput);
     let tickets = [];
-    let items1 = [];
-    let items2 = [];
-    let items3 = [];
-    xien2.map(numbers => {
-      let item: Items = {
-        Numbers: numbers,
-        Price: numbers.price1,
-        Point: numbers.point
-      };
-      items1.push(item);
-    });
-    xien3.map(numbers => {
-      let item: Items = {
-        Numbers: numbers,
-        Price: numbers.price1,
-        Point: numbers.point
-      };
-      items2.push(item);
-    });
-    xien4.map(numbers => {
-      let item: Items = {
-        Numbers: numbers,
-        Price: numbers.price1,
-        Point: numbers.point
-      };
-      items3.push(item);
-    });
-    if (items1.length == 0) {
+    if (this.items.length == 0) {
       this.message = 'Phải nhập ít nhất 2 số';
       return;
     }
     let ticket1 = {
       GameType: 0,
       BetType: 2,
-      Items: items1
+      Items: this.items
     };
     tickets.push(ticket1);
-    if (items2.length != 0) {
+    if (this.items1.length != 0) {
       let ticket2 = {
         GameType: 0,
         BetType: 3,
-        Items: items2
+        Items: this.items1
       };
       tickets.push(ticket2);
     }
 
-    if (items3.length != 0) {
+    if (this.items2.length != 0) {
       let ticket3 = {
         GameType: 0,
         BetType: 4,
-        Items: items3
+        Items: this.items2
       };
       tickets.push(ticket3);
     }
@@ -490,5 +482,15 @@ export class XienComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  private getNumberExtraPrice(number: any) {
+    let price = 0;
+    this.filterNumbers.map(numbers => {
+      if (numbers.Number == number) {
+        price = numbers.ExtraPrice;
+      }
+    });
+    return price;
   }
 }
