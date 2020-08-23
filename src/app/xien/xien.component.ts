@@ -18,6 +18,7 @@ export class XienComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
+  resultItems: Items[] = [];
   items: Items[] = [];
   items1: Items[] = [];
   items2: Items[] = [];
@@ -220,9 +221,9 @@ export class XienComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
-      numbers.map(number => {
-        number = number.trim();
-      });
+      for (let i = 0; i < numbers.length; i++) {
+        numbers[i] = numbers[i].trim();
+      }
       let xien2 = this.numbersService.getPairOfNumberArray(numbers);
       let xien3 = this.numbersService.getThreeDifferentNumber(numbers);
       let xien4 = this.numbersService.getFourDifferentNumber(numbers);
