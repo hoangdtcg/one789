@@ -18,7 +18,7 @@ export class XienComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
-  resultItems: Items[] = [];
+  resultItems: any = [];
   items: Items[] = [];
   items1: Items[] = [];
   items2: Items[] = [];
@@ -455,7 +455,7 @@ export class XienComponent implements OnInit {
         Tickets: [
           {
             GameType: 0,
-            BetType: 0,
+            BetType: 2,
             TicketNumber: ticket.TicketNumber
           }
         ]
