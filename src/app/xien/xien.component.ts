@@ -29,7 +29,7 @@ export class XienComponent implements OnInit {
   exportData: string = '';
   date: Date = new Date();
   latest: any = [];
-  listUnsatisfactory: Numbers[] = [];
+  listUnsatisfactory: any = [];
   numberOfInput: number = 0;
   maximum: string = '';
   message: string = '';
@@ -221,36 +221,66 @@ export class XienComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
+      let ticket1: any = {
+        GameType: 0
+      };
       for (let i = 0; i < numbers.length; i++) {
         numbers[i] = numbers[i].trim();
       }
       if (numbers.length == 2) {
         this.items = this.pushToItemsList(numbers, columns[1], 'price1');
-        let ticket1 = {
-          GameType: 0,
-          BetType: 2,
-          Items: this.items
-        };
+        ticket1.BetType = 2;
+        ticket1.Items = this.items;
+        if (+columns[1] > +this.maximum) {
+          let newPrice = +columns[1] - +this.maximum;
+          let temp: any = {
+            GameType: 0,
+            BetType: ticket1.BetType,
+            Items: this.pushToItemsList(numbers, newPrice+'', 'price1')
+          };
+          this.listUnsatisfactory.push(temp);
+          this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
+          ticket1.Items = this.items;
+        }
         this.tickets.push(ticket1);
       }
       if (numbers.length == 3) {
         this.items1 = this.pushToItemsList(numbers, columns[1], 'price2');
-        let ticket2 = {
-          GameType: 0,
-          BetType: 3,
-          Items: this.items1
-        };
-        this.tickets.push(ticket2);
+        ticket1.BetType = 3;
+        ticket1.Items = this.items1;
+        if (+columns[1] > +this.maximum) {
+          this.listUnsatisfactory.push(ticket1);
+          let newPrice = +columns[1] - +this.maximum;
+          let temp: any = {
+            GameType: 0,
+            BetType: ticket1.BetType,
+            Items: this.pushToItemsList(numbers, newPrice+'', 'price2')
+          };
+          this.listUnsatisfactory.push(temp);
+          this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
+          ticket1.Items = this.items1;
+        }
+        this.tickets.push(ticket1);
       }
       if (numbers.length == 4) {
         this.items2 = this.pushToItemsList(numbers, columns[1], 'price3');
-        let ticket3 = {
-          GameType: 0,
-          BetType: 4,
-          Items: this.items2
-        };
-        this.tickets.push(ticket3);
+        ticket1.BetType = 4;
+        ticket1.Items = this.items2;
+        if (+columns[1] > +this.maximum) {
+          this.listUnsatisfactory.push(ticket1);
+          let newPrice = +columns[1] - +this.maximum;
+          let temp: any = {
+            GameType: 0,
+            BetType: ticket1.BetType,
+            Items: this.pushToItemsList(numbers, newPrice+'', 'price3')
+          };
+          this.listUnsatisfactory.push(temp);
+          this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');
+          ticket1.Items = this.items2;
+        }
+        this.tickets.push(ticket1);
       }
+      this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
       if (numbers.length < 2) {
         this.message = 'Phải nhập ít nhất 2 số';
         $('#modal-danger').modal('hide');
@@ -269,54 +299,6 @@ export class XienComponent implements OnInit {
     }
     itemsList.push(items);
     return itemsList;
-  }
-
-  private getResultNumbers(number: string, items: Items, point: number) {
-    this.filterNumbers.map(number1 => {
-      let temp = number1;
-      let isEqualNumberValue = temp.Number == number;
-      if (isEqualNumberValue) {
-        items.Numbers = [number];
-        items.Price = temp.ExtraPrice;
-        this.pushNumberToUnsatisfactoryList(point, temp);
-        this.pushDifferentNumberToResultList(temp);
-      }
-    });
-  }
-
-  private pushNumberToUnsatisfactoryList(point: number, temp: Numbers) {
-    let isGreaterThanMaximum = point > +this.maximum;
-    let isPositiveNumber = +this.maximum > 0;
-    if (isGreaterThanMaximum && isPositiveNumber) {
-      temp.point = +this.maximum;
-      let temp1: Numbers = {
-        Number: temp.Number,
-        point: point - +this.maximum,
-        checked: temp.checked,
-        ExtraPrice: temp.ExtraPrice,
-        price1: temp.price1,
-        price2: temp.price2,
-        price3: temp.price3
-      };
-      this.listUnsatisfactory.push(temp1);
-    } else {
-      temp.point = point;
-    }
-  }
-
-  private pushDifferentNumberToResultList(temp: Numbers) {
-    let index = this.isTheSameNumber(temp, this.resultNumbers);
-    if (index != -1) {
-      this.resultNumbers[index].point += temp.point;
-    } else {
-      let numberTemp: Numbers = {
-        Number: temp.Number,
-        point: temp.point,
-        checked: true,
-        ExtraPrice: temp.ExtraPrice
-      };
-      this.resultNumbers.push(numberTemp);
-    }
   }
 
   isTheSameNumber(number: Numbers, listNumber: Numbers[]) {
@@ -381,7 +363,6 @@ export class XienComponent implements OnInit {
 
   clearAll() {
     this.getAllOdd();
-    this.resultNumbers = [];
     this.items = [];
     this.totalPoint = 0;
     this.totalMoney = 0;
