@@ -371,12 +371,12 @@ export class XienComponent implements OnInit {
             localStorage.setItem('xien', JSON.stringify(localStorageArray));
           });
         }
-        this.clearAll();
       }, () => {
         this.notificationService.showErrorMessage('Xảy ra lỗi');
       });
-      this.reloadTicketsLatestList();
     }
+    this.clearAll();
+    this.reloadTicketsLatestList();
   }
 
   clearAll() {
