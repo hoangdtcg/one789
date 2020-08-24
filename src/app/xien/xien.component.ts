@@ -212,7 +212,7 @@ export class XienComponent implements OnInit {
       this.data = '';
       $('#modal-danger').modal('hide');
     } else {
-      this.message = 'Xin hãy nhập như mẫu sau: Đề: 01,02x1n';
+      this.message = 'Xin hãy nhập như mẫu sau: Xiên: 01,02x1n';
       $('#modal-danger').modal('show');
     }
   }
@@ -253,6 +253,7 @@ export class XienComponent implements OnInit {
       }
       if (numbers.length < 2) {
         this.message = 'Phải nhập ít nhất 2 số';
+        $('#modal-danger').modal('hide');
         return;
       }
     });
