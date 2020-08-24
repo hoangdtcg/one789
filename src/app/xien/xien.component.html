@@ -73,7 +73,7 @@
           <table class="table table-head-fixed">
             <thead>
             <tr>
-              <th>Số</th>
+              <th>Xiên</th>
               <th>Điểm</th>
               <th>Giá tiền</th>
               <th>Thành tiền</th>
@@ -87,9 +87,9 @@
               <td *ngIf="ticket.Items[0] !=null">{{ticket.Items[0].Price * ticket.Items[0].Point}}</td>
             </tr>
             </tbody>
-            <tfoot *ngIf="resultNumbers.length!=0">
+            <tfoot *ngIf="tickets.length!=0">
             <tr>
-              <td class="text-bold">Tổng số: {{resultNumbers.length}}</td>
+              <td class="text-bold">Tổng: {{tickets.length}}</td>
               <td class="text-bold">Tổng điểm: {{totalPoint}}</td>
               <td></td>
               <td class="text-bold">Tổng tiền: {{totalMoney}}</td>
