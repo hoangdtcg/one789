@@ -224,55 +224,49 @@ export class XienComponent implements OnInit {
       for (let i = 0; i < numbers.length; i++) {
         numbers[i] = numbers[i].trim();
       }
-      let xien2 = this.numbersService.getPairOfNumberArray(numbers);
-      let xien3 = this.numbersService.getThreeDifferentNumber(numbers);
-      let xien4 = this.numbersService.getFourDifferentNumber(numbers);
-      this.items = this.pushToItemsList(xien2, columns[1], 'price1');
-      this.items1 = this.pushToItemsList(xien3, columns[1], 'price2');
-      this.items2 = this.pushToItemsList(xien4, columns[1], 'price3');
-      if (this.items.length == 0) {
-        this.message = 'Phải nhập ít nhất 2 số';
-        return;
+      if (numbers.length == 2) {
+        this.items = this.pushToItemsList(numbers, columns[1], 'price1');
+        let ticket1 = {
+          GameType: 0,
+          BetType: 2,
+          Items: this.items
+        };
+        this.tickets.push(ticket1);
       }
-      let tickets = [];
-      let ticket1 = {
-        GameType: 0,
-        BetType: 2,
-        Items: this.items
-      };
-      tickets.push(ticket1);
-      if (this.items1.length != 0) {
+      if (numbers.length == 3) {
+        this.items1 = this.pushToItemsList(numbers, columns[1], 'price2');
         let ticket2 = {
           GameType: 0,
           BetType: 3,
           Items: this.items1
         };
-        tickets.push(ticket2);
+        this.tickets.push(ticket2);
       }
-
-      if (this.items2.length != 0) {
+      if (numbers.length == 4) {
+        this.items2 = this.pushToItemsList(numbers, columns[1], 'price3');
         let ticket3 = {
           GameType: 0,
           BetType: 4,
           Items: this.items2
         };
-        tickets.push(ticket3);
+        this.tickets.push(ticket3);
       }
-      this.tickets.push(tickets);
+      if (numbers.length < 2) {
+        this.message = 'Phải nhập ít nhất 2 số';
+        return;
+      }
     });
   }
 
-  private pushToItemsList(xien: any[], price: string, priceType: string) {
+  private pushToItemsList(xien: any, price: string, priceType: string) {
     let itemsList = [];
-    xien.map(number => {
-      let items: Items = {};
-      items.Numbers = number;
-      items.Price = this.getNumberExtraPrice(number[0], priceType);
-      if (price != null) {
-        items.Point = +price;
-      }
-      itemsList.push(items);
-    });
+    let items: Items = {};
+    items.Numbers = xien;
+    items.Price = this.getNumberExtraPrice(xien[0], priceType);
+    if (price != null) {
+      items.Point = +price;
+    }
+    itemsList.push(items);
     return itemsList;
   }
 
@@ -348,7 +342,7 @@ export class XienComponent implements OnInit {
       let data = {
         Term: term,
         IgnorePrice: true,
-        Tickets: this.tickets[i]
+        Tickets: [this.tickets[i]]
       };
       let date = this.numbersService.convertDateToString(new Date());
       localStorage.setItem('now', date);
