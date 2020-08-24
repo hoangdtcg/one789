@@ -331,9 +331,9 @@ export class XienComponent implements OnInit {
   }
 
   sumTotalPointAndTotalMoney() {
-    this.resultNumbers.map(number => {
-      this.totalPoint += +number.point;
-      this.totalMoney += number.point * number.ExtraPrice;
+    this.tickets.map(ticket => {
+      this.totalPoint += ticket.Items[0].Point;
+      this.totalMoney += ticket.Items[0].point * ticket.Items[0].ExtraPrice;
     });
   }
 

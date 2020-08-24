@@ -80,11 +80,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let number of resultNumbers" [style.background]="number.checked?'#349af3':''">
-              <td>{{number.Number}}</td>
-              <td>{{number.point}}</td>
-              <td>{{number.ExtraPrice}}</td>
-              <td>{{number.ExtraPrice * number.point}}</td>
+            <tr *ngFor="let ticket of tickets">
+              <td *ngIf="ticket.Items[0] !=null">{{ticket.Items[0].Numbers}}</td>
+              <td *ngIf="ticket.Items[0] !=null">{{ticket.Items[0].Point}}</td>
+              <td *ngIf="ticket.Items[0] !=null">{{ticket.Items[0].Price}}</td>
+              <td *ngIf="ticket.Items[0] !=null">{{ticket.Items[0].Price * ticket.Items[0].Point}}</td>
             </tr>
             </tbody>
             <tfoot *ngIf="resultNumbers.length!=0">
