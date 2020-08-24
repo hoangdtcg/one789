@@ -454,7 +454,7 @@ export class XienComponent implements OnInit {
         Tickets: [
           {
             GameType: 0,
-            BetType: 2,
+            BetType: ticket.BetType,
             TicketNumber: ticket.TicketNumber
           }
         ]
