@@ -206,7 +206,7 @@ export class XienComponent implements OnInit {
       let rows = contents[1].split('n');
       rows.pop();
       this.pushDataToItemList(rows);
-      this.numberOfInput = this.resultNumbers.length;
+      this.numberOfInput = this.tickets.length;
       this.filterNumberLowerThan();
       this.sumTotalPointAndTotalMoney();
       this.data = '';
@@ -349,7 +349,6 @@ export class XienComponent implements OnInit {
       localStorage.setItem('now', date);
       this.gamePlayService.play(data).subscribe(() => {
         this.notificationService.showSuccessMessage('Thành công');
-        this.data = this.exportStringToTextArea(this.resultNumbers);
         let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
         if (localStorageArray == null) {
           localStorage.setItem('xien', JSON.stringify(this.resultNumbers));
@@ -375,6 +374,7 @@ export class XienComponent implements OnInit {
         this.notificationService.showErrorMessage('Xảy ra lỗi');
       });
     }
+    this.data = this.exportStringToTextArea(this.tickets);
     this.clearAll();
     this.reloadTicketsLatestList();
   }
@@ -391,52 +391,21 @@ export class XienComponent implements OnInit {
     this.tickets = [];
   }
 
-  exportStringToTextArea(numbers) {
-    let arrayPoint = [];
-    for (let i = 0; i < numbers.length; i++) {
-      let flag = 0;
-      for (let j = i + 1; j < numbers.length - 1; j++) {
-        if (numbers[i].point == numbers[j].point) {
-          flag = 1;
-          break;
-        }
-      }
-      if (flag == 0) {
-        if (i == numbers.length - 1) {
-          let index = arrayPoint.indexOf(numbers[i].point);
-          if (index == -1) {
-            arrayPoint.push(numbers[i].point);
-          }
-        } else {
-          arrayPoint.push(numbers[i].point);
-        }
-      }
-    }
+  exportStringToTextArea(tickets) {
     let result = 'Xiên:';
-    for (let i = 0; i < arrayPoint.length; i++) {
-      const numberHasSamePointArray = [];
-      for (let j = 0; j < numbers.length; j++) {
-        if (arrayPoint[i] == numbers[j].point) {
-          numberHasSamePointArray.push(numbers[j]);
-        }
-      }
-      result += this.exportOneLine(numberHasSamePointArray);
-      if (i != numbers.length - 1) {
+    for (let i = 0; i < tickets.length; i++) {
+      result += this.exportOneLine(tickets);
+      if (i != tickets.length - 1) {
         result += '\n';
       }
     }
     return result;
   }
 
-  exportOneLine(numbers) {
+  exportOneLine(tickets) {
     let result = '';
-    for (let i = 0; i < numbers.length; i++) {
-      result += numbers[i].Number;
-      if (i != numbers.length - 1) {
-        result += ', ';
-      }
-    }
-    result += 'x' + numbers[0].point + 'n';
+    result += tickets[0].Items[0].Numbers;
+    result += 'x' + tickets[0].Items[0].Point + 'n';
     return result;
   }
 
