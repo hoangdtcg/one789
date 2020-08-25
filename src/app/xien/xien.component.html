@@ -1,7 +1,7 @@
 <section class="content">
   <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-3">
+    <div class="col-md-1"></div>
+    <div class="col-md-4">
       <h3>Ngày: {{date.getUTCDate()}}/{{date.getUTCMonth() + 1}}/{{date.getUTCFullYear()}}</h3>
       <div class="form-group">
         <label for="search">Lọc số: </label>
@@ -15,15 +15,15 @@
       <div class="form-group">
         <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>
       </div>
-            <div class="form-group" *ngIf="numberOfInput != 0">
-              <p>Có <span style="color: red">{{numberOfInput}}</span> xiên được nhập</p>
-            </div>
+      <div class="form-group" *ngIf="numberOfInput != 0">
+        <p>Có <span style="color: red">{{numberOfInput}}</span> xiên được nhập</p>
+      </div>
       <div class="form-group">
         <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
       </div>
-            <div class="form-group" *ngIf="listUnsatisfactory.length != 0">
-              <p>Có <span style="color: red">{{listUnsatisfactory.length}}</span> xiên không thoả mãn điều kiện</p>
-            </div>
+      <div class="form-group" *ngIf="listUnsatisfactory.length != 0">
+        <p>Có <span style="color: red">{{listUnsatisfactory.length}}</span> xiên không thoả mãn điều kiện</p>
+      </div>
       <div class="form-group">
         <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>
       </div>
