@@ -52,7 +52,7 @@ export class DitNhatComponent implements OnInit {
   }
 
   getAllOdd() {
-    let numberInLocalStorage = JSON.parse(localStorage.getItem('de'));
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('dit-nhat'));
     let term = this.numbersService.convertDateToString(new Date());
     this.oddsService.getOdds(term, 22).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
@@ -97,13 +97,13 @@ export class DitNhatComponent implements OnInit {
   }
 
   deleteLocalStorageAfterNextDay() {
-    let date = +localStorage.getItem('now');
+    let date = localStorage.getItem('now');
     let currentTime = new Date();
     let convertToDate = new Date(date);
     let isLowerDate = convertToDate.getUTCDate() < currentTime.getUTCDate();
     let isLowerMonth = convertToDate.getUTCMonth() < currentTime.getUTCMonth();
     let isLowerYear = convertToDate.getUTCFullYear() < currentTime.getUTCFullYear();
-    if (date != 0) {
+    if (date != null) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
         localStorage.removeItem('dit-nhat');

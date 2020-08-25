@@ -101,13 +101,13 @@ export class HomepageComponent implements OnInit {
   }
 
   deleteLocalStorageAfterNextDay() {
-    let date = +localStorage.getItem('now');
+    let date = localStorage.getItem('now');
     let currentTime = new Date();
     let convertToDate = new Date(date);
     let isLowerDate = convertToDate.getUTCDate() < currentTime.getUTCDate();
     let isLowerMonth = convertToDate.getUTCMonth() < currentTime.getUTCMonth();
     let isLowerYear = convertToDate.getUTCFullYear() < currentTime.getUTCFullYear();
-    if (date != 0) {
+    if (date != null) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
         localStorage.removeItem('de');
