@@ -12,17 +12,25 @@
         <input id="maximum" type="number" min="0" placeholder="Nhập số điểm tối đa" name="maximum"
                [(ngModel)]="maximum" (keyup)="saveMaximumToLocalStorage()">
       </div>
-      <div class="form-group">
-        <textarea name="data" [(ngModel)]="data" cols="60" rows="5" placeholder="Input"></textarea>
+      <div class="form-group row">
+        <div class="col-9">
+          <textarea name="data" #dataInput [(ngModel)]="data" cols="50" rows="5" placeholder="Input"></textarea>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary" (click)="copyDataToClipboard(dataInput)">Copy</button>
+        </div>
       </div>
       <div class="form-group" *ngIf="numberOfInput != 0">
-        <p>Có <span style="color: red">{{numberOfInput}}</span> được nhập</p>
+        <p>Có <span style="color: red">{{numberOfInput}}</span> xiên được nhập</p>
       </div>
-      <div class="form-group">
-        <textarea name="data" [(ngModel)]="exportData" cols="60" rows="5" placeholder="Số lớn hơn điều kiện"></textarea>
-      </div>
-      <div class="form-group" *ngIf="listUnsatisfactory.length != 0">
-        <p>Có <span style="color: red">{{listUnsatisfactory.length}}</span> không thoả mãn điều kiện</p>
+      <div class="form-group row">
+        <div class="col-9">
+        <textarea #export name="data" [(ngModel)]="exportData" cols="50" rows="5"
+                  placeholder="Số lớn hơn điều kiện"></textarea>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary" (click)="copyDataToClipboard(export)">Copy</button>
+        </div>
       </div>
       <div class="form-group">
         <button class="btn btn-outline-primary" (click)="searchNumber()">Nhập dữ liệu</button>

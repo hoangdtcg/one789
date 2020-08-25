@@ -6,6 +6,7 @@ import {NumbersService} from '../service/numbers/numbers.service';
 import {GamePlayService} from '../service/game-play/game-play.service';
 import {NotificationService} from '../service/notification/notification.service';
 import {AuthenticationService} from '../service/authentication/authentication.service';
+import {CopyService} from '../service/copy/copy.service';
 
 declare var $: any;
 
@@ -37,7 +38,8 @@ export class DitNhatComponent implements OnInit {
               private numbersService: NumbersService,
               private gamePlayService: GamePlayService,
               private notificationService: NotificationService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private copyService: CopyService) {
   }
 
   ngOnInit() {
@@ -420,5 +422,9 @@ export class DitNhatComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  copyDataToClipboard(inputElement) {
+    this.copyService.copyInputMessage(inputElement);
   }
 }

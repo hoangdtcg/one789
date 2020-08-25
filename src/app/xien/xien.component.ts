@@ -6,7 +6,7 @@ import {NumbersService} from '../service/numbers/numbers.service';
 import {GamePlayService} from '../service/game-play/game-play.service';
 import {NotificationService} from '../service/notification/notification.service';
 import {AuthenticationService} from '../service/authentication/authentication.service';
-import {CopyService} from '../service/copy.service';
+import {CopyService} from '../service/copy/copy.service';
 
 declare var $: any;
 
