@@ -204,7 +204,7 @@ export class XienComponent implements OnInit {
     }
   }
 
-  private splitInputData() {
+  splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
     let isValidType = contents[0] == 'Xien' || contents[0] == 'Xiên' || contents[0] == 'xiên' || contents[0] == 'xien';
@@ -224,7 +224,7 @@ export class XienComponent implements OnInit {
     }
   }
 
-  private pushDataToItemList(rows: string[]) {
+  pushDataToItemList(rows: string[]) {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
@@ -296,7 +296,7 @@ export class XienComponent implements OnInit {
     });
   }
 
-  private pushToItemsList(xien: any, price: string, priceType: string) {
+  pushToItemsList(xien: any, price: string, priceType: string) {
     let itemsList = [];
     let items: Items = {};
     items.Numbers = xien;
@@ -431,7 +431,7 @@ export class XienComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  private getNumberExtraPrice(number: any, price) {
+  getNumberExtraPrice(number: any, price) {
     let extraPrice = 0;
     for (let i = 0; i < this.filterNumbers.length; i++) {
       if (this.filterNumbers[i].Number == number) {

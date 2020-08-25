@@ -182,7 +182,7 @@ export class DitNhatComponent implements OnInit {
     }
   }
 
-  private splitInputData() {
+  splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
     let isValidType = contents[0] == 'Dit nhat' || contents[0] == 'Đít nhất' || contents[0] == 'đít nhất' || contents[0] == 'dit nhất' || contents[0] == 'dit nhat';
@@ -202,7 +202,7 @@ export class DitNhatComponent implements OnInit {
     }
   }
 
-  private pushDataToItemList(rows: string[]) {
+  pushDataToItemList(rows: string[]) {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
@@ -218,7 +218,7 @@ export class DitNhatComponent implements OnInit {
     });
   }
 
-  private getResultNumbers(number: string, items: Items, point: number) {
+  getResultNumbers(number: string, items: Items, point: number) {
     this.filterNumbers.map(number1 => {
       let temp = number1;
       let isEqualNumberValue = temp.Number == number;
@@ -231,7 +231,7 @@ export class DitNhatComponent implements OnInit {
     });
   }
 
-  private pushNumberToUnsatisfactoryList(point: number, temp: Numbers) {
+  pushNumberToUnsatisfactoryList(point: number, temp: Numbers) {
     let isGreaterThanMaximum = point > +this.maximum;
     let isPositiveNumber = +this.maximum > 0;
     if (isGreaterThanMaximum && isPositiveNumber) {
@@ -248,7 +248,7 @@ export class DitNhatComponent implements OnInit {
     }
   }
 
-  private pushDifferentNumberToResultList(temp: Numbers) {
+  pushDifferentNumberToResultList(temp: Numbers) {
     let index = this.isTheSameNumber(temp, this.resultNumbers);
     if (index != -1) {
       this.resultNumbers[index].point += temp.point;
