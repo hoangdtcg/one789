@@ -246,8 +246,7 @@ export class XienComponent implements OnInit {
         ticket1.BetType = 3;
         ticket1.Items = this.items1;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
-          this.listUnsatisfactory.push(ticket1);
-          let newPrice = +columns[1] - +this.maximum;
+          let newPrice = +priceAfterRate - +this.maximum;
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
@@ -270,8 +269,7 @@ export class XienComponent implements OnInit {
         ticket1.BetType = 4;
         ticket1.Items = this.items2;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
-          this.listUnsatisfactory.push(ticket1);
-          let newPrice = +columns[1] - +this.maximum;
+          let newPrice = +priceAfterRate - +this.maximum;
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
