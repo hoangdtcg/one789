@@ -89,6 +89,10 @@ export class HomepageComponent implements OnInit {
   updateData() {
     this.getAllOdd();
     this.getTicketsLatest();
+    let maximum = localStorage.getItem('maximum');
+    if (maximum != null) {
+      this.maximum = maximum;
+    }
     let self = this;
     setInterval(function() {
       self.getAllOdd();
@@ -417,5 +421,9 @@ export class HomepageComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+  }
+
+  saveMaximumToLocalStorage() {
+    localStorage.setItem('maximum', this.maximum);
   }
 }
