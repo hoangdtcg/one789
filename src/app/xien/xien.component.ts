@@ -17,7 +17,6 @@ declare var $: any;
 export class XienComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
-  resultNumbers: Numbers[] = [];
   tickets: any = [];
   originTickets: any = [];
   items: Items[] = [];
@@ -296,11 +295,11 @@ export class XienComponent implements OnInit {
     });
   }
 
-  pushToItemsList(xien: any, price: string, priceType: string) {
+  pushToItemsList(numbers: any, price: string, priceType: string) {
     let itemsList = [];
     let items: Items = {};
-    items.Numbers = xien;
-    items.Price = this.getNumberExtraPrice(xien[0], priceType);
+    items.Numbers = numbers;
+    items.Price = this.getNumberExtraPrice(numbers, priceType);
     if (price != null) {
       items.Point = +price;
     }
@@ -359,11 +358,14 @@ export class XienComponent implements OnInit {
   }
 
   exportStringToTextArea(tickets) {
-    let result = 'Xiên:';
-    for (let i = 0; i < tickets.length; i++) {
-      result += this.exportOneLine(tickets);
-      if (i != tickets.length - 1) {
-        result += '\n';
+    let result = '';
+    if (tickets.length != 0) {
+      result += 'Xiên:';
+      for (let i = 0; i < tickets.length; i++) {
+        result += this.exportOneLine(tickets);
+        if (i != tickets.length - 1) {
+          result += '\n';
+        }
       }
     }
     return result;
@@ -410,24 +412,28 @@ export class XienComponent implements OnInit {
     this.authenticationService.logout();
   }
 
-  getNumberExtraPrice(number: any, price) {
+  getNumberExtraPrice(numbers: any, price) {
     let extraPrice = 0;
-    for (let i = 0; i < this.filterNumbers.length; i++) {
-      if (this.filterNumbers[i].Number == number) {
-        if (price == 'price1') {
-          extraPrice = this.filterNumbers[i].price1;
-          break;
-        }
-        if (price == 'price2') {
-          extraPrice = this.filterNumbers[i].price2;
-          break;
-        }
-        if (price == 'price3') {
-          extraPrice = this.filterNumbers[i].price3;
-          break;
+    let count = 0;
+    for (let i = 0; i < numbers.length; i++) {
+      for (let j = 0; j < this.filterNumbers.length; j++) {
+        if (this.filterNumbers[j].Number == numbers[i]) {
+          if (price == 'price1') {
+            count++;
+            extraPrice += this.filterNumbers[j].price1;
+          }
+          if (price == 'price2') {
+            count++;
+            extraPrice += this.filterNumbers[j].price2;
+          }
+          if (price == 'price3') {
+            count++;
+            extraPrice += this.filterNumbers[j].price3;
+          }
         }
       }
     }
-    return extraPrice;
+    extraPrice /= count;
+    return +extraPrice.toFixed(2);
   }
 }
