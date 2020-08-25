@@ -91,6 +91,10 @@ export class DitNhatComponent implements OnInit {
   updateData() {
     this.getAllOdd();
     this.getTicketsLatest();
+    let maximum = localStorage.getItem('maximum-nhat');
+    if (maximum != null) {
+      this.maximum = maximum;
+    }
     let self = this;
     setInterval(function() {
       self.getAllOdd();
@@ -427,5 +431,9 @@ export class DitNhatComponent implements OnInit {
 
   copyDataToClipboard(inputElement) {
     this.copyService.copyInputMessage(inputElement);
+  }
+
+  saveMaximumToLocalStorage() {
+    localStorage.setItem('maximum-nhat', this.maximum);
   }
 }

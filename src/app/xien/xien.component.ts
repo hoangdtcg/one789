@@ -93,6 +93,10 @@ export class XienComponent implements OnInit {
   updateData() {
     this.getAllOdd();
     this.getTicketsLatest();
+    let maximum = localStorage.getItem('maximum-xien');
+    if (maximum != null) {
+      this.maximum = maximum;
+    }
     let self = this;
     setInterval(function() {
       self.getAllOdd();
@@ -441,5 +445,9 @@ export class XienComponent implements OnInit {
 
   copyDataToClipboard(inputElement) {
     this.copyService.copyInputMessage(inputElement);
+  }
+
+  saveMaximumToLocalStorage() {
+    localStorage.setItem('maximum-xien', this.maximum);
   }
 }

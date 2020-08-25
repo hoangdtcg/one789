@@ -91,7 +91,7 @@ export class HomepageComponent implements OnInit {
   updateData() {
     this.getAllOdd();
     this.getTicketsLatest();
-    let maximum = localStorage.getItem('maximum');
+    let maximum = localStorage.getItem('maximum-de');
     if (maximum != null) {
       this.maximum = maximum;
     }
@@ -430,7 +430,7 @@ export class HomepageComponent implements OnInit {
   }
 
   saveMaximumToLocalStorage() {
-    localStorage.setItem('maximum', this.maximum);
+    localStorage.setItem('maximum-de', this.maximum);
   }
 
   copyDataToClipboard(inputElement) {
