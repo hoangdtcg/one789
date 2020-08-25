@@ -399,7 +399,7 @@ export class HomepageComponent implements OnInit {
         Tickets: [
           {
             GameType: 0,
-            BetType: ticket.BetType,
+            BetType: 0,
             TicketNumber: ticket.TicketNumber
           }
         ]
