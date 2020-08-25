@@ -89,13 +89,23 @@ export class XienComponent implements OnInit {
   }
 
   updateData() {
-    let date = +localStorage.getItem('now');
+    this.getAllOdd();
+    this.getTicketsLatest();
+    let self = this;
+    setInterval(function() {
+      self.getAllOdd();
+      self.deleteLocalStorageAfterNextDay();
+    }, 1000);
+  }
+
+  deleteLocalStorageAfterNextDay() {
+    let date = localStorage.getItem('now');
     let currentTime = new Date();
     let convertToDate = new Date(date);
     let isLowerDate = convertToDate.getUTCDate() < currentTime.getUTCDate();
     let isLowerMonth = convertToDate.getUTCMonth() < currentTime.getUTCMonth();
     let isLowerYear = convertToDate.getUTCFullYear() < currentTime.getUTCFullYear();
-    if (date != 0) {
+    if (date != null) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
         localStorage.removeItem('xien');
@@ -111,12 +121,6 @@ export class XienComponent implements OnInit {
         }
       }
     }
-    this.getAllOdd();
-    this.getTicketsLatest();
-    let self = this;
-    setInterval(function() {
-      self.getAllOdd();
-    }, 1000);
   }
 
   reloadTicketsLatestList() {
