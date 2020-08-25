@@ -22,7 +22,7 @@ export class XienComponent implements OnInit {
   items: Items[] = [];
   items1: Items[] = [];
   items2: Items[] = [];
-  search: string = '';
+  rate: string = '1';
   data: string = '';
   totalPoint: number = 0;
   totalMoney: number = 0;
@@ -133,23 +133,6 @@ export class XienComponent implements OnInit {
     }, 2000);
   }
 
-  filterNumberLowerThan() {
-    if (this.search != '') {
-      this.resultNumbers.map(number => {
-        let flag = -1;
-        if (number.ExtraPrice <= (+this.search)) {
-          flag = 1;
-        }
-        if (flag == -1) {
-          this.listUnsatisfactory.push(number);
-          let index = this.resultNumbers.indexOf(number);
-          this.resultNumbers.splice(index, 1);
-        }
-      });
-      this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
-    }
-  }
-
   addExtraNumberToPrice(odd, price) {
     this.numbers.map(number => {
       if (price == 1) {
@@ -214,7 +197,6 @@ export class XienComponent implements OnInit {
       rows.pop();
       this.pushDataToItemList(rows);
       this.numberOfInput = this.tickets.length;
-      this.filterNumberLowerThan();
       this.sumTotalPointAndTotalMoney();
       this.data = '';
       $('#modal-danger').modal('hide');
@@ -373,7 +355,7 @@ export class XienComponent implements OnInit {
     this.items = [];
     this.totalPoint = 0;
     this.totalMoney = 0;
-    this.search = '';
+    this.rate = '1';
     this.numberOfInput = 0;
     this.listUnsatisfactory = [];
     this.tickets = [];
