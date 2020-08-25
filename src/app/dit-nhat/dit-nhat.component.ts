@@ -107,14 +107,17 @@ export class DitNhatComponent implements OnInit {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
         localStorage.removeItem('dit-nhat');
+        localStorage.removeItem('contents');
       } else {
         if (isLowerMonth) {
           localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
           localStorage.removeItem('dit-nhat');
+          localStorage.removeItem('contents');
         } else {
           if (isLowerYear) {
             localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
             localStorage.removeItem('dit-nhat');
+            localStorage.removeItem('contents');
           }
         }
       }
