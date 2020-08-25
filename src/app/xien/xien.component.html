@@ -41,14 +41,12 @@
             <tr>
               <th style="width: 60px">Số</th>
               <th>Điểm</th>
-              <th>Điểm đã đánh</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let number of filterNumbers">
               <td>{{number.Number}}</td>
               <td>{{number.price1}}, {{number.price2}}, {{number.price3}}</td>
-              <td class="text-center">{{number.totalPoint == null ? 0 : number.totalPoint}}</td>
             </tr>
             </tbody>
           </table>
