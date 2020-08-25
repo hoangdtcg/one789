@@ -200,7 +200,7 @@ export class XienComponent implements OnInit {
   private splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
-    let isValidType = contents[0] != 'Xien' || contents[0] != 'Xiên';
+    let isValidType = contents[0] == 'Xien' || contents[0] == 'Xiên' || contents[0] == 'xiên' || contents[0] == 'xien';
     if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
@@ -236,7 +236,7 @@ export class XienComponent implements OnInit {
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice+'', 'price1')
+            Items: this.pushToItemsList(numbers, newPrice + '', 'price1')
           };
           this.listUnsatisfactory.push(temp);
           this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
@@ -254,7 +254,7 @@ export class XienComponent implements OnInit {
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice+'', 'price2')
+            Items: this.pushToItemsList(numbers, newPrice + '', 'price2')
           };
           this.listUnsatisfactory.push(temp);
           this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
@@ -272,7 +272,7 @@ export class XienComponent implements OnInit {
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice+'', 'price3')
+            Items: this.pushToItemsList(numbers, newPrice + '', 'price3')
           };
           this.listUnsatisfactory.push(temp);
           this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');

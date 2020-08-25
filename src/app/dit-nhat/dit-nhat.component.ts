@@ -182,7 +182,7 @@ export class DitNhatComponent implements OnInit {
   private splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
-    let isValidType = contents[0] != 'Dit nhat' || contents[0] != 'Đít nhất';
+    let isValidType = contents[0] == 'Dit nhat' || contents[0] == 'Đít nhất' || contents[0] == 'đít nhất' || contents[0] == 'dit nhất';
     if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');

@@ -182,7 +182,7 @@ export class HomepageComponent implements OnInit {
   private splitInputData() {
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
-    let isValidType = contents[0] != 'De' || contents[0] != 'Đề';
+    let isValidType = contents[0] == 'De' || contents[0] == 'Đề' || contents[0] == 'de' || contents[0] == 'đề';
     if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
