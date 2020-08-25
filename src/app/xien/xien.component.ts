@@ -19,6 +19,7 @@ export class XienComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   tickets: any = [];
+  originTickets: any = [];
   items: Items[] = [];
   items1: Items[] = [];
   items2: Items[] = [];
@@ -210,6 +211,7 @@ export class XienComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
+      let priceAfterRate = (+columns[1] * +this.rate) + '';
       let ticket1: any = {
         GameType: 0
       };
@@ -220,8 +222,8 @@ export class XienComponent implements OnInit {
         this.items = this.pushToItemsList(numbers, columns[1], 'price1');
         ticket1.BetType = 2;
         ticket1.Items = this.items;
-        if (+columns[1] > +this.maximum && +this.maximum > 0) {
-          let newPrice = +columns[1] - +this.maximum;
+        if (+priceAfterRate > +this.maximum && +this.maximum > 0) {
+          let newPrice = +priceAfterRate - +this.maximum;
           let temp: any = {
             GameType: 0,
             BetType: ticket1.BetType,
@@ -231,6 +233,12 @@ export class XienComponent implements OnInit {
           this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
           ticket1.Items = this.items;
         }
+        let temp: any = {
+          GameType: 0,
+          BetType: ticket1.BetType,
+          Items: this.pushToItemsList(numbers, columns[1] + '', 'price1')
+        };
+        this.originTickets.push(temp);
         this.tickets.push(ticket1);
       }
       if (numbers.length == 3) {
@@ -249,6 +257,12 @@ export class XienComponent implements OnInit {
           this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
           ticket1.Items = this.items1;
         }
+        let temp: any = {
+          GameType: 0,
+          BetType: ticket1.BetType,
+          Items: this.pushToItemsList(numbers, columns[1] + '', 'price2')
+        };
+        this.originTickets.push(temp);
         this.tickets.push(ticket1);
       }
       if (numbers.length == 4) {
@@ -267,6 +281,12 @@ export class XienComponent implements OnInit {
           this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');
           ticket1.Items = this.items2;
         }
+        let temp: any = {
+          GameType: 0,
+          BetType: ticket1.BetType,
+          Items: this.pushToItemsList(numbers, columns[1] + '', 'price3')
+        };
+        this.originTickets.push(temp);
         this.tickets.push(ticket1);
       }
       this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
@@ -320,32 +340,11 @@ export class XienComponent implements OnInit {
       localStorage.setItem('now', date);
       this.gamePlayService.play(data).subscribe(() => {
         this.notificationService.showSuccessMessage('Thành công');
-        let localStorageArray = JSON.parse(localStorage.getItem('numbers'));
-        if (localStorageArray == null) {
-          localStorage.setItem('xien', JSON.stringify(this.resultNumbers));
-        } else {
-          localStorageArray = JSON.parse(localStorage.getItem('xien'));
-          this.resultNumbers.map(number => {
-            let index = this.isTheSameNumber(number, localStorageArray);
-            if (index != -1) {
-              localStorageArray[index].point += number.point;
-            } else {
-              let numberTemp: Numbers = {
-                Number: number.Number,
-                point: number.point,
-                checked: false,
-                ExtraPrice: number.ExtraPrice
-              };
-              localStorageArray.push(numberTemp);
-            }
-            localStorage.setItem('xien', JSON.stringify(localStorageArray));
-          });
-        }
       }, () => {
         this.notificationService.showErrorMessage('Xảy ra lỗi');
       });
     }
-    this.data = this.exportStringToTextArea(this.tickets);
+    this.data = this.exportStringToTextArea(this.originTickets);
     this.clearAll();
     this.reloadTicketsLatestList();
   }
