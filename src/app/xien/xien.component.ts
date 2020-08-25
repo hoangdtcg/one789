@@ -6,6 +6,7 @@ import {NumbersService} from '../service/numbers/numbers.service';
 import {GamePlayService} from '../service/game-play/game-play.service';
 import {NotificationService} from '../service/notification/notification.service';
 import {AuthenticationService} from '../service/authentication/authentication.service';
+import {CopyService} from '../service/copy.service';
 
 declare var $: any;
 
@@ -40,7 +41,8 @@ export class XienComponent implements OnInit {
               private numbersService: NumbersService,
               private gamePlayService: GamePlayService,
               private notificationService: NotificationService,
-              private authenticationService: AuthenticationService) {
+              private authenticationService: AuthenticationService,
+              private copyService: CopyService) {
   }
 
   ngOnInit() {
@@ -435,5 +437,9 @@ export class XienComponent implements OnInit {
     }
     extraPrice /= count;
     return +extraPrice.toFixed(2);
+  }
+
+  copyDataToClipboard(inputElement) {
+    this.copyService.copyInputMessage(inputElement);
   }
 }
