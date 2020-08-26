@@ -10,11 +10,16 @@ export class UserService {
   }
 
   createUser(data) {
-    return new Promise<any>((resolve, reject) =>{
+    return new Promise<any>((resolve, reject) => {
       this.firestore
-        .collection("users")
+        .collection('users')
         .add(data)
-        .then(() => {}, err => reject(err));
+        .then(() => {
+        }, err => reject(err));
     });
+  }
+
+  getAllUser() {
+    return this.firestore.collection('users').snapshotChanges();
   }
 }
