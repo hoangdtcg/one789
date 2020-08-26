@@ -30,14 +30,32 @@
         <tr>
           <th style="width: 10px">#</th>
           <th>Tên tài khoản</th>
+          <th style="width: 160px"></th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let user of listUser; index as i">
-          <td>{{i + 1}}</td>
-          <td>
-            <span>{{user.payload.doc.data().username}}</span>
-          </td>
+          <ng-container *ngIf="username != user.payload.doc.data().username">
+            <td>{{i + 1}}</td>
+            <td>
+              <span>{{user.payload.doc.data().username}}</span>
+            </td>
+            <td>
+              <div class="row">
+                <div class="col-6">
+                  <a [routerLink]="['edit',user.id]" class="btn btn-block btn-primary" style="color: white">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                </div>
+                <div class="col-6">
+                  <button type="button" class="btn btn-block btn-danger" style="color: white" data-toggle="modal"
+                          data-target="#modal-delete">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
         </tr>
         </tbody>
       </table>

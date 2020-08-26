@@ -10,8 +10,10 @@ declare var $: any;
 })
 export class ListUserComponent implements OnInit {
   listUser: any = [];
+  username: string = '';
 
   constructor(private userService: UserService) {
+    this.username = localStorage.getItem('username');
   }
 
   ngOnInit() {
