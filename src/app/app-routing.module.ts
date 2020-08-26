@@ -29,6 +29,10 @@ const routes: Routes = [
       {
         path: 'dit-nhat',
         component: DitNhatComponent
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('./user/user.module').then(module => module.UserModule)
       }
     ]
   }
