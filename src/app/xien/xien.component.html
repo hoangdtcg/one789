@@ -16,7 +16,9 @@
           <textarea #dataInput name="data" [(ngModel)]="data" cols="45" rows="5" placeholder="Input"></textarea>
         </div>
         <div class="col-2">
-          <button class="btn btn-primary" (click)="copyDataToClipboard(dataInput)">Copy</button>
+          <button class="btn btn-primary" (click)="copyDataToClipboard(dataInput)" [disabled]="data.length==0">
+            Copy
+          </button>
         </div>
       </div>
       <div class="form-group" *ngIf="numberOfInput != 0">
@@ -28,7 +30,9 @@
                   placeholder="Số lớn hơn điều kiện"></textarea>
         </div>
         <div class="col-2">
-          <button class="btn btn-primary" (click)="copyDataToClipboard(export)">Copy</button>
+          <button class="btn btn-primary" (click)="copyDataToClipboard(export)" [disabled]="exportData.length ==0">
+            Copy
+          </button>
         </div>
       </div>
       <div class="form-group" *ngIf="listUnsatisfactory.length != 0">
