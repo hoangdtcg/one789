@@ -28,8 +28,19 @@ export class UserService {
 
   deleteUser(data) {
     return this.firestore
-      .collection("users")
+      .collection('users')
       .doc(data.payload.doc.id)
       .delete();
+  }
+
+  updateUser(data, input) {
+    return this.firestore
+      .collection('users')
+      .doc(data.payload.doc.id)
+      .set(
+        {
+          username: input.username,
+          role: input.role
+        }, {merge: true});
   }
 }

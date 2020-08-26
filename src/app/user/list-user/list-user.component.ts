@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../service/user/user.service';
+import {NotificationService} from '../../service/notification/notification.service';
 
 declare var $: any;
 
@@ -10,11 +11,14 @@ declare var $: any;
 })
 export class ListUserComponent implements OnInit {
   listUser: any = [];
-  username: string = '';
+  currentUsername: string = '';
   user: any;
+  username: string = '';
+  role: string = '';
 
-  constructor(private userService: UserService) {
-    this.username = localStorage.getItem('username');
+  constructor(private userService: UserService,
+              private notificationService: NotificationService) {
+    this.currentUsername = localStorage.getItem('username');
   }
 
   ngOnInit() {
@@ -24,25 +28,29 @@ export class ListUserComponent implements OnInit {
   getAllUser() {
     this.userService.getAllUser().subscribe(listUser => {
       this.listUser = listUser;
-      $(function() {
-        $('#table-user').DataTable({
-          'paging': true,
-          'lengthChange': false,
-          'searching': false,
-          'ordering': true,
-          'info': true,
-          'autoWidth': false,
-        });
-      });
     });
   }
 
   deleteUser = data => {
     this.userService.deleteUser(data);
+    this.notificationService.showSuccessMessage('Đã xóa!');
     $('#modal-delete').modal('hide');
   };
 
   getUser(user) {
     this.user = user;
+    this.username = user.payload.doc.data().username;
+    this.role = user.payload.doc.data().role;
   }
+
+  updateUser = data => {
+    let input = {
+      username: this.username,
+      role: this.role
+    };
+    this.userService.updateUser(data,input);
+    this.getAllUser();
+    this.notificationService.showSuccessMessage('Cập nhật thành công!');
+    $('#modal-update').modal('hide');
+  };
 }
