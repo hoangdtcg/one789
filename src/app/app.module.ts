@@ -13,6 +13,9 @@ import {SharedModule} from './shared/shared.module';
 import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shared.component';
 import { XienComponent } from './xien/xien.component';
 import { DitNhatComponent } from './dit-nhat/dit-nhat.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { DitNhatComponent } from './dit-nhat/dit-nhat.component';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
