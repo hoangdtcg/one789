@@ -24,12 +24,13 @@
         </a>
       </div>
     </div>
-    <div class="card-body">
-      <table class="table table-bordered" id="table-category">
+    <div class="card-body table-responsive p-0" style="height: 600px;">
+      <table class="table table-head-fixed">
         <thead>
         <tr>
           <th style="width: 10px">#</th>
           <th>Tên tài khoản</th>
+          <th>Quyền hạn</th>
           <th style="width: 160px"></th>
         </tr>
         </thead>
@@ -39,6 +40,9 @@
             <td>{{i + 1}}</td>
             <td>
               <span>{{user.payload.doc.data().username}}</span>
+            </td>
+            <td>
+              <span>{{user.payload.doc.data().role}}</span>
             </td>
             <td>
               <div class="row">
