@@ -11,6 +11,7 @@ declare var $: any;
 export class ListUserComponent implements OnInit {
   listUser: any = [];
   username: string = '';
+  user: any;
 
   constructor(private userService: UserService) {
     this.username = localStorage.getItem('username');
@@ -36,7 +37,12 @@ export class ListUserComponent implements OnInit {
     });
   }
 
-  deleteUser() {
+  deleteUser = data => {
+    this.userService.deleteUser(data);
+    $('#modal-delete').modal('hide');
+  };
 
+  getUser(user) {
+    this.user = user;
   }
 }

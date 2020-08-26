@@ -25,4 +25,11 @@ export class UserService {
   getAllUser() {
     return this.firestore.collection('users').snapshotChanges();
   }
+
+  deleteUser(data) {
+    return this.firestore
+      .collection("users")
+      .doc(data.payload.doc.id)
+      .delete();
+  }
 }
