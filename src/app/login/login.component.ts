@@ -37,35 +37,31 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.isExistsInFirestore(this.loginRequest.Username)) {
-      this.authenticationService.login(this.loginRequest.Username, this.loginRequest.Password)
-        .pipe(first())
-        .subscribe(
-          data => {
-            sessionStorage.setItem('ACCESS_TOKEN', data.IdToken);
-            localStorage.setItem('username', this.loginRequest.Username);
-            this.router.navigate([this.returnUrl]).finally(() => {
-            });
-            this.notificationService.showSuccessMessage('Đăng nhập thành công!');
-          },
-          () => {
-            this.notificationService.showErrorMessage('Sai tên đăng nhập hoặc mật khẩu!');
-          });
-    } else {
-      this.notificationService.showErrorMessage('Sai tên đăng nhập hoặc mật khẩu!');
-    }
-  }
-
-  isExistsInFirestore(username) {
     let isExisted = false;
     this.userService.getAllUser().subscribe(listUser => {
       listUser.map(user => {
         // @ts-ignore
-        if (user.payload.doc.data().username == username) {
+        if (user.payload.doc.data().username == this.loginRequest.Username) {
           isExisted = true;
         }
       });
+      if (isExisted) {
+        this.authenticationService.login(this.loginRequest.Username, this.loginRequest.Password)
+          .pipe(first())
+          .subscribe(
+            data => {
+              sessionStorage.setItem('ACCESS_TOKEN', data.IdToken);
+              localStorage.setItem('username', this.loginRequest.Username);
+              this.router.navigate([this.returnUrl]).finally(() => {
+              });
+              this.notificationService.showSuccessMessage('Đăng nhập thành công!');
+            },
+            () => {
+              this.notificationService.showErrorMessage('Sai tên đăng nhập hoặc mật khẩu!');
+            });
+      } else {
+        this.notificationService.showErrorMessage('Sai tên đăng nhập hoặc mật khẩu!');
+      }
     });
-    return isExisted;
   }
 }
