@@ -252,7 +252,9 @@ export class HomepageComponent implements OnInit {
     } else {
       temp.point = point;
     }
-    this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
+    if (this.listUnsatisfactory.length != 0) {
+      this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
+    }
   }
 
   pushDifferentNumberToResultList(temp: Numbers) {
