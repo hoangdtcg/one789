@@ -63,8 +63,6 @@ export class CreateUserComponent implements OnInit {
     if (this.isValid) {
       this.userService.createUser(data)
         .then();
-      this.username = '';
-      this.role = '';
     }
   }
 }
