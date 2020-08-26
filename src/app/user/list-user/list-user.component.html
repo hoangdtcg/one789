@@ -37,7 +37,7 @@
         <tr *ngFor="let user of listUser; index as i">
           <td>{{i + 1}}</td>
           <td>
-            <span>{{user.username}}</span>
+            <span>{{user.payload.doc.data().username}}</span>
           </td>
           <td>
             <div class="row">

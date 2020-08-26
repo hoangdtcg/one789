@@ -1,12 +1,14 @@
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {NotificationService} from '../notification/notification.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore,
+              private notificationService: NotificationService) {
   }
 
   createUser(data) {
@@ -15,6 +17,7 @@ export class UserService {
         .collection('users')
         .add(data)
         .then(() => {
+          this.notificationService.showSuccessMessage('Tạo tài khoản thành công');
         }, err => reject(err));
     });
   }
