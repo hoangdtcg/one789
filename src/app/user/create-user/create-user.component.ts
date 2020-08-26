@@ -18,7 +18,6 @@ export class CreateUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    const self = this;
     $(document).ready(function() {
       $('#user-form').validate({
         rules: {
