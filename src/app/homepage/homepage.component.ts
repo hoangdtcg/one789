@@ -189,6 +189,8 @@ export class HomepageComponent implements OnInit {
   }
 
   splitInputData() {
+    let regex = /.+?(?=de|đề|De|Đề)/;
+    this.data = this.data.replace(regex, '');
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
     let isValidType = contents[0].includes('De') || contents[0].includes('Đề') || contents[0].includes('de') || contents[0].includes('đề');
