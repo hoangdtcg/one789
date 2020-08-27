@@ -297,7 +297,7 @@ export class XienComponent implements OnInit {
       this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
       if (numbers.length < 2) {
         this.message = 'Phải nhập ít nhất 2 số';
-        $('#modal-danger').modal('hide');
+        $('#modal-danger').modal('show');
         return;
       }
     });
