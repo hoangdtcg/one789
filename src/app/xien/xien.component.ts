@@ -335,20 +335,18 @@ export class XienComponent implements OnInit {
 
   submit() {
     let term = this.numbersService.convertDateToString(new Date());
-    for (let i = 0; i < this.tickets.length; i++) {
-      let data = {
-        Term: term,
-        IgnorePrice: true,
-        Tickets: [this.tickets[i]]
-      };
-      let date = this.numbersService.convertDateToString(new Date());
-      localStorage.setItem('now', date);
-      this.gamePlayService.play(data).subscribe(() => {
-        this.notificationService.showSuccessMessage('Thành công');
-      }, () => {
-        this.notificationService.showErrorMessage('Xảy ra lỗi');
-      });
-    }
+    let data = {
+      Term: term,
+      IgnorePrice: true,
+      Tickets: this.tickets
+    };
+    let date = this.numbersService.convertDateToString(new Date());
+    localStorage.setItem('now', date);
+    this.gamePlayService.play(data).subscribe(() => {
+      this.notificationService.showSuccessMessage('Thành công');
+    }, () => {
+      this.notificationService.showErrorMessage('Xảy ra lỗi');
+    });
     this.data = this.exportStringToTextArea(this.originTickets);
     this.clearAll();
     this.reloadTicketsLatestList();
@@ -468,7 +466,7 @@ export class XienComponent implements OnInit {
       }
     }
     extraPrice /= count;
-    return +extraPrice.toFixed(2);
+    return +extraPrice.toFixed(0);
   }
 
   copyDataToClipboard(inputElement) {
