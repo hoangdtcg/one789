@@ -303,13 +303,13 @@ export class XienComponent implements OnInit {
     });
   }
 
-  pushToItemsList(numbers: any, price: string, priceType: string) {
+  pushToItemsList(numbers: any, point: string, priceType: string) {
     let itemsList = [];
     let items: Items = {};
     items.Numbers = numbers;
     items.Price = this.getNumberExtraPrice(numbers, priceType);
-    if (price != null) {
-      items.Point = +price;
+    if (point != null) {
+      items.Point = +point;
     }
     itemsList.push(items);
     return itemsList;
@@ -366,11 +366,37 @@ export class XienComponent implements OnInit {
   }
 
   exportStringToTextArea(tickets) {
+    let arrayPoint = [];
+    for (let i = 0; i < tickets.length; i++) {
+      let flag = 0;
+      for (let j = i + 1; j < tickets.length - 1; j++) {
+        if (tickets[i].Items[0].Point == tickets[j].Items[0].Point) {
+          flag = 1;
+          break;
+        }
+      }
+      if (flag == 0) {
+        if (i == tickets.length - 1) {
+          let index = arrayPoint.indexOf(tickets[i].Items[0].Point);
+          if (index == -1) {
+            arrayPoint.push(tickets[i].Items[0].Point);
+          }
+        } else {
+          arrayPoint.push(tickets[i].Items[0].Point);
+        }
+      }
+    }
     let result = '';
     if (tickets.length != 0) {
       result += 'Xiên:';
-      for (let i = 0; i < tickets.length; i++) {
-        result += this.exportOneLine(tickets);
+      for (let i = 0; i < arrayPoint.length; i++) {
+        const ticketHasSamePoint = [];
+        for (let j = 0; j < tickets.length; j++) {
+          if (arrayPoint[i] == tickets[j].Items[0].Point) {
+            ticketHasSamePoint.push(tickets[j]);
+          }
+        }
+        result += this.exportOneLine(ticketHasSamePoint);
         if (i != tickets.length - 1) {
           result += '\n';
         }
