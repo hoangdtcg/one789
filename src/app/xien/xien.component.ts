@@ -194,7 +194,7 @@ export class XienComponent implements OnInit {
   }
 
   splitInputData() {
-    let regex = /.+?(?=Xien|Xiên|xiên|xien)/;
+    let regex = /^[^Xien|Xiên|xiên|xien]*/;
     this.data = this.data.replace(regex, '');
     let contents = this.data.split(':');
     let isValid = contents[1] != null;

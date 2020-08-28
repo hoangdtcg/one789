@@ -189,7 +189,7 @@ export class DitNhatComponent implements OnInit {
   }
 
   splitInputData() {
-    let regex = /.+?(?=Dit nhat'|Đít nhất|đít nhất|dit nhất|dit nhat|nhat|nhất|Đit nhat)/;
+    let regex = /^[^Dit nhat|Đít nhất|đít nhất|dit nhất|dit nhat|nhat|nhất|Đit nhat]*/;
     this.data = this.data.replace(regex, '');
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
