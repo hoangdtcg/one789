@@ -4,7 +4,6 @@ import {LoginComponent} from './login/login.component';
 import {HomepageComponent} from './homepage/homepage.component';
 import {LayoutWithSharedComponent} from './layout-with-shared/layout-with-shared.component';
 import {AuthGuard} from './helper/auth-guard';
-import {XienComponent} from './xien/xien.component';
 import {DitNhatComponent} from './dit-nhat/dit-nhat.component';
 
 
@@ -24,7 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'xien',
-        component: XienComponent
+        loadChildren: () => import('./xien/xien.module').then(module => module.XienModule)
       },
       {
         path: 'dit-nhat',
