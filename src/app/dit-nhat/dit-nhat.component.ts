@@ -139,7 +139,11 @@ export class DitNhatComponent implements OnInit {
 
   filterNumberLowerThan() {
     if (this.search != '') {
+      let numbers = [];
       this.resultNumbers.map(number => {
+        numbers.push(number);
+      });
+      numbers.map(number => {
         let flag = -1;
         if (number.ExtraPrice <= (+this.search)) {
           flag = 1;
