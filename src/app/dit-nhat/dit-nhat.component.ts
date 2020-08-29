@@ -92,6 +92,10 @@ export class DitNhatComponent implements OnInit {
     this.getAllOdd();
     this.getTicketsLatest();
     let maximum = localStorage.getItem('maximum-nhat');
+    let search = localStorage.getItem('search-nhat');
+    if(search != null){
+      this.search = search;
+    }
     if (maximum != null) {
       this.maximum = maximum;
     }
@@ -445,5 +449,9 @@ export class DitNhatComponent implements OnInit {
 
   saveMaximumToLocalStorage() {
     localStorage.setItem('maximum-nhat', this.maximum);
+  }
+
+  saveSearchToLocalStorage() {
+    localStorage.setItem('search-nhat', this.search);
   }
 }

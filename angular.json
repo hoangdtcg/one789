@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "demo-login"
+    }
+  },
+  "defaultProject": "demo-login",
+  "cli": {
+    "analytics": "9e55e131-0af4-40ec-aeca-d0f258961528"
+  }
 }

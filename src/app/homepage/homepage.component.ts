@@ -92,6 +92,10 @@ export class HomepageComponent implements OnInit {
     this.getAllOdd();
     this.getTicketsLatest();
     let maximum = localStorage.getItem('maximum-de');
+    let search = localStorage.getItem('search-de');
+    if(search != null){
+      this.search = search;
+    }
     if (maximum != null) {
       this.maximum = maximum;
     }
@@ -443,5 +447,9 @@ export class HomepageComponent implements OnInit {
 
   copyDataToClipboard(inputElement) {
     this.copyService.copyInputMessage(inputElement);
+  }
+
+  saveSearchToLocalStorage() {
+    localStorage.setItem('search-de', this.search);
   }
 }
