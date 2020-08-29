@@ -44,7 +44,24 @@ export class DitNhatComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('de'));
     this.filterNumbers = this.numbersService.getAllNumber();
+    this.filterNumbers.map(number => {
+      number.totalPoint = 0;
+      this.numbers.map(number1 => {
+        if (number1.Number == number.Number) {
+          number.ExtraPrice = number1.ExtraPrice;
+        }
+      });
+      if (numberInLocalStorage != null) {
+        numberInLocalStorage.map(number1 => {
+          if (number1.Number == number.Number) {
+            number.totalPoint = number1.point;
+          }
+        });
+      }
+    });
+    this.sort(this.filterNumbers);
   }
 
   getTicketsLatest() {
@@ -60,6 +77,7 @@ export class DitNhatComponent implements OnInit {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
       this.filterNumbers.map(number => {
+        number.totalPoint = 0;
         this.numbers.map(number1 => {
           if (number1.Number == number.Number) {
             number.ExtraPrice = number1.ExtraPrice;
@@ -73,19 +91,11 @@ export class DitNhatComponent implements OnInit {
           });
         }
       });
-      for (let i = 0; i < this.filterNumbers.length; i++) {
-        for (let j = 0; j < this.filterNumbers.length; j++) {
-          if (this.numbersService.compareTo(this.filterNumbers[i], this.filterNumbers[j]) == 1) {
-            let temp = this.filterNumbers[i];
-            this.filterNumbers[i] = this.filterNumbers[j];
-            this.filterNumbers[j] = temp;
-          }
-        }
-      }
     }, () => {
       this.message = 'Đã hết phiên đăng nhập! Hãy đăng nhập lại';
       this.isExpired = true;
     });
+    this.sort(this.filterNumbers);
   }
 
   updateData() {
@@ -93,17 +103,29 @@ export class DitNhatComponent implements OnInit {
     this.getTicketsLatest();
     let maximum = localStorage.getItem('maximum-nhat');
     let search = localStorage.getItem('search-nhat');
-    if(search != null){
+    if (search != null) {
       this.search = search;
     }
     if (maximum != null) {
       this.maximum = maximum;
     }
     let self = this;
-    setInterval(function() {
+    setInterval(function () {
       self.getAllOdd();
       self.deleteLocalStorageAfterNextDay();
     }, 1000);
+  }
+
+  sort(numbers: Numbers[]) {
+    for (let i = 0; i < numbers.length; i++) {
+      for (let j = 0; j < numbers.length; j++) {
+        if (numbers[i].totalPoint > numbers[j].totalPoint) {
+          let temp = numbers[i];
+          numbers[i] = numbers[j];
+          numbers[j] = temp;
+        }
+      }
+    }
   }
 
   deleteLocalStorageAfterNextDay() {
@@ -136,7 +158,7 @@ export class DitNhatComponent implements OnInit {
 
   reloadTicketsLatestList() {
     const self = this;
-    setTimeout(function() {
+    setTimeout(function () {
       self.getTicketsLatest();
     }, 2000);
   }
