@@ -191,6 +191,7 @@ export class XienComponent implements OnInit {
         $('#modal-danger').modal('show');
       }
     }
+    this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
   }
 
   splitInputData() {
@@ -294,7 +295,6 @@ export class XienComponent implements OnInit {
         this.originTickets.push(temp);
         this.tickets.push(ticket1);
       }
-      this.exportData = this.exportStringToTextArea(this.listUnsatisfactory);
       if (numbers.length < 2) {
         this.message = 'Phải nhập ít nhất 2 số';
         $('#modal-danger').modal('show');
@@ -364,37 +364,11 @@ export class XienComponent implements OnInit {
   }
 
   exportStringToTextArea(tickets) {
-    let arrayPoint = [];
-    for (let i = 0; i < tickets.length; i++) {
-      let flag = 0;
-      for (let j = i + 1; j < tickets.length - 1; j++) {
-        if (tickets[i].Items[0].Point == tickets[j].Items[0].Point) {
-          flag = 1;
-          break;
-        }
-      }
-      if (flag == 0) {
-        if (i == tickets.length - 1) {
-          let index = arrayPoint.indexOf(tickets[i].Items[0].Point);
-          if (index == -1) {
-            arrayPoint.push(tickets[i].Items[0].Point);
-          }
-        } else {
-          arrayPoint.push(tickets[i].Items[0].Point);
-        }
-      }
-    }
     let result = '';
     if (tickets.length != 0) {
       result += 'Xiên:';
-      for (let i = 0; i < arrayPoint.length; i++) {
-        const ticketHasSamePoint = [];
-        for (let j = 0; j < tickets.length; j++) {
-          if (arrayPoint[i] == tickets[j].Items[0].Point) {
-            ticketHasSamePoint.push(tickets[j]);
-          }
-        }
-        result += this.exportOneLine(ticketHasSamePoint);
+      for (let i = 0; i < tickets.length; i++) {
+        result += this.exportOneLine(tickets[i]);
         if (i != tickets.length - 1) {
           result += '\n';
         }
@@ -405,8 +379,8 @@ export class XienComponent implements OnInit {
 
   exportOneLine(tickets) {
     let result = '';
-    result += tickets[0].Items[0].Numbers;
-    result += 'x' + tickets[0].Items[0].Point + 'n';
+    result += tickets.Items[0].Numbers;
+    result += 'x' + tickets.Items[0].Point + 'n';
     return result;
   }
 
