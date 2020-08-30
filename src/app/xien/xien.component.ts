@@ -219,7 +219,7 @@ export class XienComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
-      let priceAfterRate = (+columns[1] * +this.rate) + '';
+      let priceAfterRate = (+columns[1] * +this.rate).toFixed(0) + '';
       let ticket1: any = {
         GameType: 0
       };
@@ -230,15 +230,19 @@ export class XienComponent implements OnInit {
         this.items = this.pushToItemsList(numbers, columns[1], 'price1');
         ticket1.BetType = 2;
         ticket1.Items = this.items;
-        if (+priceAfterRate > +this.maximum && +this.maximum > 0) {
+        if (+columns[1] > +this.maximum && +this.maximum > 0) {
           let newPrice = +priceAfterRate - +this.maximum;
-          let temp: any = {
-            GameType: 0,
-            BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice + '', 'price1')
-          };
-          this.listUnsatisfactory.push(temp);
-          this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
+          if (newPrice > 0) {
+            let temp: any = {
+              GameType: 0,
+              BetType: ticket1.BetType,
+              Items: this.pushToItemsList(numbers, newPrice + '', 'price1')
+            };
+            this.listUnsatisfactory.push(temp);
+            this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
+          } else {
+            this.items = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price1');
+          }
           ticket1.Items = this.items;
         }
         let temp: any = {
@@ -255,13 +259,17 @@ export class XienComponent implements OnInit {
         ticket1.Items = this.items1;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
           let newPrice = +priceAfterRate - +this.maximum;
-          let temp: any = {
-            GameType: 0,
-            BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice + '', 'price2')
-          };
-          this.listUnsatisfactory.push(temp);
-          this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
+          if (newPrice > 0) {
+            let temp: any = {
+              GameType: 0,
+              BetType: ticket1.BetType,
+              Items: this.pushToItemsList(numbers, newPrice + '', 'price2')
+            };
+            this.listUnsatisfactory.push(temp);
+            this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
+          } else {
+            this.items1 = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price2');
+          }
           ticket1.Items = this.items1;
         }
         let temp: any = {
@@ -278,13 +286,17 @@ export class XienComponent implements OnInit {
         ticket1.Items = this.items2;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
           let newPrice = +priceAfterRate - +this.maximum;
-          let temp: any = {
-            GameType: 0,
-            BetType: ticket1.BetType,
-            Items: this.pushToItemsList(numbers, newPrice + '', 'price3')
-          };
-          this.listUnsatisfactory.push(temp);
-          this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');
+          if (newPrice > 0) {
+            let temp: any = {
+              GameType: 0,
+              BetType: ticket1.BetType,
+              Items: this.pushToItemsList(numbers, newPrice + '', 'price3')
+            };
+            this.listUnsatisfactory.push(temp);
+            this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');
+          } else {
+            this.items2 = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price3');
+          }
           ticket1.Items = this.items2;
         }
         let temp: any = {
