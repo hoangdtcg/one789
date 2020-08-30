@@ -44,7 +44,7 @@ export class DitNhatComponent implements OnInit {
 
   ngOnInit() {
     this.updateData();
-    let numberInLocalStorage = JSON.parse(localStorage.getItem('de'));
+    let numberInLocalStorage = JSON.parse(localStorage.getItem('dit-nhat'));
     this.filterNumbers = this.numbersService.getAllNumber();
     this.filterNumbers.map(number => {
       number.totalPoint = 0;
