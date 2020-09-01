@@ -219,7 +219,7 @@ export class XienComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
-      let priceAfterRate = (+columns[1] * +this.rate).toFixed(0) + '';
+      let priceAfterRate = Math.round(+columns[1] * +this.rate) + '';
       let ticket1: any = {
         GameType: 0
       };
@@ -227,7 +227,7 @@ export class XienComponent implements OnInit {
         numbers[i] = numbers[i].trim();
       }
       if (numbers.length == 2) {
-        this.items = this.pushToItemsList(numbers, columns[1], 'price1');
+        this.items = this.pushToItemsList(numbers, priceAfterRate + '', 'price1');
         ticket1.BetType = 2;
         ticket1.Items = this.items;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
@@ -241,7 +241,7 @@ export class XienComponent implements OnInit {
             this.listUnsatisfactory.push(temp);
             this.items = this.pushToItemsList(numbers, this.maximum, 'price1');
           } else {
-            this.items = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price1');
+            this.items = this.pushToItemsList(numbers, Math.round(+this.maximum * +this.rate) + '', 'price1');
           }
           ticket1.Items = this.items;
         }
@@ -254,7 +254,7 @@ export class XienComponent implements OnInit {
         this.tickets.push(ticket1);
       }
       if (numbers.length == 3) {
-        this.items1 = this.pushToItemsList(numbers, columns[1], 'price2');
+        this.items1 = this.pushToItemsList(numbers, priceAfterRate + '', 'price2');
         ticket1.BetType = 3;
         ticket1.Items = this.items1;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
@@ -268,7 +268,7 @@ export class XienComponent implements OnInit {
             this.listUnsatisfactory.push(temp);
             this.items1 = this.pushToItemsList(numbers, this.maximum, 'price2');
           } else {
-            this.items1 = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price2');
+            this.items1 = this.pushToItemsList(numbers, Math.round(+this.maximum * +this.rate) + '', 'price2');
           }
           ticket1.Items = this.items1;
         }
@@ -281,7 +281,7 @@ export class XienComponent implements OnInit {
         this.tickets.push(ticket1);
       }
       if (numbers.length == 4) {
-        this.items2 = this.pushToItemsList(numbers, columns[1], 'price3');
+        this.items2 = this.pushToItemsList(numbers, priceAfterRate + '', 'price3');
         ticket1.BetType = 4;
         ticket1.Items = this.items2;
         if (+columns[1] > +this.maximum && +this.maximum > 0) {
@@ -295,7 +295,7 @@ export class XienComponent implements OnInit {
             this.listUnsatisfactory.push(temp);
             this.items2 = this.pushToItemsList(numbers, this.maximum, 'price3');
           } else {
-            this.items2 = this.pushToItemsList(numbers, (+this.maximum * +this.rate) + '', 'price3');
+            this.items2 = this.pushToItemsList(numbers, Math.round(+this.maximum * +this.rate) + '', 'price3');
           }
           ticket1.Items = this.items2;
         }
@@ -452,7 +452,7 @@ export class XienComponent implements OnInit {
       }
     }
     extraPrice /= count;
-    return +extraPrice.toFixed(0);
+    return +Math.round(extraPrice);
   }
 
   copyDataToClipboard(inputElement) {
