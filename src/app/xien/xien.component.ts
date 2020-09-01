@@ -373,6 +373,7 @@ export class XienComponent implements OnInit {
     this.numberOfInput = 0;
     this.listUnsatisfactory = [];
     this.tickets = [];
+    this.originTickets = [];
   }
 
   exportStringToTextArea(tickets) {
