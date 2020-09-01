@@ -232,7 +232,6 @@ export class DitNhatComponent implements OnInit {
       rows.pop();
       this.pushDataToItemList(rows);
       this.numberOfInput = this.resultNumbers.length;
-      this.filterNumberLowerThan();
       this.sumTotalPointAndTotalMoney();
       this.data = '';
       $('#modal-danger').modal('hide');
@@ -247,29 +246,33 @@ export class DitNhatComponent implements OnInit {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
       numbers.map(number => {
-        let items: Items = {};
         number = number.trim();
-        this.getResultNumbers(number, items, +columns[1]);
+        this.getResultNumbers(number, +columns[1]);
+        this.filterNumberLowerThan();
+      });
+      this.resultNumbers.map(number => {
+        let items: Items = {};
+        items.Numbers = [number.Number];
+        items.Price = number.ExtraPrice;
         if (columns[1] != null) {
-          items.Point = +columns[1];
+          items.Point = +this.maximum > +columns[1] ? items.Point = +columns[1] : +this.maximum;
         }
         this.items.push(items);
       });
     });
   }
 
-  getResultNumbers(number: string, items: Items, point: number) {
+  getResultNumbers(number: string, point: number) {
     this.filterNumbers.map(number1 => {
       let temp = number1;
       let isEqualNumberValue = temp.Number == number;
       if (isEqualNumberValue) {
-        items.Numbers = [number];
-        items.Price = temp.ExtraPrice;
         this.pushNumberToUnsatisfactoryList(point, temp);
         this.pushDifferentNumberToResultList(temp);
       }
     });
   }
+
 
   pushNumberToUnsatisfactoryList(point: number, temp: Numbers) {
     let isGreaterThanMaximum = point > +this.maximum;
