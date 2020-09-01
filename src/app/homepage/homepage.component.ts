@@ -259,7 +259,7 @@ export class HomepageComponent implements OnInit {
         items.Numbers = [number.Number];
         items.Price = number.ExtraPrice;
         if (columns[1] != null) {
-          items.Point = +columns[1];
+          items.Point = +this.maximum > +columns[1] ? items.Point = +columns[1] : +this.maximum;
         }
         this.items.push(items);
       });
