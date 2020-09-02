@@ -231,7 +231,15 @@ export class DitNhatComponent implements OnInit {
       let rows = contents[1].split('n');
       rows.pop();
       this.pushDataToItemList(rows);
-      this.numberOfInput = this.resultNumbers.length;
+      this.resultNumbers.map(number => {
+        let items: Items = {};
+        items.Numbers = [number.Number];
+        items.Price = number.ExtraPrice;
+        if (number.point != null) {
+          items.Point = +this.maximum > number.point ? items.Point = number.point : +this.maximum;
+        }
+        this.items.push(items);
+      });
       this.sumTotalPointAndTotalMoney();
       this.data = '';
       $('#modal-danger').modal('hide');
@@ -250,15 +258,7 @@ export class DitNhatComponent implements OnInit {
         this.getResultNumbers(number, +columns[1]);
         this.filterNumberLowerThan();
       });
-      this.resultNumbers.map(number => {
-        let items: Items = {};
-        items.Numbers = [number.Number];
-        items.Price = number.ExtraPrice;
-        if (columns[1] != null) {
-          items.Point = +this.maximum > +columns[1] ? items.Point = +columns[1] : +this.maximum;
-        }
-        this.items.push(items);
-      });
+      this.numberOfInput += numbers.length;
     });
   }
 
