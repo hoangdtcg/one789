@@ -312,6 +312,11 @@ export class XienComponent implements OnInit {
         $('#modal-danger').modal('show');
         return;
       }
+      if (numbers.length > 4) {
+        this.message = 'Nhập tối đa 4 số';
+        $('#modal-danger').modal('show');
+        return;
+      }
     });
   }
 
