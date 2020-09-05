@@ -27,7 +27,8 @@ const routes: Routes = [
       },
       {
         path: 'dit-nhat',
-        component: DitNhatComponent
+        loadChildren: () => import('./dit-nhat/dit-nhat.module').then(module => module.DitNhatModule)
+
       },
       {
         path: 'users',

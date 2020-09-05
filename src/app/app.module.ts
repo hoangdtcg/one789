@@ -11,7 +11,6 @@ import {ErrorInterceptor} from './helper/error-interceptor';
 import {JwtInterceptor} from './helper/jwt-interceptor';
 import {SharedModule} from './shared/shared.module';
 import { LayoutWithSharedComponent } from './layout-with-shared/layout-with-shared.component';
-import { DitNhatComponent } from './dit-nhat/dit-nhat.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {environment} from '../environments/environment';
@@ -22,7 +21,6 @@ import {environment} from '../environments/environment';
     LoginComponent,
     HomepageComponent,
     LayoutWithSharedComponent,
-    DitNhatComponent,
   ],
   imports: [
     BrowserModule,
