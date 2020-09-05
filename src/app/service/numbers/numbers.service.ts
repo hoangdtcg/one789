@@ -28,6 +28,22 @@ export class NumbersService {
     return numbers;
   }
 
+  getAllNumberForBaCang() {
+    let numbers = [];
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        for (let k = 0; k < 10; k++) {
+          const number: Numbers = {
+            Number: i + '' + j + k,
+            ExtraPrice: 0
+          };
+          numbers.push(number);
+        }
+      }
+    }
+    return numbers;
+  }
+
   compareTo = (a: Numbers, b: Numbers) => {
     return a.Number < b.Number ? 1 : -1;
   };
@@ -81,7 +97,7 @@ export class NumbersService {
     for (let i = 0; i < array.length; i++) {
       for (let j = i + 1; j < array.length; j++) {
         for (let k = j + 1; k < array.length; k++) {
-          for(let n = k+1;n<array.length;n++){
+          for (let n = k + 1; n < array.length; n++) {
             let arrayTemp = [];
             arrayTemp.push(array[i]);
             arrayTemp.push(array[j]);
