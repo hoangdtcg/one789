@@ -59,12 +59,12 @@ export class XienComponent implements OnInit {
   getAllOdd() {
     let numberInLocalStorage = JSON.parse(localStorage.getItem('xien'));
     let term = this.numbersService.convertDateToString(new Date());
-    this.oddsService.getOdds(term, 2).subscribe(odd => {
+    this.oddsService.getOdds(term, 2, 0).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToPrice(odd, 1);
-      this.oddsService.getOdds(term, 3).subscribe(odd2 => {
+      this.oddsService.getOdds(term, 3, 0).subscribe(odd2 => {
         this.addExtraNumberToPrice(odd2, 2);
-        this.oddsService.getOdds(term, 4).subscribe(odd3 => {
+        this.oddsService.getOdds(term, 4, 0).subscribe(odd3 => {
           this.addExtraNumberToPrice(odd3, 3);
           this.filterNumbers.map(number => {
             this.numbers.map(number1 => {

@@ -73,7 +73,7 @@ export class DitNhatComponent implements OnInit {
   getAllOdd() {
     let numberInLocalStorage = JSON.parse(localStorage.getItem('dit-nhat'));
     let term = this.numbersService.convertDateToString(new Date());
-    this.oddsService.getOdds(term, 22).subscribe(odd => {
+    this.oddsService.getOdds(term, 22, 0).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
       this.filterNumbers.map(number => {
@@ -110,7 +110,7 @@ export class DitNhatComponent implements OnInit {
       this.maximum = maximum;
     }
     let self = this;
-    setInterval(function () {
+    setInterval(function() {
       self.getAllOdd();
       self.deleteLocalStorageAfterNextDay();
     }, 1000);
@@ -158,7 +158,7 @@ export class DitNhatComponent implements OnInit {
 
   reloadTicketsLatestList() {
     const self = this;
-    setTimeout(function () {
+    setTimeout(function() {
       self.getTicketsLatest();
     }, 2000);
   }

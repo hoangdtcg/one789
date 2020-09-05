@@ -73,7 +73,7 @@ export class HomepageComponent implements OnInit {
   getAllOdd() {
     let numberInLocalStorage = JSON.parse(localStorage.getItem('de'));
     let term = this.numbersService.convertDateToString(new Date());
-    this.oddsService.getOdds(term, 0).subscribe(odd => {
+    this.oddsService.getOdds(term, 0, 0).subscribe(odd => {
       this.numbers = this.numbersService.getAllNumber();
       this.addExtraNumberToNumber(odd);
       this.filterNumbers.map(number => {
