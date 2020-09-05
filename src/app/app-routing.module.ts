@@ -28,7 +28,10 @@ const routes: Routes = [
       {
         path: 'dit-nhat',
         loadChildren: () => import('./dit-nhat/dit-nhat.module').then(module => module.DitNhatModule)
-
+      },
+      {
+        path: 'ba-cang',
+        loadChildren: () => import('./ba-cang/ba-cang.module').then(module => module.BaCangModule)
       },
       {
         path: 'users',
