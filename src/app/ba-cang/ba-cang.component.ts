@@ -343,6 +343,11 @@ export class BaCangComponent implements OnInit {
     let data = {
       Term: term,
       IgnorePrice: true,
+      Additional: {
+        Row: 0,
+        Alias: 16384,
+        Reverse: false
+      },
       Tickets:
         [
           {
