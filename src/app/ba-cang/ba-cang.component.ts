@@ -229,7 +229,7 @@ export class BaCangComponent implements OnInit {
   }
 
   splitInputData() {
-    let regex = /[^]+?(?=Ba\scang|Ba\scàng|ba\scàng|Ba\sCàng|ba\scang|Ba\sCang|3\sCang|3\sCàng|3\scàng|3\scang)/;
+    let regex = /[^]+?(?=Ba\scang|Ba\scàng|ba\scàng|Ba\sCàng|ba\scang|Ba\sCang|3\sCang|3\sCàng|3\scàng|3\scang|cang|càng|Cang|Càng)/;
     this.data = this.data.replace(regex, '');
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
@@ -237,7 +237,9 @@ export class BaCangComponent implements OnInit {
       || contents[0].includes('Ba càng') || contents[0].includes('ba càng')
       || contents[0].includes('Ba Càng') || contents[0].includes('Ba Cang')
       || contents[0].includes('3 Càng') || contents[0].includes('3 Cang')
-      || contents[0].includes('3 càng') || contents[0].includes('3 cang');
+      || contents[0].includes('3 càng') || contents[0].includes('3 cang')
+      || contents[0].includes('cang') || contents[0].includes('càng')
+      || contents[0].includes('Càng') || contents[0].includes('Cang');
     if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
