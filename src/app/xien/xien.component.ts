@@ -114,14 +114,26 @@ export class XienComponent implements OnInit {
     if (date != null) {
       if (isLowerDate) {
         localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
+        localStorage.removeItem('de');
+        localStorage.removeItem('xien');
+        localStorage.removeItem('dit-nhat');
+        localStorage.removeItem('ba-cang');
         localStorage.removeItem('contents');
       } else {
         if (isLowerMonth) {
           localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
+          localStorage.removeItem('de');
+          localStorage.removeItem('xien');
+          localStorage.removeItem('dit-nhat');
+          localStorage.removeItem('ba-cang');
           localStorage.removeItem('contents');
         } else {
           if (isLowerYear) {
             localStorage.setItem('now', this.numbersService.convertDateToString(currentTime));
+            localStorage.removeItem('de');
+            localStorage.removeItem('xien');
+            localStorage.removeItem('dit-nhat');
+            localStorage.removeItem('ba-cang');
             localStorage.removeItem('contents');
           }
         }
