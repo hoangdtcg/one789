@@ -228,13 +228,14 @@ export class DitNhatComponent implements OnInit {
   }
 
   splitInputData() {
-    let regex = /[^]+?(?=Dit\snhat|Đít\snhất|đít\snhất|dit\snhất|dit\snhat|nhat|nhất|Đit\snhat)/;
+    let regex = /[^]+?(?=Dit\snhat|Đít\snhất|đít\snhất|dit\snhất|dit\snhat|nhat|nhất|Đit\snhat|Nhất|Nhat)/;
     this.data = this.data.replace(regex, '');
     let contents = this.data.split(':');
     let isValid = contents[1] != null;
     let isValidType = contents[0] == 'Dit nhat' || contents[0] == 'Đít nhất'
       || contents[0] == 'đít nhất' || contents[0] == 'dit nhất' || contents[0] == 'dit nhat'
-      || contents[0] == 'nhat' || contents[0] == 'nhất' || contents[0] == 'Đit nhat';
+      || contents[0] == 'nhat' || contents[0] == 'nhất' || contents[0] == 'Đit nhat'
+      || contents[0] == 'Nhất' || contents[0] == 'Nhat';
     if (isValid && isValidType) {
       contents[1] = contents[1].replace('\n', '').trim();
       let rows = contents[1].split('n');
