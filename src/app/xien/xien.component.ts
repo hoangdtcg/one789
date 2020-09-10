@@ -215,9 +215,16 @@ export class XienComponent implements OnInit {
       rows.pop();
       this.pushDataToItemList(rows);
       this.numberOfInput = this.tickets.length;
-      this.sumTotalPointAndTotalMoney();
-      this.data = '';
-      $('#modal-danger').modal('hide');
+      if (this.tickets.length > 20) {
+        this.message = 'Chỉ có thể đánh tối đa 20 xiên một lần!';
+        this.tickets = [];
+        $('#modal-danger').modal('show');
+        return;
+      } else {
+        this.sumTotalPointAndTotalMoney();
+        this.data = '';
+        $('#modal-danger').modal('hide');
+      }
     } else {
       this.message = 'Xin hãy nhập như mẫu sau: Xiên: 01,02x1n';
       $('#modal-danger').modal('show');
