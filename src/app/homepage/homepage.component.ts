@@ -20,7 +20,7 @@ export class HomepageComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   items: Items[] = [];
-  search: string = '';
+  search: string = '810';
   data: string = '';
   totalPoint: number = 0;
   totalMoney: number = 0;
@@ -29,7 +29,7 @@ export class HomepageComponent implements OnInit {
   latest: any = [];
   listUnsatisfactory: Numbers[] = [];
   numberOfInput: number = 0;
-  maximum: string = '';
+  maximum: string = '30000';
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
@@ -117,9 +117,13 @@ export class HomepageComponent implements OnInit {
     let search = localStorage.getItem('search-de');
     if (search != null) {
       this.search = search;
+    } else {
+      this.saveSearchToLocalStorage();
     }
     if (maximum != null) {
       this.maximum = maximum;
+    } else {
+      this.saveMaximumToLocalStorage();
     }
     let self = this;
     setInterval(function() {
