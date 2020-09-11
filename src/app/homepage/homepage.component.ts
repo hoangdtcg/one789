@@ -19,6 +19,7 @@ export class HomepageComponent implements OnInit {
   numbers: Numbers[] = [];
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
+  numberNotSubmit: Numbers[] = [];
   items: Items[] = [];
   search: string = '1000';
   data: string = '';
@@ -33,6 +34,7 @@ export class HomepageComponent implements OnInit {
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
+  exportListNumberNotSubmit: string = '';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -253,6 +255,19 @@ export class HomepageComponent implements OnInit {
         }
         this.items.push(items);
       });
+      for (let i = 0; i < this.numbers.length; i++) {
+        let flag = 0;
+        for (let j = 0; j < this.resultNumbers.length; j++) {
+          if (this.numbers[i].Number == this.resultNumbers[j].Number) {
+            flag = 1;
+            break;
+          }
+        }
+        if (flag == 0) {
+          this.numberNotSubmit.push(this.numbers[i]);
+        }
+      }
+      this.exportListNumberNotSubmit = this.convertListToString(this.numberNotSubmit);
       this.sumTotalPointAndTotalMoney();
       this.data = '';
       $('#modal-danger').modal('hide');
@@ -395,6 +410,17 @@ export class HomepageComponent implements OnInit {
     this.search = '';
     this.numberOfInput = 0;
     this.listUnsatisfactory = [];
+  }
+
+  convertListToString(numbers: Numbers[]) {
+    let string = '';
+    for (let i = 0; i < numbers.length; i++) {
+      string += numbers[i].Number;
+      if (i != numbers.length - 1) {
+        string += ', ';
+      }
+    }
+    return string;
   }
 
   exportStringToTextArea(numbers) {
