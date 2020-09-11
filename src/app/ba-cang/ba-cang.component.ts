@@ -21,7 +21,7 @@ export class BaCangComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   items: Items[] = [];
-  search: string = '810';
+  search: string = '1000';
   data: string = '';
   totalPoint: number = 0;
   totalMoney: number = 0;
@@ -30,7 +30,7 @@ export class BaCangComponent implements OnInit {
   latest: any = [];
   listUnsatisfactory: Numbers[] = [];
   numberOfInput: number = 0;
-  maximum: string = '30000';
+  maximum: string = '';
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
@@ -123,8 +123,6 @@ export class BaCangComponent implements OnInit {
     }
     if (maximum != null) {
       this.maximum = maximum;
-    } else {
-      this.saveMaximumToLocalStorage();
     }
     let self = this;
     setInterval(function() {
@@ -254,7 +252,11 @@ export class BaCangComponent implements OnInit {
         items.Numbers = [number.Number];
         items.Price = number.ExtraPrice;
         if (number.point != null) {
-          items.Point = +this.maximum > number.point ? items.Point = number.point : +this.maximum;
+          if (this.maximum != '') {
+            items.Point = +this.maximum > number.point ? number.point : +this.maximum;
+          } else {
+            items.Point = number.point;
+          }
         }
         this.items.push(items);
       });

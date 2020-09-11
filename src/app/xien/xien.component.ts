@@ -32,7 +32,7 @@ export class XienComponent implements OnInit {
   latest: any = [];
   listUnsatisfactory: any = [];
   numberOfInput: number = 0;
-  maximum: string = '30000';
+  maximum: string = '';
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
@@ -96,8 +96,6 @@ export class XienComponent implements OnInit {
     let maximum = localStorage.getItem('maximum-xien');
     if (maximum != null) {
       this.maximum = maximum;
-    } else {
-      this.saveMaximumToLocalStorage();
     }
     let self = this;
     setInterval(function() {
