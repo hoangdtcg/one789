@@ -33,6 +33,8 @@ export class DitNhatComponent implements OnInit {
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
+  numberNotSubmit: Numbers[] = [];
+  exportListNumberNotSubmit: string = '';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -256,6 +258,19 @@ export class DitNhatComponent implements OnInit {
         }
         this.items.push(items);
       });
+      for (let i = 0; i < this.numbers.length; i++) {
+        let flag = 0;
+        for (let j = 0; j < this.resultNumbers.length; j++) {
+          if (this.numbers[i].Number == this.resultNumbers[j].Number) {
+            flag = 1;
+            break;
+          }
+        }
+        if (flag == 0) {
+          this.numberNotSubmit.push(this.numbers[i]);
+        }
+      }
+      this.exportListNumberNotSubmit = this.convertListToString(this.numberNotSubmit);
       this.sumTotalPointAndTotalMoney();
       this.data = '';
       $('#modal-danger').modal('hide');
@@ -494,5 +509,16 @@ export class DitNhatComponent implements OnInit {
 
   saveSearchToLocalStorage() {
     localStorage.setItem('search-nhat', this.search);
+  }
+
+  convertListToString(numbers: Numbers[]) {
+    let string = '';
+    for (let i = 0; i < numbers.length; i++) {
+      string += numbers[i].Number;
+      if (i != numbers.length - 1) {
+        string += ', ';
+      }
+    }
+    return string;
   }
 }
