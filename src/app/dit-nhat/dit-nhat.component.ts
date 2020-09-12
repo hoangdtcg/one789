@@ -411,7 +411,6 @@ export class DitNhatComponent implements OnInit {
     this.items = [];
     this.totalPoint = 0;
     this.totalMoney = 0;
-    this.search = '';
     this.numberOfInput = 0;
     this.listUnsatisfactory = [];
   }
