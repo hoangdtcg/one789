@@ -21,7 +21,7 @@ export class HomepageComponent implements OnInit {
   resultNumbers: Numbers[] = [];
   numberNotSubmit: Numbers[] = [];
   items: Items[] = [];
-  search: string = '1000';
+  search: string = '';
   data: string = '';
   totalPoint: number = 0;
   totalMoney: number = 0;
@@ -119,8 +119,6 @@ export class HomepageComponent implements OnInit {
     let search = localStorage.getItem('search-de');
     if (search != null) {
       this.search = search;
-    } else {
-      this.saveSearchToLocalStorage();
     }
     if (maximum != null) {
       this.maximum = maximum;
