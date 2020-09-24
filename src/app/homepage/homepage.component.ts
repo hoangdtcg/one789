@@ -176,7 +176,7 @@ export class HomepageComponent implements OnInit {
   }
 
   filterNumberLowerThan() {
-    if (this.search != '') {
+    if (this.search != '' && this.search != 'null') {
       let numbers = [];
       this.resultNumbers.map(number => {
         numbers.push(number);
@@ -246,7 +246,7 @@ export class HomepageComponent implements OnInit {
         items.Numbers = [number.Number];
         items.Price = number.ExtraPrice;
         if (number.point != null) {
-          if (this.maximum != '') {
+          if (this.maximum != '' && this.maximum != "null") {
             items.Point = +this.maximum > number.point ? number.point : +this.maximum;
           } else {
             items.Point = number.point;
@@ -286,7 +286,7 @@ export class HomepageComponent implements OnInit {
         this.filterNumberLowerThan();
         let input: Numbers = {
           Number: number
-        }
+        };
         this.numberInput.push(input);
       });
       this.numberOfInput += numbers.length;
