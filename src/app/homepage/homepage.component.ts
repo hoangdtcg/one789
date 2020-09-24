@@ -20,6 +20,7 @@ export class HomepageComponent implements OnInit {
   filterNumbers: Numbers[] = [];
   resultNumbers: Numbers[] = [];
   numberNotSubmit: Numbers[] = [];
+  numberInput: Numbers[] = [];
   items: Items[] = [];
   search: string = '';
   data: string = '';
@@ -255,8 +256,8 @@ export class HomepageComponent implements OnInit {
       });
       for (let i = 0; i < this.numbers.length; i++) {
         let flag = 0;
-        for (let j = 0; j < this.resultNumbers.length; j++) {
-          if (this.numbers[i].Number == this.resultNumbers[j].Number) {
+        for (let j = 0; j < this.numberInput.length; j++) {
+          if (this.numbers[i].Number == this.numberInput[j].Number) {
             flag = 1;
             break;
           }
@@ -283,6 +284,10 @@ export class HomepageComponent implements OnInit {
         number = number.trim();
         this.getResultNumbers(number, +columns[1]);
         this.filterNumberLowerThan();
+        let input: Numbers = {
+          Number: number
+        }
+        this.numberInput.push(input);
       });
       this.numberOfInput += numbers.length;
     });
