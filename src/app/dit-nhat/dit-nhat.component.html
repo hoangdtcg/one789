@@ -139,7 +139,7 @@
       </div>
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">
+          <h3 class="card-title"  style="color:red;">
             MÃ CƯỢC GẦN ĐÂY
           </h3>
           <div class="card-tools">
@@ -158,9 +158,9 @@
             <tbody>
             <tr *ngFor="let ticket of latest"
                 [style.background]="ticket.Status == 9?'#718299':''">
-              <td>{{ticket.TicketNumber}}</td>
-              <td></td>
-              <td [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
+              <td  style="color:red;">{{ticket.TicketNumber}}</td>
+              <td  style="color:red;"></td>
+              <td  style="color:red;" [style.text-decoration]="ticket.Status == 9?'line-through':''">{{ticket.Amount}}</td>
               <td>
                 <button class="btn btn-outline-danger" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">
                   Hủy
