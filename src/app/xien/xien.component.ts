@@ -404,7 +404,7 @@ export class XienComponent implements OnInit {
       for (let i = 0; i < tickets.length; i++) {
         result += this.exportOneLine(tickets[i]);
         if (i != tickets.length - 1) {
-          result += '\n';
+          result += ' ';
         }
       }
     }

@@ -451,7 +451,7 @@ export class HomepageComponent implements OnInit {
       }
       result += this.exportOneLine(numberHasSamePointArray);
       if (i != numbers.length - 1) {
-        result += '\n';
+        result += ' ';
       }
     }
     return result;
