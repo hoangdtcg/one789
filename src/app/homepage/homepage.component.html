@@ -160,10 +160,10 @@
             <tbody>
             <tr *ngFor="let ticket of latest;index as i"
                 [style.background]="ticket.Status == 9?'#718299':''">
-              <td [style.color]="i == 1 ? 'red' : ''">{{ticket.TicketNumber}}</td>
-              <td [style.color]="i == 1 ? 'red' : ''"></td>
+              <td [style.color]="i == 0 ? '#c90404' : ''">{{ticket.TicketNumber}}</td>
+              <td [style.color]="i == 0 ? '#c90404' : ''"></td>
               <td [style.text-decoration]="ticket.Status == 9?'line-through':''"
-                  [style.color]="i == 1 ? 'red' : ''">{{ticket.Amount}}</td>
+                  [style.color]="i == 0 ? '#c90404' : ''">{{ticket.Amount}}</td>
               <td>
                 <button class="btn btn-outline-primary" [disabled]="ticket.Status == 9" (click)="cancelPlay(ticket)">
                   Hủy
