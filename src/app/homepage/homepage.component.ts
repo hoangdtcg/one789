@@ -36,6 +36,7 @@ export class HomepageComponent implements OnInit {
   continue: boolean = false;
   isExpired: boolean = false;
   exportListNumberNotSubmit: string = '';
+  isEnabled: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -246,7 +247,7 @@ export class HomepageComponent implements OnInit {
         items.Numbers = [number.Number];
         items.Price = number.ExtraPrice;
         if (number.point != null) {
-          if (this.maximum != '' && this.maximum != "null") {
+          if (this.maximum != '' && this.maximum != 'null') {
             items.Point = +this.maximum > number.point ? number.point : +this.maximum;
           } else {
             items.Point = number.point;
@@ -397,6 +398,7 @@ export class HomepageComponent implements OnInit {
           localStorage.setItem('de', JSON.stringify(localStorageArray));
         });
       }
+      this.isEnabled = true;
       this.clearAll();
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
@@ -518,5 +520,9 @@ export class HomepageComponent implements OnInit {
 
   saveSearchToLocalStorage() {
     localStorage.setItem('search-de', this.search);
+  }
+
+  disableCopy() {
+    this.isEnabled = false;
   }
 }
