@@ -34,6 +34,7 @@ export class BaCangComponent implements OnInit {
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
+  isEnabled: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -368,6 +369,7 @@ export class BaCangComponent implements OnInit {
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
       this.data = this.exportStringToTextArea(this.resultNumbers);
+      this.isEnabled = true;
       let localStorageArray = JSON.parse(localStorage.getItem('ba-cang'));
       if (localStorageArray == null) {
         localStorage.setItem('ba-cang', JSON.stringify(this.resultNumbers));
@@ -499,5 +501,9 @@ export class BaCangComponent implements OnInit {
 
   saveSearchToLocalStorage() {
     localStorage.setItem('search-ba-cang', this.search);
+  }
+
+  disableCopy() {
+    this.isEnabled = false;
   }
 }
