@@ -36,6 +36,7 @@ export class DitNhatComponent implements OnInit {
   isExpired: boolean = false;
   numberNotSubmit: Numbers[] = [];
   exportListNumberNotSubmit: string = '';
+  isEnabled: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -289,7 +290,7 @@ export class DitNhatComponent implements OnInit {
         this.filterNumberLowerThan();
         let input: Numbers = {
           Number: number
-        }
+        };
         this.numberInput.push(input);
       });
       this.numberOfInput += numbers.length;
@@ -379,6 +380,7 @@ export class DitNhatComponent implements OnInit {
     localStorage.setItem('now', date);
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
+      this.isEnabled = true;
       this.data = this.exportStringToTextArea(this.resultNumbers);
       let localStorageArray = JSON.parse(localStorage.getItem('dit-nhat'));
       if (localStorageArray == null) {
@@ -522,5 +524,9 @@ export class DitNhatComponent implements OnInit {
       }
     }
     return string;
+  }
+
+  disableCopy() {
+    this.isEnabled = false;
   }
 }
