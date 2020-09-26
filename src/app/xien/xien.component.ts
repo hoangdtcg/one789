@@ -36,6 +36,7 @@ export class XienComponent implements OnInit {
   message: string = '';
   continue: boolean = false;
   isExpired: boolean = false;
+  isEnabled: boolean = false;
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -377,6 +378,7 @@ export class XienComponent implements OnInit {
     localStorage.setItem('now', date);
     this.gamePlayService.play(data).subscribe(() => {
       this.notificationService.showSuccessMessage('Thành công');
+      this.isEnabled = true;
     }, () => {
       this.notificationService.showErrorMessage('Xảy ra lỗi');
     });
@@ -483,5 +485,9 @@ export class XienComponent implements OnInit {
 
   saveMaximumToLocalStorage() {
     localStorage.setItem('maximum-xien', this.maximum);
+  }
+
+  disableCopy() {
+    this.isEnabled = false;
   }
 }
