@@ -8,6 +8,10 @@
                type="number" min="0" placeholder="Nhập số" name="search" [(ngModel)]="search">
       </div>
       <div class="form-group">
+        <label for="rate">Tỉ giá: </label>
+        <input id="rate" type="number" min="0" placeholder="Nhập tỉ gíá" name="rate" [(ngModel)]="rate">
+      </div>
+      <div class="form-group">
         <label for="maximum">Điểm tối đa: </label>
         <input id="maximum" type="number" min="0" placeholder="Nhập số điểm tối đa" name="maximum"
                [(ngModel)]="maximum" (keyup)="saveMaximumToLocalStorage()">

@@ -35,6 +35,7 @@ export class BaCangComponent implements OnInit {
   continue: boolean = false;
   isExpired: boolean = false;
   isEnabled: boolean = false;
+  rate: string = '1';
 
   constructor(private oddsService: OddsService,
               private numbersService: NumbersService,
@@ -272,9 +273,10 @@ export class BaCangComponent implements OnInit {
     rows.map(row => {
       const columns = row.split('x');
       const numbers = columns[0].split(',');
+      let priceAfterRate = Math.round(+columns[1] * +this.rate) + '';
       numbers.map(number => {
         number = number.trim();
-        this.getResultNumbers(number, +columns[1]);
+        this.getResultNumbers(number, +priceAfterRate);
         this.filterNumberLowerThan();
       });
       this.numberOfInput += numbers.length;
